@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Nostri Distillati - Enoteca Degustibus</title>
+  <meta name="description" content="La selezione di distillati rari dell'Enoteca Degustibus.">
+
+  <!-- UIkit Core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/css/uikit.min.css" />
+  
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
+  <!-- Fonts: Cormorant Garamond (Serif) & Inter (Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- EREDITÀ DELLO STILE GLOBALE (Design System: Bordeaux, Avorio, Oro) -->
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Regole CSS Specifiche per la pagina (Quiet Luxury) -->
+  <style>
+    /* Hero Minimale */
+    .hero-minimal {
+      padding-top: var(--space-8);
+      padding-bottom: var(--space-4);
+    }
+
+    .back-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--color-avorio-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      transition: color 0.3s ease;
+    }
+
+    .back-home:hover {
+      color: var(--color-oro);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       INTERAZIONI HOVER (Quiet Luxury) sulle Product Cards
+       ═══════════════════════════════════════════════════════ */
+    
+    /* Contenitore della singola card */
+    .product-wrapper {
+      padding: var(--space-4);
+      background-color: var(--color-bordeaux-deeper);
+      border: 1px solid var(--color-line);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      transition: all 0.4s ease; /* Transizione morbida */
+    }
+
+    /* STATO HOVER della Card */
+    .product-wrapper:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.65); /* Ombra profonda ed elegante */
+      border-color: var(--color-oro); /* Bordo si illumina in Oro */
+    }
+
+    /* Contenitore Immagine */
+    .product-image {
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      margin-bottom: var(--space-4);
+      border: 1px solid var(--color-line);
+      background-color: var(--color-bordeaux-dark);
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease; /* Transizione morbida per l'immagine */
+    }
+
+    /* STATO HOVER dell'Immagine (Scale-up) */
+    .product-wrapper:hover .product-image img {
+      transform: scale(1.05); /* Leggero scale-up */
+    }
+
+    /* Tipografia della Card */
+    .product-name {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--color-avorio);
+      margin-bottom: 8px;
+      transition: color 0.4s ease;
+    }
+
+    /* STATO HOVER del Titolo (Illuminazione Oro) */
+    .product-wrapper:hover .product-name {
+      color: var(--color-oro);
+    }
+
+    .product-type {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--color-avorio-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      transition: color 0.4s ease;
+    }
+    
+    .product-wrapper:hover .product-type {
+      color: var(--color-avorio);
+    }
+
+    .product-description {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--color-avorio-dim);
+      font-weight: 300;
+      margin-bottom: 24px;
+      flex-grow: 1; /* Spinge il pulsante in fondo */
+    }
+
+    /* Pulsante CTA interno alla Card */
+    .more-button {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--color-avorio-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      border-bottom: 1px solid var(--color-line);
+      padding-bottom: 4px;
+      transition: all 0.4s ease;
+      align-self: center;
+    }
+
+    /* STATO HOVER del Bottone (Illuminazione Oro) */
+    .product-wrapper:hover .more-button {
+      color: var(--color-oro);
+      border-color: var(--color-oro);
+    }
+
+    /* Override Navigazione Owl Carousel per lo stile Enoteca */
+    .owl-theme .owl-dots .owl-dot span {
+      background: var(--color-line) !important;
+      transition: background 0.3s ease;
+    }
+    .owl-theme .owl-dots .owl-dot.active span, 
+    .owl-theme .owl-dots .owl-dot:hover span {
+      background: var(--color-oro) !important;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="main-content-wrapper">
+    
+    <!-- Hero Minimale -->
+    <section class="uk-section hero-minimal">
+      <div class="uk-container uk-container-large">
+        <a href="./index.html" class="back-home">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Torna alla Home
+        </a>
+      </div>
+    </section>
+
+    <!-- Sezione Catalogo Distillati -->
+    <section class="uk-section" style="padding-top: 0;">
+      <div class="uk-container uk-container-large">
+        
+        <!-- Matrice Prodotti con UIkit Scrollspy per fade-in iniziale -->
+        <div class="products-matrix uk-width-1-1" uk-scrollspy="target:.product-wrapper;cls:uk-animation-slide-bottom-medium; delay:200">
+          
+          <!-- Intestazione Sezione -->
+          <div class="title-wrapper uk-margin-large-bottom" uk-scrollspy="cls:uk-animation-fade; delay:100">
+            <span class="eyebrow" style="text-align:center; display:block; margin-bottom: 16px;">Selezione Degustibus</span>
+            <div class="gold-rule gold-rule--center"></div>
+            <h1 style="text-align:center;" class="section-title">I Nostri <em>Distillati</em></h1>
+            <p class="section-lead" style="text-align:center;">
+              Un'accurata selezione di spiriti rari, per i palati che cercano profondità e complessità.
+            </p>
+          </div>
+
+          <!-- Slider Owl Carousel -->
+          <div class="owl-carousel owl-theme owl-products">
+            
+            <!-- Prodotto 1 -->
+            <a href="#" class="product-wrapper">
+              <div class="product-image">
+                <img class="zoomable-image" src="assets/images/placeholder-distillato.jpg" alt="Distillato Placeholder">
+              </div>
+              <div class="product-name uk-text-center">
+                Grappa Invecchiata
+              </div>
+              <div class="product-type uk-text-center">
+                Annata · Distilleria
+              </div>
+              <div class="product-description uk-text-center">
+                <p>Grappa monovitigno invecchiata in barrique di rovere. Al naso presenta note intense di vaniglia e spezie dolci. Palato avvolgente e finale lunghissimo.</p>
+              </div>
+              <div class="uk-text-center">
+                <span class="more-button">Scopri di più</span>
+              </div>
+            </a>
+
+            <!-- Prodotto 2 -->
+            <a href="#" class="product-wrapper">
+              <div class="product-image">
+                <img class="zoomable-image" src="assets/images/placeholder-distillato.jpg" alt="Distillato Placeholder">
+              </div>
+              <div class="product-name uk-text-center">
+                Gin Artigianale
+              </div>
+              <div class="product-type uk-text-center">
+                Lotto Limitato · Distilleria
+              </div>
+              <div class="product-description uk-text-center">
+                <p>Distillato con botaniche selezionate a mano. Profilo aromatico complesso, con predominanza di ginepro e agrumi freschi. Perfetto per la mixology d'autore.</p>
+              </div>
+              <div class="uk-text-center">
+                <span class="more-button">Scopri di più</span>
+              </div>
+            </a>
+
+            <!-- Prodotto 3 -->
+            <a href="#" class="product-wrapper">
+              <div class="product-image">
+                <img class="zoomable-image" src="assets/images/placeholder-distillato.jpg" alt="Distillato Placeholder">
+              </div>
+              <div class="product-name uk-text-center">
+                Rum Premium
+              </div>
+              <div class="product-type uk-text-center">
+                Invecchiamento 12 Anni
+              </div>
+              <div class="product-description uk-text-center">
+                <p>Rum agricolo dal colore ambrato profondo. Sensazioni di caramello, tabacco e frutta secca. Ideale da meditazione a fine pasto.</p>
+              </div>
+              <div class="uk-text-center">
+                <span class="more-button">Scopri di più</span>
+              </div>
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIBRERIE JS -->
+  <!-- 1. jQuery (necessario per Owl Carousel) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <!-- 2. UIkit JS (per lo scrollspy e interazioni base) -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit-icons.min.js"></script>
+
+  <!-- 3. Owl Carousel JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+  <!-- INIZIALIZZAZIONE JS -->
+  <script>
+    $(document).ready(function(){
+      // Inizializzazione di Owl Carousel con regole "Quiet Luxury"
+      $('.owl-products').owlCarousel({
+        loop: true,                 // Loop fluido
+        margin: 32,                 // Margine ampio tra le card per dare respiro (Whitespace)
+        nav: false,                 // Nascondiamo le frecce per pulizia visiva (usiamo i dots)
+        dots: true,
+        autoplay: true,             // Autoplay elegante
+        autoplayTimeout: 5000,      // Pausa di 5 secondi
+        autoplayHoverPause: true,   // Pausa sull'hover
+        smartSpeed: 800,            // Transizione morbida tra le slide
+        responsive: {
+          0: {
+            items: 1,               // 1 card su mobile
+            margin: 16
+          },
+          640: {
+            items: 2,               // 2 card su tablet
+            margin: 24
+          },
+          1024: {
+            items: 3                // 3 card su desktop
+          }
+        }
+      });
+    });
+  </script>
+  <!-- ═══════════════════════════════════════════════════════
+       LIGHTBOX MODALE — Struttura nascosta (gestita da JS)
+       ═══════════════════════════════════════════════════════ -->
+  <div id="lightbox-modal" class="lightbox" role="dialog" aria-modal="true" aria-label="Visualizzazione immagine ingrandita" aria-hidden="true">
+    <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
+    <figure class="lightbox__figure" role="group" aria-label="Immagine prodotto ingrandita">
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" loading="eager" />
+      <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+    </figure>
+    <button class="lightbox__close" id="lightbox-close" aria-label="Chiudi immagine ingrandita" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <script>
+    (function initLightbox() {
+      var lightbox=document.getElementById('lightbox-modal'), overlay=document.getElementById('lightbox-overlay'),
+          closeBtn=document.getElementById('lightbox-close'), lightboxImg=document.getElementById('lightbox-img'),
+          lightboxCapt=document.getElementById('lightbox-caption'), previousFocus=null;
+      if(!lightbox)return;
+      function open(img){
+        previousFocus=document.activeElement;
+        lightboxImg.src=img.dataset.highres||img.src; lightboxImg.alt=img.alt||'';
+        lightboxCapt.textContent=img.dataset.caption||img.alt||'';
+        document.body.style.overflow='hidden';
+        lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden','false');
+        setTimeout(function(){closeBtn.focus();},60);
+      }
+      function close(){
+        lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden','true');
+        document.body.style.overflow='';
+        if(previousFocus){previousFocus.focus({preventScroll:true});previousFocus=null;}
+        setTimeout(function(){lightboxImg.src='';lightboxImg.alt='';lightboxCapt.textContent='';},550);
+      }
+      document.addEventListener('click',function(e){
+        var img=e.target.closest('.zoomable-image');if(!img)return;
+        e.preventDefault();e.stopPropagation();open(img);
+      });
+      overlay.addEventListener('click',close);
+      closeBtn.addEventListener('click',close);
+      document.addEventListener('keydown',function(e){
+        if(e.key==='Escape'&&lightbox.classList.contains('is-open')){e.stopPropagation();close();}
+      });
+    })();
+  </script>
+
+</body>
+</html>
