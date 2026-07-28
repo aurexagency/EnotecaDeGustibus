@@ -5,7 +5,7 @@
       const canvas    = document.getElementById('hero-canvas');
       const ctx       = canvas.getContext('2d');
       const container = document.getElementById('hero-scroll-container');
-      const BASE      = 'public/hero/vorrei_un_qualcosa_di_estremam_000/vorrei_un_qualcosa_di_estremam_';
+      const BASE      = '/hero/vorrei_un_qualcosa_di_estremam_000/vorrei_un_qualcosa_di_estremam_';
       const TOTAL     = 100;
 
       const frames    = new Array(TOTAL);
