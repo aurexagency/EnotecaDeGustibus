@@ -1985,8 +1985,15 @@
   >
     <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
     <figure class="lightbox__figure" role="group" aria-label="Immagine prodotto ingrandita">
+      <!-- Immagine 2D (visibile di default) -->
       <img class="lightbox__img" id="lightbox-img" src="" alt="" loading="eager" />
+      <!-- Contenitore viewer 3D — popolato da JS quando data-model è presente -->
+      <div class="lightbox__viewer-3d" id="lightbox-viewer-3d" aria-hidden="true"></div>
       <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+      <!-- Hint interazione 3D — visibile solo in modalità model-viewer -->
+      <p class="lightbox__hint-3d" id="lightbox-hint-3d" aria-live="polite">
+        Trascina per ruotare · Pizzica per zoomare
+      </p>
     </figure>
     <button class="lightbox__close" id="lightbox-close" aria-label="Chiudi immagine ingrandita" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
@@ -1995,54 +2002,122 @@
     </button>
   </div>
 
-  <!-- Lightbox JS (inline per compatibilità con UIkit/jQuery esistente) -->
+  <!-- Lightbox JS — logica duale 2D / 3D model-viewer -->
   <script>
     (function initLightbox() {
+      'use strict';
+
+      // ── Riferimenti DOM ─────────────────────────────────────
       var lightbox     = document.getElementById('lightbox-modal');
       var overlay      = document.getElementById('lightbox-overlay');
       var closeBtn     = document.getElementById('lightbox-close');
       var lightboxImg  = document.getElementById('lightbox-img');
       var lightboxCapt = document.getElementById('lightbox-caption');
-      if (!lightbox) return;
-      var previousFocus = null;
+      var viewer3dWrap = document.getElementById('lightbox-viewer-3d');
 
-      function openLightbox(triggerImg) {
-        previousFocus = document.activeElement;
+      if (!lightbox) return;
+
+      // ── Stato interno ────────────────────────────────────────
+      var previousFocus = null;
+      var _mvLoaded     = false;
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ── Lazy loader @google/model-viewer ────────────────────
+      // Script ESM iniettato una sola volta, solo quando serve il 3D.
+      function loadModelViewer() {
+        if (_mvLoaded) return Promise.resolve();
+        return new Promise(function(resolve) {
+          var script = document.createElement('script');
+          script.type    = 'module';
+          script.src     = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+          script.onload  = function() { _mvLoaded = true; resolve(); };
+          script.onerror = function() {
+            console.warn('[Lightbox 3D] Impossibile caricare model-viewer.');
+            resolve();
+          };
+          document.head.appendChild(script);
+        });
+      }
+
+      // ── Apertura — modalità 2D ───────────────────────────────
+      function openAs2D(triggerImg) {
+        lightbox.classList.remove('is-3d');
+        if (viewer3dWrap) viewer3dWrap.innerHTML = '';
         var hiResSrc = triggerImg.dataset.highres || triggerImg.src;
         lightboxImg.src = hiResSrc;
         lightboxImg.alt = triggerImg.alt || '';
         lightboxCapt.textContent = triggerImg.dataset.caption || triggerImg.alt || '';
+        lightbox.setAttribute('aria-label', 'Visualizzazione immagine ingrandita');
+      }
+
+      // ── Apertura — modalità 3D ───────────────────────────────
+      function openAs3D(triggerImg) {
+        var modelSrc = triggerImg.dataset.model;
+        lightbox.classList.add('is-3d');
+        if (viewer3dWrap) {
+          viewer3dWrap.innerHTML =
+            '<div style="width:100%;height:100%;display:flex;align-items:center;' +
+            'justify-content:center;font-family:var(--font-sans);font-size:9px;' +
+            'letter-spacing:0.28em;text-transform:uppercase;color:var(--color-avorio-dim);">' +
+            'Caricamento modello\u2026</div>';
+        }
+        lightboxCapt.textContent = triggerImg.dataset.caption || triggerImg.alt || '';
+        lightbox.setAttribute('aria-label', 'Visualizzazione 3D: ' + (triggerImg.alt || 'bottiglia'));
+        loadModelViewer().then(function() {
+          if (!lightbox.classList.contains('is-open')) return;
+          var mv = document.createElement('model-viewer');
+          mv.setAttribute('src',              modelSrc);
+          mv.setAttribute('alt',              triggerImg.alt || 'Modello 3D bottiglia');
+          mv.setAttribute('shadow-intensity', '1');
+          mv.setAttribute('exposure',         '0.85');
+          mv.setAttribute('camera-controls', '');
+          if (!reducedMotion) {
+            mv.setAttribute('auto-rotate', '');
+            mv.setAttribute('auto-rotate-delay', '1500');
+            mv.setAttribute('rotation-per-second', '20deg');
+          }
+          mv.style.width           = '100%';
+          mv.style.height          = '100%';
+          mv.style.backgroundColor = 'transparent';
+          if (viewer3dWrap) { viewer3dWrap.innerHTML = ''; viewer3dWrap.appendChild(mv); }
+        });
+      }
+
+      // ── Apertura modale (entry point) ───────────────────────
+      function openLightbox(triggerImg) {
+        previousFocus = document.activeElement;
         document.body.style.overflow = 'hidden';
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
-        setTimeout(function(){ closeBtn.focus(); }, 60);
+        if (triggerImg.dataset.model) { openAs3D(triggerImg); } else { openAs2D(triggerImg); }
+        setTimeout(function() { closeBtn.focus(); }, 60);
       }
 
+      // ── Chiusura modale ─────────────────────────────────────
+      // disconnectedCallback di <model-viewer> rilascia il WebGL context
       function closeLightbox() {
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
         if (previousFocus) { previousFocus.focus({ preventScroll: true }); previousFocus = null; }
-        setTimeout(function(){
-          lightboxImg.src = '';
-          lightboxImg.alt = '';
-          lightboxCapt.textContent = '';
+        setTimeout(function() {
+          if (viewer3dWrap) viewer3dWrap.innerHTML = '';
+          lightbox.classList.remove('is-3d');
+          lightboxImg.src = ''; lightboxImg.alt = ''; lightboxCapt.textContent = '';
         }, 550);
       }
 
+      // ── Delega click ─────────────────────────────────────────
       document.addEventListener('click', function(e) {
         var img = e.target.closest('.zoomable-image');
         var cta = e.target.closest('.champ-card__cta');
         if (cta) {
           e.preventDefault();
           var card = cta.closest('.champ-card');
-          if (card) {
-            img = card.querySelector('.zoomable-image');
-          }
+          if (card) { img = card.querySelector('.zoomable-image'); }
         }
         if (!img) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
+        e.preventDefault(); e.stopImmediatePropagation();
         openLightbox(img);
       });
 
@@ -2051,8 +2126,14 @@
 
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
-          e.stopPropagation();
-          closeLightbox();
+          e.stopPropagation(); closeLightbox();
+        }
+      });
+
+      // Focus trap minimale
+      lightbox.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab' && lightbox.classList.contains('is-open')) {
+          e.preventDefault(); closeBtn.focus();
         }
       });
     })();

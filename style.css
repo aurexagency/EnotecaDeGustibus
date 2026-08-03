@@ -1451,7 +1451,99 @@
 
 
     /* ═══════════════════════════════════════════════════════
-       SWIPE BUTTON — Cork Pop · Quiet Luxury Edition
+       LIGHTBOX 3D — Viewer model-viewer
+       Si attiva quando l'immagine cliccata ha data-model="*.glb".
+       Il <model-viewer> è un Web Component di Google che gestisce
+       internamente WebGL, camera, luci e cleanup della memoria.
+       ═══════════════════════════════════════════════════════ */
+
+    /* — Contenitore viewer 3D: nascosto di default — */
+    .lightbox__viewer-3d {
+      display: none;          /* nascosto finché non è modalità 3D */
+      width:  min(80vw, 680px);
+      height: min(72vh, 640px);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Quando la modale è in modalità 3D */
+    .lightbox.is-3d .lightbox__viewer-3d {
+      display: block;
+    }
+
+    /* In modalità 3D, l'immagine 2D è nascosta */
+    .lightbox.is-3d .lightbox__img {
+      display: none;
+    }
+
+    /* — Stile del Web Component model-viewer — */
+    model-viewer {
+      width:  100%;
+      height: 100%;
+
+      /* Sfondo: completamente trasparente, il bordeaux del lightbox traspare */
+      --mv-theme-button-color:          var(--color-oro);
+      --mv-theme-color:                 var(--color-oro);
+      background-color:                 transparent;
+
+      /* Bordo brand sottile */
+      border: 1px solid var(--color-avorio-border);
+
+      /* Cursore grab durante la rotazione */
+      cursor: grab;
+    }
+
+    model-viewer:active {
+      cursor: grabbing;
+    }
+
+    /* Nasconde il pulsante AR di default (mantenere look pulito) */
+    model-viewer::part(default-ar-button) {
+      display: none;
+    }
+
+    /* — Progress bar di caricamento modello — */
+    model-viewer::part(default-progress-bar) {
+      background: rgba(255, 215, 0, 0.35);
+      height: 2px;
+    }
+
+    model-viewer::part(default-progress-mask) {
+      background: var(--color-oro);
+    }
+
+    /* — Hint di rotazione: etichetta sotto il viewer — */
+    .lightbox__hint-3d {
+      font-family:    var(--font-sans);
+      font-size:      9px;
+      font-weight:    400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color:          var(--color-avorio-dim);
+      text-align:     center;
+      margin-top:     var(--space-2);
+      display:        none;         /* visibile solo in modalità 3D */
+    }
+
+    .lightbox.is-3d .lightbox__hint-3d {
+      display: block;
+    }
+
+    /* — Nasconde hint in modalità 2D — */
+    .lightbox:not(.is-3d) .lightbox__hint-3d {
+      display: none;
+    }
+
+    /* ── Reduced Motion: nessuna auto-rotate nel viewer 3D ── */
+    @media (prefers-reduced-motion: reduce) {
+      model-viewer {
+        /* auto-rotate è controllato dall'attributo HTML,
+           qui disabilitiamo la transizione interna del componente */
+        --mv-transition-duration: 0ms;
+      }
+    }
+
+
        Riferimento variabili: --color-bordeaux-deeper, --color-oro,
        --color-avorio, --color-line, --font-sans
        ═══════════════════════════════════════════════════════ */

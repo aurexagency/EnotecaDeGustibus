@@ -170,9 +170,13 @@
 
 
     // ══════════════════════════════════════════════════════
-    // LIGHTBOX — Sistema modale per immagini prodotto
-    // Intercetta `.zoomable-image`, carica data-highres o src,
-    // gestisce chiusura via X / overlay / Escape.
+    // LIGHTBOX DUALE — 2D Immagine / 3D Model-Viewer
+    // ─────────────────────────────────────────────────────
+    // • Se l'elemento cliccato HA data-model="*.glb"  → viewer 3D
+    // • Altrimenti                                     → immagine 2D
+    // • model-viewer caricato lazy (solo al primo uso)
+    // • closeLightbox distrugge l'istanza WebGL (libera RAM)
+    // • Rispetta prefers-reduced-motion (no auto-rotate se attivo)
     // ══════════════════════════════════════════════════════
     (function initLightbox() {
       'use strict';
@@ -183,86 +187,175 @@
       const closeBtn     = document.getElementById('lightbox-close');
       const lightboxImg  = document.getElementById('lightbox-img');
       const lightboxCapt = document.getElementById('lightbox-caption');
+      const viewer3dWrap = document.getElementById('lightbox-viewer-3d');
+      const hint3d       = document.getElementById('lightbox-hint-3d');
 
       // Se la modale non è nel DOM (es. pagine diverse), esci silenziosamente
       if (!lightbox) return;
 
-      // Elemento che aveva il focus prima dell'apertura (per ripristino)
-      let previousFocus = null;
+      // ── Stato interno ─────────────────────────────────
+      let previousFocus  = null;
+      let _mvLoaded      = false;   // flag: script model-viewer già iniettato
 
-      // ── Apertura modale ───────────────────────────────
-      function openLightbox(triggerImg) {
-        // 1. Salva il focus corrente
-        previousFocus = document.activeElement;
+      // Rispetta prefers-reduced-motion per il viewer 3D
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        // 2. Carica immagine: preferisce data-highres se esiste,
-        //    altrimenti usa il src normale dell'img cliccata
+      // ── Lazy loader model-viewer ──────────────────────
+      // Inietta lo script ESM una sola volta, solo quando serve il 3D.
+      // Usa la CDN ufficiale di Google; nessuna dipendenza npm richiesta.
+      function loadModelViewer() {
+        if (_mvLoaded) return Promise.resolve();
+        return new Promise((resolve) => {
+          const script = document.createElement('script');
+          script.type  = 'module';
+          script.src   = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+          script.onload  = () => { _mvLoaded = true; resolve(); };
+          script.onerror = () => {
+            // Fallback silenzioso: il viewer non sarà disponibile
+            console.warn('[Lightbox 3D] Impossibile caricare model-viewer.');
+            resolve();
+          };
+          document.head.appendChild(script);
+        });
+      }
+
+      // ── Apertura modale — modalità 2D ─────────────────
+      function openAs2D(triggerImg) {
+        // Pulisce eventuale stato 3D residuo
+        lightbox.classList.remove('is-3d');
+        if (viewer3dWrap) viewer3dWrap.innerHTML = '';
+
+        // Carica immagine hi-res
         const hiResSrc = triggerImg.dataset.highres || triggerImg.src;
         lightboxImg.src = hiResSrc;
         lightboxImg.alt = triggerImg.alt || '';
+        lightboxCapt.textContent = triggerImg.dataset.caption || triggerImg.alt || '';
 
-        // 3. Popola la didascalia dall'attributo data-caption o dall'alt
-        lightboxCapt.textContent = triggerImg.dataset.caption
-          || triggerImg.alt
-          || '';
+        // Aggiorna aria-label sulla dialog per screen reader
+        lightbox.setAttribute('aria-label', 'Visualizzazione immagine ingrandita');
+      }
 
-        // 4. Blocca lo scroll del body
+      // ── Apertura modale — modalità 3D ─────────────────
+      async function openAs3D(triggerImg) {
+        const modelSrc = triggerImg.dataset.model;
+
+        // Entra in modalità 3D: CSS nasconde img, mostra viewer-3d
+        lightbox.classList.add('is-3d');
+
+        // Svuota il contenitore e mostra lo scheletro di caricamento
+        if (viewer3dWrap) {
+          viewer3dWrap.innerHTML =
+            '<div style="width:100%;height:100%;display:flex;align-items:center;' +
+            'justify-content:center;font-family:var(--font-sans);font-size:9px;' +
+            'letter-spacing:0.28em;text-transform:uppercase;color:var(--color-avorio-dim);">' +
+            'Caricamento modello…</div>';
+        }
+
+        // Popola la caption con il nome del prodotto
+        lightboxCapt.textContent = triggerImg.dataset.caption || triggerImg.alt || '';
+
+        // Aggiorna aria-label sulla dialog
+        lightbox.setAttribute('aria-label', 'Visualizzazione 3D prodotto: ' + (triggerImg.alt || 'bottiglia'));
+
+        // Carica model-viewer (lazy — noop se già caricato)
+        await loadModelViewer();
+
+        // Verifica che il lightbox sia ancora aperto (utente potrebbe aver chiuso nel frattempo)
+        if (!lightbox.classList.contains('is-open')) return;
+
+        // Costruisce il tag <model-viewer>
+        const mv = document.createElement('model-viewer');
+        mv.setAttribute('src',              modelSrc);
+        mv.setAttribute('alt',              triggerImg.alt || 'Modello 3D bottiglia');
+        mv.setAttribute('shadow-intensity', '1');
+        mv.setAttribute('exposure',         '0.85');
+        mv.setAttribute('camera-controls', '');
+        // auto-rotate solo se l'utente non preferisce moto ridotto
+        if (!reducedMotion) {
+          mv.setAttribute('auto-rotate', '');
+          mv.setAttribute('auto-rotate-delay', '1500');
+          mv.setAttribute('rotation-per-second', '20deg');
+        }
+        // Stile inline: trasparenza totale per far trasparire il bordeaux del lightbox
+        mv.style.width           = '100%';
+        mv.style.height          = '100%';
+        mv.style.backgroundColor = 'transparent';
+
+        // Sostituisce il placeholder di caricamento
+        if (viewer3dWrap) {
+          viewer3dWrap.innerHTML = '';
+          viewer3dWrap.appendChild(mv);
+        }
+      }
+
+      // ── Apertura modale (entry point) ─────────────────
+      function openLightbox(triggerImg) {
+        previousFocus = document.activeElement;
+
+        // Blocca lo scroll del body
         document.body.style.overflow = 'hidden';
 
-        // 5. Rendi visibile la modale (classe CSS)
+        // Apri la modale (CSS transition)
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
 
-        // 6. Sposta il focus al pulsante di chiusura (accessibilità)
-        //    Piccolo delay per aspettare la transizione CSS
+        // Branch: 3D se ha data-model, altrimenti 2D
+        if (triggerImg.dataset.model) {
+          openAs3D(triggerImg);
+        } else {
+          openAs2D(triggerImg);
+        }
+
+        // Sposta il focus al pulsante X (accessibilità)
         setTimeout(() => closeBtn.focus(), 60);
       }
 
       // ── Chiusura modale ───────────────────────────────
       function closeLightbox() {
-        // 1. Avvia la transizione di uscita
+        // Avvia la transizione di uscita CSS
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
 
-        // 2. Ripristina lo scroll del body
+        // Ripristina lo scroll del body
         document.body.style.overflow = '';
 
-        // 3. Ripristina il focus all'elemento sorgente
+        // Ripristina il focus all'elemento sorgente
         if (previousFocus) {
           previousFocus.focus({ preventScroll: true });
           previousFocus = null;
         }
 
-        // 4. Pulisce src e alt dopo la transizione di uscita
-        //    (evita flash dell'immagine precedente alla prossima apertura)
-        const TRANSITION_DURATION = 550; // ms — allineato alla transizione CSS
+        // Dopo la transizione: distrugge l'istanza WebGL e pulisce il DOM
+        // disconnectedCallback di <model-viewer> rilascia automaticamente il WebGL context
+        const TRANSITION_MS = 550;
         setTimeout(() => {
+          // — Cleanup viewer 3D —
+          if (viewer3dWrap) viewer3dWrap.innerHTML = '';
+          lightbox.classList.remove('is-3d');
+
+          // — Cleanup immagine 2D —
           lightboxImg.src = '';
           lightboxImg.alt = '';
           lightboxCapt.textContent = '';
-        }, TRANSITION_DURATION);
+        }, TRANSITION_MS);
       }
 
       // ── Event: click su immagine zoomabile ────────────
-      // Utilizza event delegation su document per catturare
-      // anche immagini caricate dinamicamente o in iframe/pagine
+      // Event delegation su document per catturare elementi dinamici
       document.addEventListener('click', (e) => {
         let img = e.target.closest('.zoomable-image');
         const cta = e.target.closest('.champ-card__cta');
-        
+
         if (cta) {
-            e.preventDefault();
-            const card = cta.closest('.champ-card');
-            if (card) {
-                img = card.querySelector('.zoomable-image');
-            }
+          e.preventDefault();
+          const card = cta.closest('.champ-card');
+          if (card) img = card.querySelector('.zoomable-image');
         }
 
         if (!img) return;
 
         e.preventDefault();
         e.stopImmediatePropagation();
-
         openLightbox(img);
       });
 
@@ -280,16 +373,16 @@
         }
       });
 
-      // ── Accessibilità: blocca tab focus dentro la modale ─
-      // (focus trap minimale: solo closeBtn ricevibile)
+      // ── Accessibilità: focus trap minimale nella modale ─
       lightbox.addEventListener('keydown', (e) => {
         if (e.key === 'Tab' && lightbox.classList.contains('is-open')) {
-          e.preventDefault(); // tiene il focus sul close button
+          e.preventDefault();
           closeBtn.focus();
         }
       });
 
     })(); // fine initLightbox
+
 
 
     // ══════════════════════════════════════════════════════

@@ -300,8 +300,15 @@
   <div id="lightbox-modal" class="lightbox" role="dialog" aria-modal="true" aria-label="Visualizzazione immagine ingrandita" aria-hidden="true">
     <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
     <figure class="lightbox__figure" role="group" aria-label="Immagine prodotto ingrandita">
+      <!-- Immagine 2D (visibile di default) -->
       <img class="lightbox__img" id="lightbox-img" src="" alt="" loading="eager" />
+      <!-- Contenitore viewer 3D — popolato da JS quando data-model è presente -->
+      <div class="lightbox__viewer-3d" id="lightbox-viewer-3d" aria-hidden="true"></div>
       <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+      <!-- Hint interazione 3D — visibile solo in modalità model-viewer -->
+      <p class="lightbox__hint-3d" id="lightbox-hint-3d" aria-live="polite">
+        Trascina per ruotare · Pizzica per zoomare
+      </p>
     </figure>
     <button class="lightbox__close" id="lightbox-close" aria-label="Chiudi immagine ingrandita" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -310,32 +317,98 @@
 
   <script>
     (function initLightbox() {
-      var lightbox=document.getElementById('lightbox-modal'), overlay=document.getElementById('lightbox-overlay'),
-          closeBtn=document.getElementById('lightbox-close'), lightboxImg=document.getElementById('lightbox-img'),
-          lightboxCapt=document.getElementById('lightbox-caption'), previousFocus=null;
-      if(!lightbox)return;
-      function open(img){
-        previousFocus=document.activeElement;
-        lightboxImg.src=img.dataset.highres||img.src; lightboxImg.alt=img.alt||'';
-        lightboxCapt.textContent=img.dataset.caption||img.alt||'';
-        document.body.style.overflow='hidden';
-        lightbox.classList.add('is-open'); lightbox.setAttribute('aria-hidden','false');
-        setTimeout(function(){closeBtn.focus();},60);
+      'use strict';
+      var lightbox     = document.getElementById('lightbox-modal'),
+          overlay      = document.getElementById('lightbox-overlay'),
+          closeBtn     = document.getElementById('lightbox-close'),
+          lightboxImg  = document.getElementById('lightbox-img'),
+          lightboxCapt = document.getElementById('lightbox-caption'),
+          viewer3dWrap = document.getElementById('lightbox-viewer-3d'),
+          previousFocus = null,
+          _mvLoaded     = false;
+      if (!lightbox) return;
+      var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function loadModelViewer() {
+        if (_mvLoaded) return Promise.resolve();
+        return new Promise(function(resolve) {
+          var s = document.createElement('script');
+          s.type = 'module';
+          s.src  = 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+          s.onload  = function() { _mvLoaded = true; resolve(); };
+          s.onerror = function() { console.warn('[Lightbox 3D] Impossibile caricare model-viewer.'); resolve(); };
+          document.head.appendChild(s);
+        });
       }
-      function close(){
-        lightbox.classList.remove('is-open'); lightbox.setAttribute('aria-hidden','true');
-        document.body.style.overflow='';
-        if(previousFocus){previousFocus.focus({preventScroll:true});previousFocus=null;}
-        setTimeout(function(){lightboxImg.src='';lightboxImg.alt='';lightboxCapt.textContent='';},550);
+
+      function openAs2D(img) {
+        lightbox.classList.remove('is-3d');
+        if (viewer3dWrap) viewer3dWrap.innerHTML = '';
+        lightboxImg.src = img.dataset.highres || img.src;
+        lightboxImg.alt = img.alt || '';
+        lightboxCapt.textContent = img.dataset.caption || img.alt || '';
+        lightbox.setAttribute('aria-label', 'Visualizzazione immagine ingrandita');
       }
-      document.addEventListener('click',function(e){
-        var img=e.target.closest('.zoomable-image');if(!img)return;
-        e.preventDefault();e.stopPropagation();open(img);
+
+      function openAs3D(img) {
+        lightbox.classList.add('is-3d');
+        if (viewer3dWrap) {
+          viewer3dWrap.innerHTML = '<div style="width:100%;height:100%;display:flex;align-items:center;' +
+            'justify-content:center;font-family:var(--font-sans);font-size:9px;' +
+            'letter-spacing:0.28em;text-transform:uppercase;color:var(--color-avorio-dim);">Caricamento modello…</div>';
+        }
+        lightboxCapt.textContent = img.dataset.caption || img.alt || '';
+        lightbox.setAttribute('aria-label', 'Visualizzazione 3D: ' + (img.alt || 'bottiglia'));
+        loadModelViewer().then(function() {
+          if (!lightbox.classList.contains('is-open')) return;
+          var mv = document.createElement('model-viewer');
+          mv.setAttribute('src', img.dataset.model);
+          mv.setAttribute('alt', img.alt || 'Modello 3D');
+          mv.setAttribute('shadow-intensity', '1');
+          mv.setAttribute('exposure', '0.85');
+          mv.setAttribute('camera-controls', '');
+          if (!reducedMotion) {
+            mv.setAttribute('auto-rotate', '');
+            mv.setAttribute('auto-rotate-delay', '1500');
+            mv.setAttribute('rotation-per-second', '20deg');
+          }
+          mv.style.width = '100%'; mv.style.height = '100%'; mv.style.backgroundColor = 'transparent';
+          if (viewer3dWrap) { viewer3dWrap.innerHTML = ''; viewer3dWrap.appendChild(mv); }
+        });
+      }
+
+      function open(img) {
+        previousFocus = document.activeElement;
+        document.body.style.overflow = 'hidden';
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        if (img.dataset.model) { openAs3D(img); } else { openAs2D(img); }
+        setTimeout(function() { closeBtn.focus(); }, 60);
+      }
+
+      function close() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (previousFocus) { previousFocus.focus({ preventScroll: true }); previousFocus = null; }
+        setTimeout(function() {
+          if (viewer3dWrap) viewer3dWrap.innerHTML = '';
+          lightbox.classList.remove('is-3d');
+          lightboxImg.src = ''; lightboxImg.alt = ''; lightboxCapt.textContent = '';
+        }, 550);
+      }
+
+      document.addEventListener('click', function(e) {
+        var img = e.target.closest('.zoomable-image'); if (!img) return;
+        e.preventDefault(); e.stopPropagation(); open(img);
       });
-      overlay.addEventListener('click',close);
-      closeBtn.addEventListener('click',close);
-      document.addEventListener('keydown',function(e){
-        if(e.key==='Escape'&&lightbox.classList.contains('is-open')){e.stopPropagation();close();}
+      overlay.addEventListener('click', close);
+      closeBtn.addEventListener('click', close);
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) { e.stopPropagation(); close(); }
+      });
+      lightbox.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab' && lightbox.classList.contains('is-open')) { e.preventDefault(); closeBtn.focus(); }
       });
     })();
   </script>

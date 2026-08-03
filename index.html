@@ -92,9 +92,6 @@
           </p>
 
           <div class="hero-cta-group">
-            <a href="#esperienze" class="btn btn--primary" id="cta-prenota">
-              Prenota una Degustazione in Enoteca
-            </a>
             <a href="#catalogo" class="btn btn--ghost" id="cta-eventi">
               Scopri i Nostri Eventi
             </a>
@@ -589,11 +586,22 @@
         alt=""
         loading="eager"
       />
+      <!-- Contenitore viewer 3D — popolato da JS quando data-model è presente -->
+      <div
+        class="lightbox__viewer-3d"
+        id="lightbox-viewer-3d"
+        aria-hidden="true"
+      ></div>
       <!-- Didascalia dinamica — popolata da JS -->
       <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+      <!-- Hint interazione 3D — visibile solo in modalità model-viewer -->
+      <p class="lightbox__hint-3d" id="lightbox-hint-3d" aria-live="polite">
+        Trascina per ruotare · Pizzica per zoomare
+      </p>
     </figure>
 
     <!-- Pulsante chiusura X -->
+
     <button
       class="lightbox__close"
       id="lightbox-close"
