@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Degustibus Enoteca — Un percorso sensoriale tra vini d'eccellenza, distillati rari e degustazioni sartoriali curate da Alessandra, Sommelier AIS. Scopri eventi, masterclass e consulenze per privati e ristoranti." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Degustibus Enoteca — Il Vino come Esperienza" />
+  <meta property="og:description" content="Vini d'eccellenza, distillati rari, birre artigianali e oli toscani. Degustazioni guidate, eventi élite e advisory per privati e ristoranti." />
+  <meta property="og:type" content="website" />
+  <title>Degustibus Enoteca — Il Vino come Esperienza</title>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TYPOGRAPHY — Cormorant Garamond (Titoli Serif Premium)
+                   + Inter (Body Sans-Serif Spaziato)
+       ═══════════════════════════════════════════════════════ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HEADER — Navigazione Fissa
+       ═══════════════════════════════════════════════════════ -->
+  <header id="site-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+
+        <!-- Logo -->
+        <a href="#hero" class="site-logo" aria-label="Degustibus Enoteca — Home">
+          <img src="public/logo/Logo%20degustibus.png" alt="Degustibus Enoteca Logo" style="height: 50px; width: auto;" />
+        </a>
+
+        <!-- Navigazione principale -->
+        <nav class="site-nav" aria-label="Navigazione principale">
+          <ul class="nav-list" id="nav-menu" role="list">
+            <li><a href="#hero"      class="nav-link" id="nav-home">Home</a></li>
+            <li><a href="./chi-siamo.html" class="nav-link" id="nav-chisiamo">Chi Siamo</a></li>
+            <li><a href="./contatti.html" class="nav-link" id="nav-contatti">Contatti</a></li>
+          </ul>
+
+          <!-- Toggle hamburger mobile -->
+          <button
+            class="nav-toggle"
+            id="nav-toggle-btn"
+            aria-controls="nav-menu"
+            aria-expanded="false"
+            aria-label="Apri menu di navigazione"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════
+         BLOCCO 1 — HERO SECTION (scroll-scrubbed)
+         ═══════════════════════════════════════════════════════ -->
+    <div id="hero-scroll-container">
+      <section id="hero" aria-labelledby="hero-title">
+
+        <!-- Frame sequence canvas -->
+        <canvas id="hero-canvas" aria-hidden="true"></canvas>
+
+        <!-- Overlay e griglia geometrica -->
+        <div class="hero-overlay" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+
+        <!-- Contenuto Hero -->
+        <div class="hero-content">
+          <span class="hero-eyebrow">Enoteca · Degustazioni · Advisory</span>
+
+          <h1 class="hero-headline" id="hero-title">
+            Il vino è memoria,<br>
+            <em>il calice è inizio.</em>
+          </h1>
+
+          <p class="hero-sub">
+            Un percorso sensoriale tra etichette d'eccellenza, distillati rari e oli toscani d'autore.
+            Ogni selezione nasce dalla cura di Alessandra, per chi sa distinguere.
+          </p>
+
+          <div class="hero-cta-group">
+            <a href="#catalogo" class="btn btn--ghost" id="cta-eventi">
+              Scopri i Nostri Eventi
+            </a>
+          </div>
+
+          <!-- ── Swipe Button: Cork Pop ──────────────────────── -->
+          <div class="swipe-btn" id="swipe-btn" role="button" tabindex="0"
+               aria-label="Trascina per prenotare una degustazione"
+               aria-live="polite">
+
+            <!-- Traccia di riempimento (si espande con il trascinamento) -->
+            <div class="swipe-btn__fill" id="swipe-fill" aria-hidden="true"></div>
+
+            <!-- Scia effervescente (bolle che si creano durante il drag) -->
+            <div class="swipe-btn__trail" id="swipe-trail" aria-hidden="true"></div>
+
+            <!-- Testo label centrale -->
+            <span class="swipe-btn__label" id="swipe-label" aria-hidden="true">
+              TRASCINA PER PRENOTARE
+            </span>
+            <span class="swipe-btn__label swipe-btn__label--success" id="swipe-label-success" aria-hidden="true">
+              PRENOTAZIONE INIZIATA
+            </span>
+
+            <!-- Thumb: tappo in oro metallico con icona ›› -->
+            <div class="swipe-btn__thumb" id="swipe-thumb" aria-hidden="true">
+              <!-- Tappo champagne SVG stilizzato -->
+              <svg class="swipe-btn__cork-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                <!-- Corpo del tappo -->
+                <rect x="10" y="13" width="12" height="10" rx="2" fill="currentColor" opacity="0.9"/>
+                <!-- Testa muselets -->
+                <rect x="8" y="10" width="16" height="5" rx="1.5" fill="currentColor"/>
+                <!-- Highlight metallico -->
+                <rect x="10" y="11" width="12" height="2" rx="1" fill="white" opacity="0.25"/>
+                <!-- Wire cage -->
+                <path d="M11 23 L10 27 M16 23 L16 27 M21 23 L22 27" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+                <path d="M10 25 Q16 26 22 25" stroke="currentColor" stroke-width="1" opacity="0.6" fill="none"/>
+                <!-- Frecce -->
+                <path d="M13 16.5 L15.5 16.5 M15.5 15 L17.5 16.5 L15.5 18" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+              </svg>
+            </div>
+
+            <!-- Canvas overlay per le particelle di bollicine al 'pop' -->
+            <canvas class="swipe-btn__canvas" id="swipe-canvas" aria-hidden="true"></canvas>
+
+          </div>
+          <!-- ── Fine Swipe Button ───────────────────────────── -->
+        </div>
+
+        <!-- Indicatore scroll -->
+        <div class="scroll-indicator" aria-hidden="true">
+          <span>Scorri</span>
+        </div>
+
+      </section>
+    </div>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         BLOCCO 2 — TRI-GRID: Vini / Distillati / Birra & Olio
+         ═══════════════════════════════════════════════════════ -->
+    <section id="catalogo" aria-labelledby="catalogo-title">
+      <div class="container">
+        <header class="section-header reveal">
+          <span class="eyebrow">La Nostra Selezione</span>
+          <div class="gold-rule gold-rule--center"></div>
+          <h2 class="section-title" id="catalogo-title">
+            Una cura <em>maniacale</em><br>nella scelta
+          </h2>
+          <p class="section-lead">
+            Ogni bottiglia è il frutto di un dialogo diretto con produttori visionari.
+            Nessuna mediocrità è ammessa in cantina.
+          </p>
+        </header>
+      </div>
+
+      <!-- Grid 3 colonne senza padding container (full-bleed) -->
+      <div class="tri-grid" role="list">
+
+        <!-- Card 1: Vini -->
+        <article class="tri-card reveal" role="listitem" tabindex="0" aria-label="Scopri i nostri vini" onclick="window.location.href='./vini.html';">
+          <img
+            class="tri-card__img"
+            src="assets/vini_section.png"
+            alt="Selezione di vini pregiati dell'Enoteca Degustibus"
+            loading="lazy"
+          />
+          <div class="tri-card__overlay">
+            <span class="tri-card__number">01</span>
+            <h3 class="tri-card__title">I Nostri<br>Vini</h3>
+            <p class="tri-card__desc">
+              Rossi strutturati, bianchi territoriali, bollicine da metodo classico.
+              Una selezione che racconta terroir, biodiversità e vignaioli di carattere.
+            </p>
+            <span class="tri-card__arrow">
+              Esplora
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </article>
+
+        <!-- Card 2: Distillati -->
+        <article class="tri-card reveal reveal--delay-1" role="listitem" tabindex="0" aria-label="Scopri i nostri distillati" onclick="window.location.href='./distillati.html';">
+          <img
+            class="tri-card__img"
+            src="assets/distillati_section.png"
+            alt="Distillati rari e premium selezionati da Degustibus"
+            loading="lazy"
+          />
+          <div class="tri-card__overlay">
+            <span class="tri-card__number">02</span>
+            <h3 class="tri-card__title">I Nostri<br>Distillati</h3>
+            <p class="tri-card__desc">
+              Grappe monovitigno di eccellenza, whisky single malt d'annata, rum agricoli e amari artigianali.
+              Per i palati che cercano profondità.
+            </p>
+            <span class="tri-card__arrow">
+              Esplora
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </article>
+
+        <!-- Card 3: Birra & Olio -->
+        <article class="tri-card reveal reveal--delay-2" role="listitem" tabindex="0" aria-label="Scopri birre artigianali e oli toscani" onclick="window.location.href='./birra-olio.html';">
+          <img
+            class="tri-card__img"
+            src="assets/birra_olio_section.png"
+            alt="Birre artigianali e oli toscani premium di Degustibus"
+            loading="lazy"
+          />
+          <div class="tri-card__overlay">
+            <span class="tri-card__number">03</span>
+            <h3 class="tri-card__title">Birra &<br>Olio</h3>
+            <p class="tri-card__desc">
+              Birre artigianali da microbirrifici di eccellenza e oli extravergine toscani da cultivar rare.
+              Il lusso discreto del quotidiano.
+            </p>
+            <span class="tri-card__arrow">
+              Esplora
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         BLOCCO 3 — BI-GRID: Eventi / Degustazioni
+         ═══════════════════════════════════════════════════════ -->
+    <section id="esperienze" aria-labelledby="esperienze-title">
+      <div class="container">
+
+        <header class="section-header reveal">
+          <span class="eyebrow">Esperienze Sartoriali</span>
+          <div class="gold-rule gold-rule--center"></div>
+          <h2 class="section-title" id="esperienze-title">
+            Momenti che restano,<br>
+            <em>calici che parlano.</em>
+          </h2>
+        </header>
+
+        <div class="bi-grid">
+
+          <!-- Card: Eventi -->
+          <article class="bi-card reveal">
+            <img
+              class="bi-card__bg"
+              src="assets/eventi_section.png"
+              alt="Evento esclusivo di degustazione Degustibus"
+              loading="lazy"
+            />
+            <div class="bi-card__overlay" aria-hidden="true"></div>
+            <div class="bi-card__inner">
+              <p class="bi-card__tag">Events & Masterclass</p>
+              <h3 class="bi-card__title">
+                Serate d'Élite &<br>
+                Esperienze Culturali
+              </h3>
+              <p class="bi-card__body">
+                Non semplici degustazioni, ma veri e propri appuntamenti culturali.
+                Masterclass tenute in italiano, francese e inglese, incontri con i produttori,
+                serate con musica dal vivo, teatro e — in stagione — degustazioni in barca.
+              </p>
+
+              <a href="#footer-contact" class="btn btn--outline-gold" id="cta-eventi-iscriviti">
+                Partecipa ad un Evento
+              </a>
+            </div>
+          </article>
+
+          <!-- Card: Degustazioni -->
+          <article class="bi-card reveal reveal--delay-1">
+            <div class="bi-card__overlay" style="background: linear-gradient(180deg, transparent 0%, rgba(28,0,8,0.98) 100%);" aria-hidden="true"></div>
+            <div class="bi-card__inner">
+              <p class="bi-card__tag">Degustazioni in Enoteca</p>
+              <h3 class="bi-card__title">
+                Due Formule,<br>
+                Un'unica Cura.
+              </h3>
+              <p class="bi-card__body">
+                Degustare non è bere. È ascoltare. Ogni sessione in enoteca è progettata
+                per creare connessione autentica tra chi produce e chi assapora.
+              </p>
+
+              <div class="degust-split">
+
+                <div class="degust-formula">
+                  <h4>Degustazione Guidata con il Produttore</h4>
+                  <p>
+                    Sessioni tematiche condotte direttamente dai vignaioli o dai distillatori.
+                    Massimo 20 partecipanti per garantire la qualità del dialogo.
+                    Calendario fisso, prenotazione richiesta.
+                  </p>
+                </div>
+
+                <div class="degust-formula">
+                  <h4>Degustazione Conviviale su Misura</h4>
+                  <p>
+                    Percorsi personalizzati curati personalmente da Alessandra.
+                    Ideali per compleanni, anniversari, team building aziendali
+                    o semplicemente per approfondire un territorio o un vitigno.
+                  </p>
+                </div>
+
+              </div>
+
+              <br>
+              <a href="#footer-contact" class="btn btn--primary" id="cta-degustazione" style="margin-top: var(--space-5);">
+                Prenota la Tua Degustazione
+              </a>
+
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         MANIFESTO — Citazione Editoriale
+         ═══════════════════════════════════════════════════════ -->
+    <section id="manifesto" aria-labelledby="manifesto-quote">
+      <div class="container">
+        <div class="gold-rule gold-rule--center"></div>
+        <blockquote class="manifesto-quote reveal" id="manifesto-quote">
+          "Il vino non si vende: si racconta, <span style="color: var(--color-oro);">si condivide</span>, si rispetta.
+          <span style="color: var(--color-oro);">È un atto di cultura</span>, prima che di commercio."
+        </blockquote>
+
+        <div class="gold-rule gold-rule--center" style="margin-top: var(--space-4);"></div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         BLOCCO 4 — SOMMELIERIE ADVISORY
+         ═══════════════════════════════════════════════════════ -->
+    <section id="advisory" aria-labelledby="advisory-title">
+      <div class="container">
+        <div class="advisory-inner">
+
+          <!-- Ritratto Alessandra -->
+          <div class="advisory-portrait-wrap">
+            <!-- Badge Certificazioni sopra la foto -->
+            <div class="certifications" role="list" aria-label="Certificazioni professionali" style="margin-bottom: var(--space-4); text-align: center; justify-content: center;">
+              <span class="cert-badge" role="listitem">Sommelier AIS</span>
+              <span class="cert-badge" role="listitem">Treccani Accademia</span>
+            </div>
+            <figure class="advisory-portrait reveal">
+              <img
+                class="advisory-portrait__img"
+                src="public/Home/Foto%20Alessandra%20per%20Sito%20.jpg"
+                alt="Alessandra, Sommelier AIS e titolare di Degustibus Enoteca"
+                loading="lazy"
+              />
+              <figcaption class="visually-hidden">
+                Alessandra, Sommelier AIS e titolare di Degustibus Enoteca
+              </figcaption>
+            </figure>
+
+          </div>
+
+          <!-- Contenuto Advisory -->
+          <div class="advisory-content reveal reveal--delay-1">
+
+            <span class="eyebrow">Chi Siamo</span>
+            <div class="gold-rule"></div>
+
+            <h2 id="advisory-title">
+              Una guida esperta<br>
+              nel mondo del <em>vino d'autore.</em>
+            </h2>
+
+            <p class="lead-text">
+              Alessandra è il cuore e la mente di Degustibus. Sommelier AIS con
+              formazione Treccani Accademia, ha costruito negli anni una rete di
+              relazioni dirette con produttori visionari in Italia e in Europa.
+              La sua filosofia: nessun compromesso sulla qualità, rispetto assoluto
+              per il vignaiolo e per il consumatore consapevole.
+              <br><br>
+              <strong style="color: var(--color-avorio);">Nota:</strong> Degustibus non vende vino sfuso.
+              Ogni bottiglia in enoteca è selezionata personalmente e racconta una storia precisa.
+            </p>
+
+
+
+            <!-- Servizi B2B -->
+            <h3 class="visually-hidden">Servizi per Privati e Aziende</h3>
+            <div class="services-grid">
+
+              <div class="service-item">
+                <span class="service-item__icon" aria-hidden="true">◆</span>
+                <h4 class="service-item__title">Elaborazione Carta dei Vini</h4>
+                <p class="service-item__desc">
+                  Progettazione e ottimizzazione di carte vini per ristoranti, hotel e bistrot di livello.
+                </p>
+              </div>
+
+              <div class="service-item">
+                <span class="service-item__icon" aria-hidden="true">◆</span>
+                <h4 class="service-item__title">Cantine Private</h4>
+                <p class="service-item__desc">
+                  Selezione, composizione e gestione di cantine private per collezionisti e appassionati.
+                </p>
+              </div>
+
+              <div class="service-item">
+                <span class="service-item__icon" aria-hidden="true">◆</span>
+                <h4 class="service-item__title">Regali Aziendali</h4>
+                <p class="service-item__desc">
+                  Cofanetti personalizzati, selezioni curate per clienti e collaboratori di valore.
+                </p>
+              </div>
+
+              <div class="service-item">
+                <span class="service-item__icon" aria-hidden="true">◆</span>
+                <h4 class="service-item__title">Advisory Privato</h4>
+                <p class="service-item__desc">
+                  Chiedi un consiglio one-to-one per costruire una cultura del vino autentica e personale.
+                </p>
+              </div>
+
+            </div>
+
+            <!-- Nota "no vino sfuso" -->
+            <div class="disclaimer-note" role="note">
+              <span class="disclaimer-note__icon" aria-hidden="true">◈</span>
+              <span>
+                <strong style="color: var(--color-avorio);">Degustibus non vende vino sfuso.</strong>
+                La nostra identità si fonda sulla selezione di bottiglie d'autore, ciascuna con una
+                storia e un produttore che ne garantisce l'integrità. Qualità, non quantità.
+              </span>
+            </div>
+
+            <br>
+            <a href="#footer-contact" class="btn btn--primary" id="cta-advisory" style="margin-top: var(--space-4);">
+              Chiedi un Consiglio
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER — Contatti · Newsletter · Note Legali
+       ═══════════════════════════════════════════════════════ -->
+  <footer id="site-footer" id="footer-contact" role="contentinfo">
+    <div class="container">
+
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <img src="public/logo/Logo%20degustibus.png" alt="Degustibus Enoteca Logo" style="height: 70px; width: auto; margin-bottom: var(--space-4);" />
+          <p>
+            Un'enoteca che non vende semplicemente vino,
+            ma offre esperienze, conoscenza e relazioni
+            durature con il mondo del vino d'autore.
+          </p>
+          <br>
+          <address style="font-style: normal; font-size: 12px; color: var(--color-avorio-dim); line-height: 1.8;">
+            Via Guglielmo Oberdan 43a<br>
+            58100 Grosseto, Italy<br>
+            <a href="mailto:degustibus.wine@gmail.com" style="color: var(--color-oro);">degustibus.wine@gmail.com</a><br>
+            <a href="tel:+393454041576" style="color: var(--color-avorio-dim);">+39 345 404 1576</a>
+          </address>
+        </div>
+
+        <!-- Link Navigazione -->
+        <nav aria-label="Link rapidi footer">
+          <h4>Naviga</h4>
+          <ul class="footer-nav-list" role="list">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#catalogo">I Nostri Vini</a></li>
+            <li><a href="#esperienze">Degustazioni</a></li>
+            <li><a href="#advisory">Chi Siamo</a></li>
+            <li><a href="#footer-contact">Contatti</a></li>
+          </ul>
+        </nav>
+
+        <!-- Esperienze -->
+        <nav aria-label="Esperienze footer">
+          <h4>Esperienze</h4>
+          <ul class="footer-nav-list" role="list">
+            <li><a href="#esperienze">Degustazione Guidata</a></li>
+            <li><a href="#esperienze">Degustazione Conviviale</a></li>
+            <li><a href="#esperienze">Masterclass</a></li>
+            <li><a href="#advisory">Consulenza B2B</a></li>
+            <li><a href="#advisory">Regali Aziendali</a></li>
+          </ul>
+        </nav>
+
+        <!-- Newsletter -->
+        <div class="footer-section" id="footer-contact">
+          <h4>Rimani Informato</h4>
+          <form class="newsletter-form" action="#" method="post" aria-label="Form iscrizione newsletter">
+            <p>
+              Iscriviti alla newsletter per ricevere in anteprima gli inviti agli eventi
+              e le nuove selezioni in enoteca.
+            </p>
+            <div class="input-group">
+              <label for="newsletter-email" class="visually-hidden">Il tuo indirizzo email</label>
+              <input
+                type="email"
+                id="newsletter-email"
+                name="email"
+                class="newsletter-input"
+                placeholder="La tua email"
+                required
+                autocomplete="email"
+              />
+              <button type="submit" class="newsletter-submit" id="newsletter-btn">
+                Iscriviti
+              </button>
+            </div>
+            <p style="font-size: 10px; color: rgba(255,255,240,0.25); letter-spacing: 0.03em;">
+              Nessuno spam. Privacy garantita. Disiscrizione in un click.
+            </p>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <p>© 2025 Degustibus Enoteca. Tutti i diritti riservati.</p>
+        <ul class="footer-legal-links" role="list">
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">Note Legali</a></li>
+        </ul>
+        <p>Vendita riservata ai maggiori di 18 anni. Bevi responsabilmente.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       LIGHTBOX MODALE — Struttura nascosta (gestita da JS)
+       Si apre al click su qualsiasi .zoomable-image
+       ═══════════════════════════════════════════════════════ -->
+  <div
+    id="lightbox-modal"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Visualizzazione immagine ingrandita"
+    aria-hidden="true"
+  >
+    <!-- Sfondo overlay cliccabile per chiudere -->
+    <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
+
+    <!-- Contenitore immagine centrato -->
+    <figure class="lightbox__figure" role="group" aria-label="Immagine prodotto ingrandita">
+      <img
+        class="lightbox__img"
+        id="lightbox-img"
+        src=""
+        alt=""
+        loading="eager"
+      />
+      <!-- Didascalia dinamica — popolata da JS -->
+      <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+    </figure>
+
+    <!-- Pulsante chiusura X -->
+    <button
+      class="lightbox__close"
+      id="lightbox-close"
+      aria-label="Chiudi immagine ingrandita"
+      type="button"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       JAVASCRIPT — Header Scroll + Reveal + Mobile Menu
+       ═══════════════════════════════════════════════════════ -->
+  <script type="module" src="/main.js"></script>
+
+</body>
+</html>
