@@ -487,7 +487,8 @@
        ═══════════════════════════════════════════════════════ */
     #catalogo {
       background: var(--color-bordeaux-dark);
-      padding-block: var(--space-20);
+      padding-top: var(--space-20);
+      padding-bottom: 0;
     }
 
     .section-header {
@@ -1720,3 +1721,59 @@
         opacity: 0;
       }
     }
+
+/* ═══════════════════════════════════════════════════════
+   HERO CONTENT & NARRATIVE STRIP
+   ═══════════════════════════════════════════════════════ */
+
+/* Centraggio assoluto infallibile per la Hero */
+.hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none; /* Lascia passare eventuali interazioni al canvas sottostante */
+  text-align: center;
+}
+
+/* Striscia Narrativa - Stile "Quiet Luxury" */
+.narrative-strip {
+  background-color: var(--color-bordeaux-deeper, #3d000f);
+  border-top: 1px solid var(--color-avorio-border, rgba(255,255,240,0.2));
+  border-bottom: 1px solid var(--color-avorio-border, rgba(255,255,240,0.2));
+  padding-block: var(--space-20);
+  position: relative;
+  overflow: hidden;
+}
+
+.narrative-strip::before {
+  content: '"';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-serif);
+  font-size: 400px;
+  color: var(--color-bordeaux);
+  opacity: 0.5;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.narrative-strip__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+
+.narrative-strip__quote {
+  /* Eredita da .manifesto-quote in index.html, ma diamo un margine top/bottom specifico */
+  margin-block: var(--space-6) var(--space-8);
+  text-align: center;
+}

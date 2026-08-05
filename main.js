@@ -507,8 +507,36 @@
         // Dopo 1.6 s naviga alla sezione prenotazione
         setTimeout(() => {
           const target = document.getElementById('esperienze');
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Resetta il bottone 1 secondo dopo aver iniziato lo scroll
+            setTimeout(() => {
+              resetSwipeButton();
+            }, 1000);
+          }
         }, 1600);
+      }
+
+      function resetSwipeButton() {
+        isCompleted = false;
+        btn.classList.remove('is-complete');
+        btn.setAttribute('aria-label', 'Trascina per prenotare una degustazione');
+        
+        // Ferma particelle e pulisci canvas
+        if (particleRAF) { cancelAnimationFrame(particleRAF); particleRAF = null; }
+        ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+        particles = [];
+
+        // Riporta il thumb a 0 con animazione
+        thumb.classList.add('is-returning');
+        setThumbX(0);
+        fill.style.width = '0%';
+        labelNormal.style.opacity = '1';
+
+        thumb.addEventListener('transitionend', () => {
+          thumb.classList.remove('is-returning');
+        }, { once: true });
       }
 
       // ══════════════════════════════════════════════════════

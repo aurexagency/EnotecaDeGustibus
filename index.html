@@ -77,74 +77,70 @@
         <div class="hero-overlay" aria-hidden="true"></div>
         <div class="hero-grid" aria-hidden="true"></div>
 
-        <!-- Contenuto Hero -->
+        <!-- Contenuto Hero (Puro Minimalismo) -->
         <div class="hero-content">
-          <span class="hero-eyebrow">Enoteca · Degustazioni · Advisory</span>
-
           <h1 class="hero-headline" id="hero-title">
             Il vino è memoria,<br>
             <em>il calice è inizio.</em>
           </h1>
-
-          <p class="hero-sub">
-            Un percorso sensoriale tra etichette d'eccellenza, distillati rari e oli toscani d'autore.
-            Ogni selezione nasce dalla cura di Alessandra, per chi sa distinguere.
-          </p>
-
-          <div class="hero-cta-group">
-            <a href="#catalogo" class="btn btn--ghost" id="cta-eventi">
-              Scopri i Nostri Eventi
-            </a>
-          </div>
-
-          <!-- ── Swipe Button: Cork Pop ──────────────────────── -->
-          <div class="swipe-btn" id="swipe-btn" role="button" tabindex="0"
-               aria-label="Trascina per prenotare una degustazione"
-               aria-live="polite">
-
-            <!-- Traccia di riempimento (si espande con il trascinamento) -->
-            <div class="swipe-btn__fill" id="swipe-fill" aria-hidden="true"></div>
-
-            <!-- Scia effervescente (bolle che si creano durante il drag) -->
-            <div class="swipe-btn__trail" id="swipe-trail" aria-hidden="true"></div>
-
-            <!-- Testo label centrale -->
-            <span class="swipe-btn__label" id="swipe-label" aria-hidden="true">
-              TRASCINA PER PRENOTARE
-            </span>
-            <span class="swipe-btn__label swipe-btn__label--success" id="swipe-label-success" aria-hidden="true">
-              PRENOTAZIONE INIZIATA
-            </span>
-
-            <!-- Thumb: tappo in oro metallico con icona ›› -->
-            <div class="swipe-btn__thumb" id="swipe-thumb" aria-hidden="true">
-              <!-- Tappo champagne SVG stilizzato -->
-              <svg class="swipe-btn__cork-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-                <!-- Corpo del tappo -->
-                <rect x="10" y="13" width="12" height="10" rx="2" fill="currentColor" opacity="0.9"/>
-                <!-- Testa muselets -->
-                <rect x="8" y="10" width="16" height="5" rx="1.5" fill="currentColor"/>
-                <!-- Highlight metallico -->
-                <rect x="10" y="11" width="12" height="2" rx="1" fill="white" opacity="0.25"/>
-                <!-- Wire cage -->
-                <path d="M11 23 L10 27 M16 23 L16 27 M21 23 L22 27" stroke="currentColor" stroke-width="1" opacity="0.6"/>
-                <path d="M10 25 Q16 26 22 25" stroke="currentColor" stroke-width="1" opacity="0.6" fill="none"/>
-                <!-- Frecce -->
-                <path d="M13 16.5 L15.5 16.5 M15.5 15 L17.5 16.5 L15.5 18" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-              </svg>
-            </div>
-
-            <!-- Canvas overlay per le particelle di bollicine al 'pop' -->
-            <canvas class="swipe-btn__canvas" id="swipe-canvas" aria-hidden="true"></canvas>
-
-          </div>
-          <!-- ── Fine Swipe Button ───────────────────────────── -->
         </div>
-
-
 
       </section>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         STRISCIA NARRATIVA
+         ═══════════════════════════════════════════════════════ -->
+    <section class="narrative-strip">
+      <div class="container narrative-strip__inner">
+        
+        <!-- Grafica e Tipografia in stile Manifesto -->
+        <div class="gold-rule gold-rule--center"></div>
+        <p class="manifesto-quote narrative-strip__quote">
+          Un percorso sensoriale tra etichette d'eccellenza, distillati rari e oli toscani d'autore.<br>
+          Ogni selezione nasce dalla cura di Alessandra, per chi sa distinguere.
+        </p>
+        <div class="gold-rule gold-rule--center" style="margin-bottom: var(--space-8);"></div>
+
+        <!-- ── Swipe Button: Cork Pop ──────────────────────── -->
+        <div class="swipe-btn" id="swipe-btn" role="button" tabindex="0"
+             aria-label="Trascina per prenotare una degustazione"
+             aria-live="polite">
+
+          <!-- Traccia di riempimento -->
+          <div class="swipe-btn__fill" id="swipe-fill" aria-hidden="true"></div>
+
+          <!-- Scia effervescente -->
+          <div class="swipe-btn__trail" id="swipe-trail" aria-hidden="true"></div>
+
+          <!-- Testo label centrale -->
+          <span class="swipe-btn__label" id="swipe-label" aria-hidden="true">
+            TRASCINA PER PRENOTARE
+          </span>
+          <span class="swipe-btn__label swipe-btn__label--success" id="swipe-label-success" aria-hidden="true">
+            PRENOTAZIONE INIZIATA
+          </span>
+
+          <!-- Thumb: tappo in oro metallico -->
+          <div class="swipe-btn__thumb" id="swipe-thumb" aria-hidden="true">
+            <svg class="swipe-btn__cork-icon" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect x="10" y="13" width="12" height="10" rx="2" fill="currentColor" opacity="0.9"/>
+              <rect x="8" y="10" width="16" height="5" rx="1.5" fill="currentColor"/>
+              <rect x="10" y="11" width="12" height="2" rx="1" fill="white" opacity="0.25"/>
+              <path d="M11 23 L10 27 M16 23 L16 27 M21 23 L22 27" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+              <path d="M10 25 Q16 26 22 25" stroke="currentColor" stroke-width="1" opacity="0.6" fill="none"/>
+              <path d="M13 16.5 L15.5 16.5 M15.5 15 L17.5 16.5 L15.5 18" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+            </svg>
+          </div>
+
+          <!-- Canvas overlay bollicine -->
+          <canvas class="swipe-btn__canvas" id="swipe-canvas" aria-hidden="true"></canvas>
+
+        </div>
+        <!-- ── Fine Swipe Button ───────────────────────────── -->
+
+      </div>
+    </section>
 
 
     <!-- ═══════════════════════════════════════════════════════
