@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I Nostri Vini — Enoteca Degustibus</title>
+  <meta name="description" content="La selezione di vini d'eccellenza dell'Enoteca Degustibus: Champagne, Bollicine, Vini Bianchi e Vini Rossi accuratamente selezionati da Alessandra.">
+  <meta name="robots" content="index, follow">
+
+  <!-- UIkit Core CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/css/uikit.min.css" />
+
+  <!-- Fonts: Cormorant Garamond (Serif) & Inter (Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Design System Globale -->
+  <link rel="stylesheet" href="/style.css">
+
+  <!-- Stili specifici pagina vini -->
+  <style>
+
+    /* ═══════════════════════════════════════════════════════
+       LAYOUT PAGINA
+       ═══════════════════════════════════════════════════════ */
+    body {
+      background-color: var(--color-bordeaux-deeper);
+    }
+
+    /* ── Navigazione di ritorno ── */
+    .page-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: var(--space-3) var(--space-6);
+      display: flex;
+      align-items: center;
+      background: transparent;
+      transition: var(--transition-slow);
+    }
+
+    .page-nav.scrolled {
+      background: rgba(28, 0, 8, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-line);
+      padding-block: var(--space-2);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--color-oro);
+    }
+
+    /* ── Hero editoriale pagina ── */
+    .vini-hero {
+      padding-top: calc(var(--space-12) + var(--space-8));
+      padding-bottom: var(--space-16);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vini-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--color-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      opacity: 0.20;
+      pointer-events: none;
+    }
+
+    .vini-hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      margin-inline: auto;
+      padding-inline: var(--space-6);
+    }
+
+    .vini-hero__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(48px, 7vw, 88px);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-4);
+    }
+
+    .vini-hero__title em {
+      font-style: italic;
+      color: var(--color-oro);
+    }
+
+    .vini-hero__lead {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      line-height: 1.9;
+      color: var(--color-avorio-dim);
+      max-width: 520px;
+      margin-inline: auto;
+    }
+
+    /* ── Divisore sezionale in oro ── */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--color-line);
+      position: relative;
+      margin-block: 0;
+    }
+
+    .section-divider::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 1px;
+      background: var(--color-oro);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       WINE SECTION — Blocco verticale per categoria
+       ═══════════════════════════════════════════════════════ */
+    .wine-section {
+      padding-block: var(--space-20);
+      position: relative;
+    }
+
+    /* Alternanza di sfondo sottile tra sezioni */
+    .wine-section:nth-child(even) {
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .wine-section__container {
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: var(--space-6);
+    }
+
+    /* Intestazione di sezione */
+    .wine-section__header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: flex-end;
+      gap: var(--space-6);
+      margin-bottom: var(--space-10);
+      padding-bottom: var(--space-5);
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    .wine-section__meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .wine-section__number {
+      font-family: var(--font-serif);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.40em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+    }
+
+    .wine-section__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(36px, 4.5vw, 60px);
+      line-height: 1.0;
+      color: var(--color-avorio);
+      letter-spacing: 0.01em;
+    }
+
+    .wine-section__title em {
+      font-style: italic;
+      color: var(--color-oro);
+    }
+
+    .wine-section__desc {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+      color: var(--color-avorio-dim);
+      max-width: 480px;
+      margin-top: var(--space-2);
+    }
+
+    .wine-section__count {
+      font-family: var(--font-serif);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 300;
+      color: var(--color-line);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: flex-start;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       WINE CARD — Scheda prodotto placeholder
+       ═══════════════════════════════════════════════════════ */
+    .wine-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+
+    .wine-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--color-line);
+      background: var(--color-card-bg);
+      cursor: pointer;
+      transition: border-color 0.40s ease, transform 0.40s ease, box-shadow 0.40s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wine-card:hover {
+      border-color: rgba(255, 215, 0, 0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Placeholder immagine — nessuna <img> in questa fase */
+    .wine-card__visual {
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(
+        160deg,
+        var(--color-bordeaux-dark) 0%,
+        var(--color-bordeaux-deeper) 100%
+      );
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      border-bottom: 1px solid var(--color-line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Pattern geometrico decorativo nel placeholder */
+    .wine-card__visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--color-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.4;
+    }
+
+    .wine-card__visual-icon {
+      position: relative;
+      z-index: 1;
+      width: 40px;
+      height: 40px;
+      opacity: 0.25;
+      color: var(--color-avorio);
+    }
+
+    .wine-card__visual-label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-sans);
+      font-size: 8px;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      opacity: 0.5;
+    }
+
+    /* Shine hover */
+    .wine-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 215, 0, 0.04),
+        transparent
+      );
+      transform: skewX(-15deg);
+      transition: left 0.6s ease;
+      pointer-events: none;
+    }
+
+    .wine-card:hover::after {
+      left: 120%;
+    }
+
+    /* Corpo testuale della card */
+    .wine-card__body {
+      padding: var(--space-3) var(--space-4) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .wine-card__category {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin-bottom: var(--space-2);
+      transition: color 0.3s ease;
+    }
+
+    .wine-card__name {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--color-avorio);
+      line-height: 1.2;
+      margin-bottom: var(--space-1);
+      transition: color 0.35s ease;
+    }
+
+    .wine-card:hover .wine-card__name {
+      color: var(--color-oro);
+    }
+
+    .wine-card__winery {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--color-avorio-dim);
+      margin-bottom: var(--space-3);
+    }
+
+    .wine-card__vintage {
+      display: inline-block;
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      border: 1px solid var(--color-line);
+      padding: 3px 10px;
+      margin-bottom: var(--space-3);
+      transition: border-color 0.35s ease, color 0.35s ease;
+    }
+
+    .wine-card:hover .wine-card__vintage {
+      border-color: rgba(255, 215, 0, 0.30);
+      color: var(--color-avorio);
+    }
+
+    .wine-card__cta {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      border-bottom: 1px solid var(--color-line);
+      padding-bottom: 3px;
+      transition: color 0.35s ease, border-color 0.35s ease;
+    }
+
+    .wine-card:hover .wine-card__cta {
+      color: var(--color-oro);
+      border-color: var(--color-oro);
+    }
+
+    .wine-card__cta svg {
+      transition: transform 0.25s ease;
+    }
+
+    .wine-card:hover .wine-card__cta svg {
+      transform: translateX(3px);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SCROLL REVEAL
+       ═══════════════════════════════════════════════════════ */
+    .vr {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.70s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.70s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .vr.vr--visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vr--d1 { transition-delay: 0.08s; }
+    .vr--d2 { transition-delay: 0.16s; }
+    .vr--d3 { transition-delay: 0.24s; }
+    .vr--d4 { transition-delay: 0.32s; }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .wine-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .wine-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-2);
+      }
+
+      .wine-section__header {
+        grid-template-columns: 1fr;
+      }
+
+      .wine-section__count {
+        display: none;
+      }
+
+      .vini-hero {
+        padding-bottom: var(--space-10);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .wine-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ─── Reduced Motion ─── */
+    @media (prefers-reduced-motion: reduce) {
+      .vr {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .wine-card,
+      .wine-card__name,
+      .wine-card__vintage,
+      .wine-card__cta,
+      .back-link,
+      .champ-card__img,
+      .champ-card__name,
+      .champ-card__cta,
+      .champ-card__frame::after {
+        transition: none;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CHAMP-CARD — Freestanding / Quiet Luxury
+       La bottiglia fluttua direttamente sullo sfondo scuro.
+       Nessuna scatola, nessun riquadro, nessun bordo.
+       ═══════════════════════════════════════════════════════ */
+
+    /* ── Contenitore globale: trasparente, nessuna cornice ── */
+    .champ-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;       /* Bottiglia e testo centrati */
+      gap: 0;
+      cursor: pointer;
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    /* ── Frame: trasparente, SENZA overflow:hidden ──
+       overflow visible = il collo/base della bottiglia
+       non viene mai tagliato durante lo zoom */
+    .champ-card__frame {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      overflow: visible !important;  /* ← CRITICO: bottiglia libera di espandersi */
+      position: relative;
+      width: 100%;
+      /* L'altezza si auto-adatta all'immagine */
+    }
+
+    /* ── Immagine: zoom CSS puro sull'elemento stesso ──
+       transform su <img> isolato: non taglia nulla  */
+    .champ-card__img {
+      display: block;
+      width: 100%;
+      height: auto;              /* Mantiene le proporzioni native */
+      object-fit: contain;       /* Bottiglia intera, mai tagliata */
+      transform-origin: center bottom;  /* Zoom sale verso l'alto */
+      transition: transform 0.50s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    /* Zoom al hover: solo sull'<img>, non sulla card intera */
+    .champ-card:hover .champ-card__img,
+    .champ-card:focus-within .champ-card__img {
+      transform: scale(1.08);
+    }
+
+    /* Override: sulle bottiglie .zoomable-image il cursor zoom-in è gestito
+       dalla card stessa; il scale è già definito sopra — non raddoppiarlo */
+    .champ-card__img.zoomable-image {
+      cursor: zoom-in;
+    }
+    .champ-card__img.zoomable-image:hover {
+      transform: none; /* lo scale lo gestisce .champ-card:hover sopra */
+    }
+
+    /* ── Testo: centrato, distanziato dalla bottiglia ── */
+    .champ-card__info {
+      padding: var(--space-3) var(--space-2) var(--space-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;       /* Centra testo sotto la bottiglia */
+      text-align: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    /* ── Cuvée: etichetta oro in alto ── */
+    .champ-card__cuvee {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin-bottom: var(--space-1);
+      line-height: 1.4;
+    }
+
+    /* ── Nome vino: Serif, avorio, vira oro all'hover ── */
+    .champ-card__name {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(14px, 1.4vw, 19px);
+      line-height: 1.2;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-1);
+      transition: color 0.35s ease;
+    }
+
+    .champ-card:hover .champ-card__name {
+      color: var(--color-oro);
+    }
+
+    /* ── Vitigni / annata: sans-serif dim ── */
+    .champ-card__grapes {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      color: var(--color-avorio-dim);
+      line-height: 1.6;
+      margin-bottom: var(--space-3);
+    }
+
+    /* ── CTA: link oro minimale centrato ── */
+    .champ-card__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      border-bottom: 1px solid var(--color-line);
+      padding-bottom: 3px;
+      transition: color 0.30s ease, border-color 0.30s ease;
+    }
+
+    .champ-card:hover .champ-card__cta,
+    .champ-card__cta:hover,
+    .champ-card__cta:focus-visible {
+      color: var(--color-oro);
+      border-color: var(--color-oro);
+      outline: none;
+    }
+
+    .champ-card__cta svg {
+      transition: transform 0.25s ease;
+    }
+
+    .champ-card:hover .champ-card__cta svg {
+      transform: translateX(3px);
+    }
+
+    /* ── Spaziatura griglia ── */
+    #champagne .uk-grid-large,
+    #bollicine .uk-grid-large,
+    #vini-bianchi .uk-grid-large,
+    #vini-rossi .uk-grid-large {
+      margin-left: calc(-1 * var(--space-5));
+    }
+
+    #champagne .uk-grid-large > *,
+    #bollicine .uk-grid-large > *,
+    #vini-bianchi .uk-grid-large > *,
+    #vini-rossi .uk-grid-large > * {
+      padding-left: var(--space-5);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       BLINDATURA ANTI-BOX — Neutralizza ogni sorgente di
+       riquadri, ombre e bordi che UIkit potrebbe applicare
+       alle card, ai li della griglia o agli articoli.
+       ═══════════════════════════════════════════════════════ */
+
+    /* Li della griglia UIkit — nessun background ereditato */
+    #champagne .uk-grid > li, #champagne .uk-grid > li > *, #champagne .uk-grid-large > li,
+    #bollicine .uk-grid > li, #bollicine .uk-grid > li > *, #bollicine .uk-grid-large > li,
+    #vini-bianchi .uk-grid > li, #vini-bianchi .uk-grid > li > *, #vini-bianchi .uk-grid-large > li,
+    #vini-rossi .uk-grid > li, #vini-rossi .uk-grid > li > *, #vini-rossi .uk-grid-large > li {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+    /* Classi card di UIkit se applicate accidentalmente */
+    #champagne .uk-card, #champagne .uk-card-default, #champagne .uk-card-primary, #champagne .uk-card-secondary, #champagne [class*="uk-card"],
+    #bollicine .uk-card, #bollicine .uk-card-default, #bollicine .uk-card-primary, #bollicine .uk-card-secondary, #bollicine [class*="uk-card"],
+    #vini-bianchi .uk-card, #vini-bianchi .uk-card-default, #vini-bianchi .uk-card-primary, #vini-bianchi .uk-card-secondary, #vini-bianchi [class*="uk-card"],
+    #vini-rossi .uk-card, #vini-rossi .uk-card-default, #vini-rossi .uk-card-primary, #vini-rossi .uk-card-secondary, #vini-rossi [class*="uk-card"] {
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+
+    /* UIkit panels e box generici */
+    #champagne .uk-panel, #champagne .uk-box-shadow-small, #champagne .uk-box-shadow-medium, #champagne .uk-box-shadow-large,
+    #bollicine .uk-panel, #bollicine .uk-box-shadow-small, #bollicine .uk-box-shadow-medium, #bollicine .uk-box-shadow-large,
+    #vini-bianchi .uk-panel, #vini-bianchi .uk-box-shadow-small, #vini-bianchi .uk-box-shadow-medium, #vini-bianchi .uk-box-shadow-large,
+    #vini-rossi .uk-panel, #vini-rossi .uk-box-shadow-small, #vini-rossi .uk-box-shadow-medium, #vini-rossi .uk-box-shadow-large {
+      box-shadow: none !important;
+      background: transparent !important;
+    }
+
+    /* Garantisce che il contenitore UIkit uk-transition-toggle
+       non aggiunga background o overflow propri */
+    #champagne .uk-transition-toggle,
+    #bollicine .uk-transition-toggle,
+    #vini-bianchi .uk-transition-toggle,
+    #vini-rossi .uk-transition-toggle {
+      background: transparent !important;
+      overflow: visible !important;
+    }
+
+    /* Reset definitivo su tutti i discendenti della sezione:
+       nessun background-color sopravvive */
+    #champagne article, #champagne .champ-card, #champagne .champ-card__frame,
+    #bollicine article, #bollicine .champ-card, #bollicine .champ-card__frame,
+    #vini-bianchi article, #vini-bianchi .champ-card, #vini-bianchi .champ-card__frame,
+    #vini-rossi article, #vini-rossi .champ-card, #vini-rossi .champ-card__frame {
+      background: transparent !important;
+      background-color: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVIGAZIONE FISSA MINIMALE
+       ═══════════════════════════════════════════════════════ -->
+  <nav class="page-nav" id="page-nav" aria-label="Navigazione pagina">
+    <a href="./index.html" class="back-link" aria-label="Torna alla Home di Degustibus">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Home
+    </a>
+  </nav>
+
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════
+         HERO EDITORIALE PAGINA
+         ═══════════════════════════════════════════════════════ -->
+    <header class="vini-hero" aria-labelledby="vini-page-title">
+      <div class="vini-hero__content">
+        <span class="eyebrow vr" aria-label="Categoria">Selezione Degustibus</span>
+        <div class="gold-rule gold-rule--center vr vr--d1" aria-hidden="true"></div>
+        <h1 class="vini-hero__title vr vr--d1" id="vini-page-title">
+          I Nostri <em>Vini</em>
+        </h1>
+        <p class="vini-hero__lead vr vr--d2">
+          Un percorso verticale tra quattro mondi distinti. Dalla finezza effervescente
+          dello Champagne alla struttura profonda dei grandi rossi italiani e internazionali.
+          Ogni bottiglia racconta un vignaiolo, un terroir, una storia.
+        </p>
+      </div>
+    </header>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SEZIONE 01 — CHAMPAGNE
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="champagne" class="wine-section" aria-labelledby="champagne-title">
+      <div class="wine-section__container">
+
+        <header class="wine-section__header vr">
+          <div class="wine-section__meta">
+            <span class="wine-section__number">01 — Champagne</span>
+            <h2 class="wine-section__title" id="champagne-title">
+              <em>Champagne</em>
+            </h2>
+            <p class="wine-section__desc">
+              Maison storiche e récoltants-manipulants di culto. Solo cuvée di carattere,
+              millesimate e blanc de blancs da territori d'elezione. Nessun compromesso
+              sulla complessità.
+            </p>
+          </div>
+          <span class="wine-section__count" aria-hidden="true">01</span>
+        </header>
+
+        <!-- ── Griglia 10 Bottiglie: UIkit uk-grid ──
+             Desktop: 5 col · Tablet: 3 col · Mobile: 2 col · XS: 1 col
+             uk-flex-center garantisce centratura ultima riga parziale -->
+        <ul
+          class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
+          uk-grid
+          role="list"
+          aria-label="Selezione Champagne"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
+        >
+
+          <!-- ── Bottiglia 1 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Bollinger PN AYC 18">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/1.png"
+                  alt="Bottiglia Bollinger PN AYC 18"
+                  data-caption="Bollinger PN AYC 18. [Spazio elegante per la didascalia in breve...]"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Bollinger PN AYC 18</h3>
+                <p class="champ-card__grapes">Pinot Noir</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Bollinger PN AYC 18">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 2 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Perrier-Jouët Blanc de Blancs">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/2.png"
+                  alt="Bottiglia Perrier-Jouët Blanc de Blancs"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Perrier-Jouët Blanc de Blancs</h3>
+                <p class="champ-card__grapes">Blanc de Blancs</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Perrier-Jouët Blanc de Blancs">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 3 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Épître Blanc de Noirs Act 18">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/3.png"
+                  alt="Bottiglia Épître Blanc de Noirs Act 18"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Épître Blanc de Noirs Act 18</h3>
+                <p class="champ-card__grapes">Blanc de Noirs</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Épître Blanc de Noirs Act 18">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 4 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Krug Grande Cuvée">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/4.png"
+                  alt="Bottiglia Krug Grande Cuvée"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Krug Grande Cuvée</h3>
+                <p class="champ-card__grapes">Brut</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Krug Grande Cuvée">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 5 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Piper-Heidsieck Cuvée Brut">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/5.png"
+                  alt="Bottiglia Piper-Heidsieck Cuvée Brut"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Piper-Heidsieck Cuvée Brut</h3>
+                <p class="champ-card__grapes">Brut</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Piper-Heidsieck Cuvée Brut">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 6 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Piper-Heidsieck Essentiel Blanc de Blancs">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/6.png"
+                  alt="Bottiglia Piper-Heidsieck Essentiel Blanc de Blancs"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Piper-Heidsieck Essentiel</h3>
+                <p class="champ-card__grapes">Blanc de Blancs Extra Brut</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Piper-Heidsieck Essentiel Blanc de Blancs">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 7 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Ayala Brut Majeur">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/7.png"
+                  alt="Bottiglia Ayala Brut Majeur"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Ayala Brut Majeur</h3>
+                <p class="champ-card__grapes">Brut</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Ayala Brut Majeur">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 8 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Louis Brochet Héritage Brut">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/8.png"
+                  alt="Bottiglia Louis Brochet Héritage Brut"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Louis Brochet Héritage Brut</h3>
+                <p class="champ-card__grapes">Brut</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Louis Brochet Héritage Brut">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 9 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Louis Roederer Cristal 2015">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/9.png"
+                  alt="Bottiglia Louis Roederer Cristal 2015"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Louis Roederer Cristal 2015</h3>
+                <p class="champ-card__grapes">Cristal</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Louis Roederer Cristal 2015">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- ── Bottiglia 10 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Diogène Tissier & Fils Saveur de Juliette">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/champagne 2/10.png"
+                  alt="Bottiglia Diogène Tissier & Fils Saveur de Juliette"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Champagne</p>
+                <h3 class="champ-card__name">Diogène Tissier & Fils</h3>
+                <p class="champ-card__grapes">Saveur de Juliette Brut Blanc de Noirs</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Diogène Tissier & Fils Saveur de Juliette">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+
+        </ul><!-- /uk-grid champagne -->
+
+      </div>
+    </section>
+
+
+    
+    <!-- ═══════════════════════════════════════════════════════
+         SEZIONE 02 — BOLLICINE
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="bollicine" class="wine-section" aria-labelledby="bollicine-title">
+      <div class="wine-section__container">
+
+        <header class="wine-section__header vr">
+          <div class="wine-section__meta">
+            <span class="wine-section__number">02 — Bollicine</span>
+            <h2 class="wine-section__title" id="bollicine-title">
+              <em>Bollicine</em>
+            </h2>
+            <p class="wine-section__desc">
+              Metodo classico e charmat d'autore. Franciacorta, Trentodoc, Altissimo Metodo Classico e rarità internazionali. Effervescenza come arte, non come consuetudine.
+            </p>
+          </div>
+          <span class="wine-section__count" aria-hidden="true">02</span>
+        </header>
+
+        <ul
+          class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
+          uk-grid
+          role="list"
+          aria-label="Selezione Bollicine"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
+        >
+          <!-- ── Bottiglia 1 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 1">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/1.avif"
+                  alt="Bottiglia Nome Bollicina 1"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 1</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 1">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 2 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 2">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/2.avif"
+                  alt="Bottiglia Nome Bollicina 2"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 2</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 2">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 3 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 3">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/3.avif"
+                  alt="Bottiglia Nome Bollicina 3"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 3</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 3">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 4 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 4">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/4.avif"
+                  alt="Bottiglia Nome Bollicina 4"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 4</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 4">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 5 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 5">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/5.avif"
+                  alt="Bottiglia Nome Bollicina 5"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 5</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 5">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 6 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 6">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/6.avif"
+                  alt="Bottiglia Nome Bollicina 6"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 6</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 6">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 7 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 7">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/7.avif"
+                  alt="Bottiglia Nome Bollicina 7"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 7</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 7">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 8 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 8">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/8.avif"
+                  alt="Bottiglia Nome Bollicina 8"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 8</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 8">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 9 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 9">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/9.avif"
+                  alt="Bottiglia Nome Bollicina 9"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 9</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 9">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 10 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Bollicina 10">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bollicine/10.avif"
+                  alt="Bottiglia Nome Bollicina 10"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Metodo Classico</p>
+                <h3 class="champ-card__name">Nome Bollicina 10</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Bollicina 10">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SEZIONE 03 — VINI BIANCHI
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="vini-bianchi" class="wine-section" aria-labelledby="vini-bianchi-title">
+      <div class="wine-section__container">
+
+        <header class="wine-section__header vr">
+          <div class="wine-section__meta">
+            <span class="wine-section__number">03 — Vini Bianchi</span>
+            <h2 class="wine-section__title" id="vini-bianchi-title">
+              <em>Vini Bianchi</em>
+            </h2>
+            <p class="wine-section__desc">
+              Mineralità, freschezza e struttura. Un viaggio tra i grandi vitigni autoctoni italiani e le espressioni più raffinate della viticoltura europea.
+            </p>
+          </div>
+          <span class="wine-section__count" aria-hidden="true">03</span>
+        </header>
+
+        <ul
+          class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
+          uk-grid
+          role="list"
+          aria-label="Selezione Vini Bianchi"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
+        >
+          <!-- ── Bottiglia 1 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 1">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/1.avif"
+                  alt="Bottiglia Nome Vino Bianco 1"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 1</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 1">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 2 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 2">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/2.avif"
+                  alt="Bottiglia Nome Vino Bianco 2"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 2</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 2">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 3 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 3">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/3.avif"
+                  alt="Bottiglia Nome Vino Bianco 3"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 3</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 3">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 4 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 4">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/4.avif"
+                  alt="Bottiglia Nome Vino Bianco 4"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 4</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 4">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 5 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 5">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/5.avif"
+                  alt="Bottiglia Nome Vino Bianco 5"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 5</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 5">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 6 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 6">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/6.avif"
+                  alt="Bottiglia Nome Vino Bianco 6"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 6</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 6">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 7 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 7">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/7.avif"
+                  alt="Bottiglia Nome Vino Bianco 7"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 7</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 7">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 8 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 8">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/8.avif"
+                  alt="Bottiglia Nome Vino Bianco 8"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 8</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 8">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 9 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 9">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/9.avif"
+                  alt="Bottiglia Nome Vino Bianco 9"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 9</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 9">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 10 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Bianco 10">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/bianchi/10.avif"
+                  alt="Bottiglia Nome Vino Bianco 10"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Bianco</p>
+                <h3 class="champ-card__name">Nome Vino Bianco 10</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Bianco 10">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         SEZIONE 04 — VINI ROSSI
+         ═══════════════════════════════════════════════════════ -->
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="vini-rossi" class="wine-section" aria-labelledby="vini-rossi-title">
+      <div class="wine-section__container">
+
+        <header class="wine-section__header vr">
+          <div class="wine-section__meta">
+            <span class="wine-section__number">04 — Vini Rossi</span>
+            <h2 class="wine-section__title" id="vini-rossi-title">
+              <em>Vini Rossi</em>
+            </h2>
+            <p class="wine-section__desc">
+              Corpo, eleganza e potenziale di invecchiamento. Dai grandi Nebbiolo piemontesi ai nobili blend toscani, fino alle espressioni più identitarie del Sud.
+            </p>
+          </div>
+          <span class="wine-section__count" aria-hidden="true">04</span>
+        </header>
+
+        <ul
+          class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
+          uk-grid
+          role="list"
+          aria-label="Selezione Vini Rossi"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
+        >
+          <!-- ── Bottiglia 1 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 1">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/1.avif"
+                  alt="Bottiglia Nome Vino Rosso 1"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 1</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 1">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 2 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 2">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/2.avif"
+                  alt="Bottiglia Nome Vino Rosso 2"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 2</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 2">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 3 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 3">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/3.avif"
+                  alt="Bottiglia Nome Vino Rosso 3"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 3</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 3">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 4 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 4">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/4.avif"
+                  alt="Bottiglia Nome Vino Rosso 4"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 4</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 4">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 5 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 5">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/5.avif"
+                  alt="Bottiglia Nome Vino Rosso 5"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 5</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 5">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 6 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 6">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/6.avif"
+                  alt="Bottiglia Nome Vino Rosso 6"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 6</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 6">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 7 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 7">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/7.avif"
+                  alt="Bottiglia Nome Vino Rosso 7"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 7</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 7">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 8 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 8">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/8.avif"
+                  alt="Bottiglia Nome Vino Rosso 8"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 8</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 8">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 9 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 9">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/9.avif"
+                  alt="Bottiglia Nome Vino Rosso 9"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 9</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 9">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- ── Bottiglia 10 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Nome Vino Rosso 10">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img
+                  class="champ-card__img zoomable-image"
+                  src="/assets/immagini/rossi/10.avif"
+                  alt="Bottiglia Nome Vino Rosso 10"
+                  loading="lazy"
+                  decoding="async"
+                  width="400"
+                  height="600"
+                >
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Nome Vino Rosso 10</h3>
+                <p class="champ-card__grapes">Uve / Annata</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Nome Vino Rosso 10">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <!-- CTA FOOTER PAGINA -->
+    <section class="wine-section" aria-label="Call to action prenotazione">
+      <div class="wine-section__container" style="text-align: center; padding-block: var(--space-16);">
+        <span class="eyebrow vr">Enoteca Degustibus</span>
+        <div class="gold-rule gold-rule--center vr" aria-hidden="true"></div>
+        <h2 class="section-title vr vr--d1" style="margin-bottom: var(--space-4);">
+          Vuoi conoscere la selezione<br><em>completa?</em>
+        </h2>
+        <p class="section-lead vr vr--d2" style="margin-bottom: var(--space-8);">
+          Passa in enoteca oppure scrivici. Alessandra sarà felice di guidarti
+          nella scoperta delle etichette più adatte ai tuoi gusti.
+        </p>
+        <div style="display: inline-flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center;" class="vr vr--d3">
+          <a href="./contatti.html" class="btn btn--primary" id="cta-vini-prenota" aria-label="Prenota una degustazione">
+            Prenota una Degustazione
+          </a>
+          <a href="./index.html" class="btn btn--ghost" id="cta-vini-home" aria-label="Torna alla home">
+            Torna alla Home
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       JAVASCRIPT — Nav scroll + Scroll Reveal
+       ═══════════════════════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.16.24/dist/js/uikit-icons.min.js"></script>
+
+  <script>
+    'use strict';
+
+    // ── Nav: diventa solida allo scroll ──
+    const pageNav = document.getElementById('page-nav');
+    window.addEventListener('scroll', () => {
+      pageNav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Scroll Reveal ──
+    const vrElements = document.querySelectorAll('.vr');
+    const vrObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('vr--visible');
+          vrObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' });
+
+    vrElements.forEach(el => vrObserver.observe(el));
+  </script>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       LIGHTBOX MODALE — Struttura nascosta (gestita da JS)
+       ═══════════════════════════════════════════════════════ -->
+  <div
+    id="lightbox-modal"
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Visualizzazione immagine ingrandita"
+    aria-hidden="true"
+  >
+    <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
+    <figure class="lightbox__figure" role="group" aria-label="Immagine prodotto ingrandita">
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" loading="eager" />
+      <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+    </figure>
+    <button class="lightbox__close" id="lightbox-close" aria-label="Chiudi immagine ingrandita" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+        <path d="M18 6L6 18M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Lightbox JS (inline per compatibilità con UIkit/jQuery esistente) -->
+  <script>
+    (function initLightbox() {
+      var lightbox     = document.getElementById('lightbox-modal');
+      var overlay      = document.getElementById('lightbox-overlay');
+      var closeBtn     = document.getElementById('lightbox-close');
+      var lightboxImg  = document.getElementById('lightbox-img');
+      var lightboxCapt = document.getElementById('lightbox-caption');
+      if (!lightbox) return;
+      var previousFocus = null;
+
+      function openLightbox(triggerImg) {
+        previousFocus = document.activeElement;
+        var hiResSrc = triggerImg.dataset.highres || triggerImg.src;
+        lightboxImg.src = hiResSrc;
+        lightboxImg.alt = triggerImg.alt || '';
+        lightboxCapt.textContent = triggerImg.dataset.caption || triggerImg.alt || '';
+        document.body.style.overflow = 'hidden';
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        setTimeout(function(){ closeBtn.focus(); }, 60);
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (previousFocus) { previousFocus.focus({ preventScroll: true }); previousFocus = null; }
+        setTimeout(function(){
+          lightboxImg.src = '';
+          lightboxImg.alt = '';
+          lightboxCapt.textContent = '';
+        }, 550);
+      }
+
+      document.addEventListener('click', function(e) {
+        var img = e.target.closest('.zoomable-image');
+        var cta = e.target.closest('.champ-card__cta');
+        if (cta) {
+          e.preventDefault();
+          var card = cta.closest('.champ-card');
+          if (card) {
+            img = card.querySelector('.zoomable-image');
+          }
+        }
+        if (!img) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        openLightbox(img);
+      });
+
+      overlay.addEventListener('click', closeLightbox);
+      closeBtn.addEventListener('click', closeLightbox);
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
+          e.stopPropagation();
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

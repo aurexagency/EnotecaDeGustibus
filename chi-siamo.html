@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi Siamo — Enoteca Degustibus</title>
+  <meta name="description" content="La storia di Degustibus Enoteca e della sua fondatrice Alessandra, Sommelier AIS con Master Treccani Accademia. Un percorso di cura, cultura e passione per il vino d'autore." />
+
+  <!-- Fonts: Cormorant Garamond (Serif) & Inter (Sans-Serif) — in sincronia con la Home -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- DESIGN SYSTEM GLOBALE — tutta la palette, token e reset -->
+  <link rel="stylesheet" href="/style.css" />
+
+  <!-- Stili specifici della pagina Chi Siamo -->
+  <style>
+
+    /* ═══════════════════════════════════════════════════════
+       OVERRIDE BODY — Bordeaux come canvas principale
+       ═══════════════════════════════════════════════════════ */
+    body {
+      background-color: var(--color-bordeaux);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       NAV MINIMALE — Solo freccia di ritorno
+       ═══════════════════════════════════════════════════════ */
+    .page-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: var(--space-3) var(--space-6);
+      /* Trasparente di default, diventa opaco allo scroll */
+      transition: background 0.5s ease, border-color 0.5s ease;
+    }
+
+    .page-nav.scrolled {
+      background: rgba(28, 0, 8, 0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--color-oro);
+    }
+
+    .back-link svg {
+      transition: transform 0.3s ease;
+    }
+
+    .back-link:hover svg {
+      transform: translateX(-3px);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO EDITORIALE — Titolo d'impatto centrato
+       ═══════════════════════════════════════════════════════ */
+    .cs-hero {
+      padding-top: calc(var(--space-20) + var(--space-8)); /* Compensa la nav fissa */
+      padding-bottom: var(--space-20);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grande citazione decorativa di sfondo */
+    .cs-hero::before {
+      content: 'D';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -45%);
+      font-family: var(--font-serif);
+      font-size: clamp(300px, 40vw, 600px);
+      color: var(--color-bordeaux-dark);
+      opacity: 0.6;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      font-style: italic;
+    }
+
+    .cs-hero__inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cs-hero__eyebrow {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.40em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin-bottom: var(--space-4);
+    }
+
+    .cs-hero__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(52px, 8vw, 112px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-5);
+    }
+
+    .cs-hero__title em {
+      color: var(--color-oro);
+      font-style: italic;
+    }
+
+    .cs-hero__intro {
+      font-family: var(--font-sans);
+      font-size: clamp(14px, 1.6vw, 16px);
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--color-avorio-dim);
+      max-width: 58ch;
+      margin-inline: auto;
+      letter-spacing: 0.03em;
+    }
+
+    /* Divisore visivo sotto l'hero */
+    .cs-hero__rule {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-top: var(--space-10);
+    }
+
+    .cs-hero__rule-line {
+      width: 80px;
+      height: 1px;
+      background: var(--color-line);
+    }
+
+    .cs-hero__rule-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--color-oro);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SEZIONE STORIA — Layout asimmetrico 2 colonne
+       ═══════════════════════════════════════════════════════ */
+    .cs-storia {
+      padding-block: var(--space-20);
+      background: var(--color-bordeaux-dark);
+    }
+
+    /* Layout asimmetrico: 5fr immagine | 7fr testo su desktop */
+    .cs-storia__grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    /* Colonna immagine con cornici ornamentali */
+    .cs-storia__visual {
+      position: relative;
+    }
+
+    .cs-storia__img-frame {
+      position: relative;
+    }
+
+    .cs-storia__img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: brightness(0.88) saturate(0.8) sepia(0.08);
+      transition: filter 0.6s ease;
+    }
+
+    .cs-storia__img-frame:hover .cs-storia__img {
+      filter: brightness(0.95) saturate(0.95) sepia(0);
+    }
+
+    /* Cornice ornamentale esterna in oro */
+    .cs-storia__img-frame::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border: 1px solid var(--color-card-border);
+      pointer-events: none;
+    }
+
+    /* Angolo decorativo in basso a destra */
+    .cs-storia__img-frame::after {
+      content: '';
+      position: absolute;
+      bottom: -18px;
+      right: -18px;
+      width: 55%;
+      height: 55%;
+      border-right: 1px solid var(--color-oro);
+      border-bottom: 1px solid var(--color-oro);
+      pointer-events: none;
+    }
+
+    /* Anno / etichetta sull'immagine */
+    .cs-storia__year-badge {
+      position: absolute;
+      top: var(--space-3);
+      left: calc(-1 * var(--space-4));
+      background: var(--color-bordeaux-deeper);
+      border: 1px solid var(--color-card-border);
+      padding: var(--space-2) var(--space-3);
+      font-family: var(--font-serif);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      color: var(--color-oro);
+      text-transform: uppercase;
+    }
+
+    /* Colonna testo narrativo */
+    .cs-storia__text {
+      padding-left: var(--space-4); /* Ulteriore respiro dal bordo */
+    }
+
+    .cs-storia__text h2 {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.1;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-3);
+    }
+
+    .cs-storia__text h2 em {
+      font-style: italic;
+      color: var(--color-oro);
+    }
+
+    .cs-storia__text p {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--color-avorio-dim);
+      max-width: 65ch;
+      margin-bottom: var(--space-4);
+    }
+
+    .cs-storia__text p strong {
+      color: var(--color-avorio);
+      font-weight: 400;
+    }
+
+    /* Citazione interna al blocco testo */
+    .cs-pull-quote {
+      border-left: 2px solid var(--color-oro);
+      padding-left: var(--space-4);
+      margin-block: var(--space-6);
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.5;
+      color: var(--color-avorio);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SEZIONE SOMMELIER ALESSANDRA — Blocco dedicato
+       ═══════════════════════════════════════════════════════ */
+    .cs-sommelier {
+      padding-block: var(--space-20);
+      background: var(--color-bordeaux-deeper);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Decorazione geometrica di sfondo */
+    .cs-sommelier::before {
+      content: '';
+      position: absolute;
+      top: -30%;
+      left: -5%;
+      width: 55%;
+      height: 160%;
+      background: linear-gradient(145deg, transparent 45%, var(--color-oro-dim) 100%);
+      pointer-events: none;
+    }
+
+    .cs-sommelier__grid {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: var(--space-16);
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Testo prima, immagine dopo (inverte la storia) */
+    .cs-sommelier__text {
+      order: 1;
+    }
+
+    .cs-sommelier__visual {
+      order: 2;
+      position: relative;
+    }
+
+    .cs-sommelier__text h2 {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.1;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-3);
+    }
+
+    .cs-sommelier__text h2 em {
+      font-style: italic;
+      color: var(--color-oro);
+    }
+
+    .cs-sommelier__text p {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--color-avorio-dim);
+      max-width: 65ch;
+      margin-bottom: var(--space-4);
+    }
+
+    /* Badge certificazioni (Oro pieni) */
+    .cs-cert-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      list-style: none;
+    }
+
+    .cs-cert-badge {
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-bordeaux-deeper);
+      background: var(--color-oro);
+      padding: 6px 16px;
+    }
+
+    /* Immagine Alessandra */
+    .cs-sommelier__portrait {
+      position: relative;
+    }
+
+    .cs-sommelier__portrait img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: brightness(0.88) saturate(0.8) sepia(0.05);
+      transition: filter 0.6s ease;
+    }
+
+    .cs-sommelier__portrait:hover img {
+      filter: brightness(0.95) saturate(0.95) sepia(0);
+    }
+
+    .cs-sommelier__portrait::before {
+      content: '';
+      position: absolute;
+      inset: -10px;
+      border: 1px solid var(--color-card-border);
+      pointer-events: none;
+    }
+
+    .cs-sommelier__portrait::after {
+      content: '';
+      position: absolute;
+      top: -18px;
+      left: -18px;
+      width: 55%;
+      height: 55%;
+      border-left: 1px solid var(--color-oro);
+      border-top: 1px solid var(--color-oro);
+      pointer-events: none;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SEZIONE VALORI — 3 pilastri a griglia
+       ═══════════════════════════════════════════════════════ */
+    .cs-valori {
+      padding-block: var(--space-20);
+      background: var(--color-bordeaux-dark);
+    }
+
+    .cs-valori__intro {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    .cs-valori__intro h2 {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(32px, 4vw, 52px);
+      color: var(--color-avorio);
+      margin-bottom: var(--space-2);
+    }
+
+    .cs-valori__intro h2 em {
+      font-style: italic;
+      color: var(--color-oro);
+    }
+
+    .cs-valori__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-line);
+    }
+
+    .cs-valore-item {
+      background: var(--color-bordeaux-dark);
+      padding: var(--space-8) var(--space-6);
+      border-top: 2px solid transparent;
+      transition: border-color 0.4s ease;
+    }
+
+    .cs-valore-item:hover {
+      border-color: var(--color-oro);
+    }
+
+    .cs-valore-item__num {
+      font-family: var(--font-serif);
+      font-size: 11px;
+      letter-spacing: 0.30em;
+      color: var(--color-oro);
+      display: block;
+      margin-bottom: var(--space-3);
+    }
+
+    .cs-valore-item__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(22px, 2.5vw, 30px);
+      color: var(--color-avorio);
+      line-height: 1.2;
+      margin-bottom: var(--space-3);
+    }
+
+    .cs-valore-item__body {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--color-avorio-dim);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       CTA FINALE — Invito al contatto
+       ═══════════════════════════════════════════════════════ */
+    .cs-cta {
+      padding-block: var(--space-20);
+      background: var(--color-bordeaux);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cs-cta::before {
+      content: '"';
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-serif);
+      font-size: 500px;
+      color: var(--color-bordeaux-dark);
+      opacity: 0.4;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .cs-cta__inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cs-cta__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(30px, 4vw, 52px);
+      color: var(--color-avorio);
+      margin-bottom: var(--space-3);
+      line-height: 1.2;
+    }
+
+    .cs-cta__title em {
+      color: var(--color-oro);
+    }
+
+    .cs-cta__body {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--color-avorio-dim);
+      max-width: 50ch;
+      margin-inline: auto;
+      line-height: 1.8;
+      margin-bottom: var(--space-8);
+    }
+
+    .cs-cta__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      justify-content: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       SCROLL REVEAL — Classi custom per questa pagina
+       (si affiancano a .reveal già in style.css)
+       ═══════════════════════════════════════════════════════ */
+    .cs-reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .cs-reveal.cs-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cs-reveal--delay-1 { transition-delay: 0.1s; }
+    .cs-reveal--delay-2 { transition-delay: 0.22s; }
+    .cs-reveal--delay-3 { transition-delay: 0.35s; }
+    .cs-reveal--delay-4 { transition-delay: 0.48s; }
+
+    /* ═══════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .cs-storia__grid,
+      .cs-sommelier__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-nav { padding: var(--space-2) var(--space-4); }
+
+      .cs-storia__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+      }
+
+      .cs-storia__img-frame::after { display: none; }
+      .cs-storia__year-badge { left: 0; }
+      .cs-storia__text { padding-left: 0; }
+
+      .cs-sommelier__grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-10);
+      }
+
+      .cs-sommelier__visual { order: 1; }
+      .cs-sommelier__text { order: 2; }
+      .cs-sommelier__portrait { max-width: 360px; margin-inline: auto; }
+      .cs-sommelier__portrait::after { display: none; }
+
+      .cs-valori__grid { grid-template-columns: 1fr; }
+
+      .cs-cta__actions { flex-direction: column; align-items: center; }
+    }
+
+    /* ─── Reduced Motion Override ─── */
+    @media (prefers-reduced-motion: reduce) {
+      .cs-reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAV MINIMALE — Solo torna alla Home
+       ═══════════════════════════════════════════════════════ -->
+  <nav class="page-nav" id="page-nav" aria-label="Navigazione pagina">
+    <a href="./index.html" class="back-link" aria-label="Torna alla Home di Degustibus">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Home
+    </a>
+  </nav>
+
+
+  <main id="main-content">
+
+    <!-- ═══════════════════════════════════════════════════════
+         HERO — Titolo d'impatto centrato
+         ═══════════════════════════════════════════════════════ -->
+    <section class="cs-hero" aria-labelledby="cs-hero-title">
+      <div class="container">
+        <div class="cs-hero__inner">
+
+          <span class="cs-hero__eyebrow cs-reveal">Chi Siamo · La Nostra Storia</span>
+
+          <h1 class="cs-hero__title cs-reveal cs-reveal--delay-1" id="cs-hero-title">
+            Un'enoteca.<br>
+            <em>Un'idea di mondo.</em>
+          </h1>
+
+          <p class="cs-hero__intro cs-reveal cs-reveal--delay-2">
+            Degustibus non è un semplice negozio di vini. È il risultato di anni di studio, viaggi nei vigneti più importanti d'Europa e di una convinzione incrollabile: il vino è un atto di cultura, prima che di commercio.
+          </p>
+
+          <div class="cs-hero__rule cs-reveal cs-reveal--delay-3" aria-hidden="true">
+            <span class="cs-hero__rule-line"></span>
+            <span class="cs-hero__rule-dot"></span>
+            <span class="cs-hero__rule-line"></span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         STORIA — Layout asimmetrico 2 colonne
+         ═══════════════════════════════════════════════════════ -->
+    <section class="cs-storia" aria-labelledby="cs-storia-title">
+      <div class="container">
+        <div class="cs-storia__grid">
+
+          <!-- Colonna immagine -->
+          <div class="cs-storia__visual cs-reveal">
+            <div class="cs-storia__img-frame">
+              <span class="cs-storia__year-badge" aria-hidden="true">Est. 2018</span>
+              <img
+                class="cs-storia__img"
+                src="public/Home/Foto%20Alessandra%20per%20Sito%20.jpg"
+                alt="L'interno dell'Enoteca Degustibus, un'atmosfera di eleganza e cura artigianale"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- Colonna testo narrativo -->
+          <article class="cs-storia__text">
+            <span class="eyebrow cs-reveal">La Nostra Storia</span>
+            <div class="gold-rule cs-reveal cs-reveal--delay-1"></div>
+
+            <h2 class="cs-reveal cs-reveal--delay-1" id="cs-storia-title">
+              Nata da una passione,<br>
+              costruita sulla <em>qualità.</em>
+            </h2>
+
+            <p class="cs-reveal cs-reveal--delay-2">
+              Degustibus nasce da una <strong>visione precisa</strong>: creare uno spazio in cui il vino smettesse di essere un prodotto e diventasse un racconto. Un luogo dove ogni bottiglia custodisce l'identità di chi l'ha prodotta, il paesaggio dove l'uva è cresciuta, la stagione che ne ha determinato il carattere.
+            </p>
+
+            <blockquote class="cs-pull-quote cs-reveal cs-reveal--delay-3">
+              "Il vino non si vende: si racconta, si condivide, si rispetta. È un atto di cultura, prima che di commercio."
+            </blockquote>
+
+            <p class="cs-reveal cs-reveal--delay-2">
+              Abbiamo costruito la nostra cantina rifiutando la logica della quantità. <strong>Nessun vino sfuso, nessuna etichetta anonima.</strong> Ogni produttore che entra a far parte della nostra selezione è il risultato di un incontro diretto, di una stretta di mano, di una degustazione condivisa sul posto.
+            </p>
+
+            <p class="cs-reveal cs-reveal--delay-3">
+              Questa è l'identità di Degustibus: un'enoteca sartoriale, costruita su relazioni umane autentiche e su una cura maniacale per la qualità.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         SOMMELIER — Blocco dedicato ad Alessandra
+         ═══════════════════════════════════════════════════════ -->
+    <section class="cs-sommelier" aria-labelledby="cs-sommelier-title">
+      <div class="container">
+        <div class="cs-sommelier__grid">
+
+          <!-- Testo Alessandra -->
+          <article class="cs-sommelier__text">
+            <span class="eyebrow cs-reveal">L'Arte della Somellerie</span>
+            <div class="gold-rule cs-reveal cs-reveal--delay-1"></div>
+
+            <h2 class="cs-reveal cs-reveal--delay-1" id="cs-sommelier-title">
+              Alessandra,<br>
+              <em>il cuore di Degustibus.</em>
+            </h2>
+
+            <p class="cs-reveal cs-reveal--delay-2">
+              Fondatrice e anima dell'enoteca, Alessandra ha trasformato una passione personale per il vino in una professione di altissimo livello. Il suo percorso formativo è tra i più completi del panorama enologico italiano, con una solida base teorica e un'esperienza sul campo maturata nei territori vitivinicoli più importanti d'Europa.
+            </p>
+
+            <!-- Badge Certificazioni -->
+            <ul class="cs-cert-list cs-reveal cs-reveal--delay-2" role="list" aria-label="Qualifiche professionali di Alessandra">
+              <li class="cs-cert-badge" role="listitem">Sommelier AIS</li>
+              <li class="cs-cert-badge" role="listitem">Treccani Accademia</li>
+              <li class="cs-cert-badge" role="listitem">Master Borgogna</li>
+              <li class="cs-cert-badge" role="listitem">Master Bordeaux</li>
+              <li class="cs-cert-badge" role="listitem">Enoturismo</li>
+            </ul>
+
+            <p class="cs-reveal cs-reveal--delay-3">
+              Il percorso all'<strong>Accademia Treccani</strong> le ha permesso di approfondire i territori di eccellenza mondiale — la Borgogna e il Bordeaux — con un approccio accademico rigoroso che si fonde con una sensibilità organica e territoriale. La sua specializzazione in <strong>Enoturismo</strong> la rende inoltre una narratrice unica dei luoghi da cui nascono le grandi etichette.
+            </p>
+
+            <p class="cs-reveal cs-reveal--delay-3">
+              La sua filosofia è semplice e radicale: <strong>nessun compromesso sulla qualità</strong>, rispetto assoluto per il produttore e per il consumatore consapevole. Ogni selezione in enoteca porta la sua firma personale.
+            </p>
+
+          </article>
+
+          <!-- Ritratto Alessandra -->
+          <figure class="cs-sommelier__visual cs-reveal cs-reveal--delay-1">
+            <div class="cs-sommelier__portrait">
+              <img
+                src="public/Home/Foto%20Alessandra%20per%20Sito%20.jpg"
+                alt="Alessandra, Sommelier AIS e fondatrice di Degustibus Enoteca"
+                loading="lazy"
+              />
+            </div>
+            <figcaption class="visually-hidden">
+              Alessandra, Sommelier AIS e fondatrice di Degustibus Enoteca
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         VALORI — I 3 pilastri del brand
+         ═══════════════════════════════════════════════════════ -->
+    <section class="cs-valori" aria-labelledby="cs-valori-title">
+      <div class="container">
+
+        <header class="cs-valori__intro cs-reveal">
+          <span class="eyebrow">La Nostra Filosofia</span>
+          <div class="gold-rule gold-rule--center"></div>
+          <h2 id="cs-valori-title">
+            Tre principi,<br>
+            <em>una sola identità.</em>
+          </h2>
+        </header>
+
+        <div class="cs-valori__grid" role="list">
+
+          <article class="cs-valore-item cs-reveal cs-reveal--delay-1" role="listitem">
+            <span class="cs-valore-item__num">01</span>
+            <h3 class="cs-valore-item__title">Selezione<br>Radicale</h3>
+            <p class="cs-valore-item__body">
+              Ogni etichetta presente in cantina è il frutto di una visita diretta al produttore, di una degustazione condivisa sul campo. Non lavoriamo con intermediari. La relazione umana è il filtro più rigoroso.
+            </p>
+          </article>
+
+          <article class="cs-valore-item cs-reveal cs-reveal--delay-2" role="listitem">
+            <span class="cs-valore-item__num">02</span>
+            <h3 class="cs-valore-item__title">Cultura<br>del Vino</h3>
+            <p class="cs-valore-item__body">
+              Le nostre masterclass, gli eventi tematici e le degustazioni guidate non sono solo momenti di consumo. Sono occasioni per costruire una conoscenza autentica del territorio, delle uve e delle storie dietro ogni bottiglia.
+            </p>
+          </article>
+
+          <article class="cs-valore-item cs-reveal cs-reveal--delay-3" role="listitem">
+            <span class="cs-valore-item__num">03</span>
+            <h3 class="cs-valore-item__title">Consulenza<br>Sartoriale</h3>
+            <p class="cs-valore-item__body">
+              Ogni carta dei vini progettata per un ristorante, ogni cantina privata curata, ogni selezione per un regalo aziendale è unica. Il nostro servizio non è un catalogo standard: è un lavoro di ascolto e di cura personalizzata.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ═══════════════════════════════════════════════════════
+         CTA FINALE — Invito al contatto
+         ═══════════════════════════════════════════════════════ -->
+    <section class="cs-cta" aria-labelledby="cs-cta-title">
+      <div class="container">
+        <div class="cs-cta__inner">
+
+          <div class="gold-rule gold-rule--center cs-reveal"></div>
+
+          <h2 class="cs-cta__title cs-reveal cs-reveal--delay-1" id="cs-cta-title">
+            Inizia il tuo percorso.<br>
+            <em>Comincia da un calice.</em>
+          </h2>
+
+          <p class="cs-cta__body cs-reveal cs-reveal--delay-2">
+            Che tu voglia prenotare una degustazione, partecipare a un evento o chiedere una consulenza privata, siamo qui per guidarti con la stessa cura che mettiamo in ogni selezione.
+          </p>
+
+          <div class="cs-cta__actions cs-reveal cs-reveal--delay-3">
+            <a href="./index.html#esperienze" class="btn btn--primary" id="cta-degustazioni">
+              Prenota una Degustazione
+            </a>
+            <a href="./index.html#footer-contact" class="btn btn--ghost" id="cta-contatti">
+              Contattaci
+            </a>
+          </div>
+
+          <div class="gold-rule gold-rule--center cs-reveal cs-reveal--delay-4" style="margin-top: var(--space-8);" aria-hidden="true"></div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       JAVASCRIPT — Scroll Reveal + Nav Scroll Effect
+       (nessuna dipendenza esterna, vanilla JS puro)
+       ═══════════════════════════════════════════════════════ -->
+  <script>
+    'use strict';
+
+    // ── Nav: diventa solida allo scroll ──────────────────
+    const pageNav = document.getElementById('page-nav');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 48) {
+        pageNav.classList.add('scrolled');
+      } else {
+        pageNav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // ── Scroll Reveal per .cs-reveal ─────────────────────
+    const csRevealElements = document.querySelectorAll('.cs-reveal');
+
+    const csRevealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('cs-visible');
+          csRevealObserver.unobserve(entry.target); // Osserva una sola volta
+        }
+      });
+    }, {
+      threshold: 0.10,           // Scatta quando il 10% dell'elemento è visibile
+      rootMargin: '0px 0px -48px 0px' // Anticipa leggermente il trigger dal basso
+    });
+
+    csRevealElements.forEach(el => csRevealObserver.observe(el));
+  </script>
+
+</body>
+</html>
