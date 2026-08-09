@@ -1777,3 +1777,376 @@
   margin-block: var(--space-6) var(--space-8);
   text-align: center;
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   SWIPE-ACTION — Componente Swipe-to-Action (base)
+   Sistema riutilizzabile per Wine Pour e Cork Pop.
+   Struttura:
+     .swipe-action              → container pillola
+       .swipe-action__fill      → riempimento animato
+       .swipe-action__trail     → scia DOM bolle/liquido
+       .swipe-action__label     → testo "Scorri per…"
+       .swipe-action__label--success → testo successo
+       .swipe-action__thumb     → maniglia drag
+       .swipe-action__canvas    → overlay canvas particelle
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Variabili interne del componente ── */
+.swipe-action {
+  --sa-thumb-sz:    56px;    /* diametro maniglia */
+  --sa-pad:          6px;    /* padding interno dai bordi */
+  --sa-h:           72px;    /* altezza pillola */
+  --sa-radius:      40px;    /* arrotondamento pillola */
+  --sa-fill-color:  var(--color-bordeaux);
+  --sa-fill-color2: var(--color-bordeaux-dark);
+  --sa-thumb-color: var(--color-oro);
+  --sa-border-color: rgba(255,255,240,0.20);
+  --sa-label-color: var(--color-avorio-dim);
+  --sa-transition-spring: 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --sa-transition-fast:   0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Layout base container ── */
+.swipe-action {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+  height: var(--sa-h);
+  border-radius: var(--sa-radius);
+  border: 1px solid var(--sa-border-color);
+  background: var(--color-bordeaux-deeper);
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;   /* blocca scroll touch durante drag */
+  -webkit-tap-highlight-color: transparent;
+  isolation: isolate;
+}
+
+.swipe-action:focus-visible {
+  outline: 1px solid var(--color-oro);
+  outline-offset: 3px;
+}
+
+/* ── Fill — elemento di riempimento (liquido / pressione) ── */
+.swipe-action__fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--sa-fill-color2) 0%,
+    var(--sa-fill-color)  100%
+  );
+  border-radius: var(--sa-radius);
+  transform-origin: left center;
+  transition: width var(--sa-transition-fast);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Trail — zona scia dietro il thumb ── */
+.swipe-action__trail {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: var(--sa-radius);
+  z-index: 2;
+}
+
+/* ── Label testo centrale ── */
+.swipe-action__label,
+.swipe-action__label--success {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: var(--sa-label-color);
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.15s ease;
+}
+
+.swipe-action__label--success {
+  opacity: 0;
+  color: var(--color-avorio);
+  letter-spacing: 0.22em;
+}
+
+/* ── Thumb — maniglia drag ── */
+.swipe-action__thumb {
+  position: absolute;
+  top: 50%;
+  left: var(--sa-pad);
+  width:  var(--sa-thumb-sz);
+  height: var(--sa-thumb-sz);
+  border-radius: 50%;
+  background: var(--sa-thumb-color);
+  transform: translateY(-50%) translateX(0px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  cursor: grab;
+  /* Ombra calda */
+  box-shadow:
+    0 2px 12px rgba(0,0,0,0.40),
+    0 0 0 1px rgba(255,215,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: box-shadow var(--sa-transition-fast);
+  will-change: transform;
+}
+
+/* Icona SVG dentro il thumb */
+.swipe-action__thumb svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-bordeaux-deeper);
+  display: block;
+}
+
+/* Effetto luminoso su hover */
+.swipe-action:hover .swipe-action__thumb {
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.55),
+    0 0 0 2px rgba(255,215,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.30);
+}
+
+/* ── Canvas overlay particelle ── */
+.swipe-action__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: var(--sa-radius);
+  z-index: 20;
+}
+
+/* ══════════════════════════════════════════════════════
+   VARIANTE: WINE POUR (--pour)
+   Fill come liquido rosso vino che scorre
+   ══════════════════════════════════════════════════════ */
+.swipe-action--pour {
+  --sa-fill-color:  #8B0025;
+  --sa-fill-color2: #3d000f;
+  --sa-border-color: rgba(255,255,240,0.18);
+  --sa-thumb-color: var(--color-oro);
+}
+
+/* Il fill del Pour ha un'onda organica nel leading edge */
+.swipe-action--pour .swipe-action__fill {
+  background: linear-gradient(
+    90deg,
+    #3d000f 0%,
+    #6b001a 40%,
+    #8B0025 80%,
+    #a00030 100%
+  );
+  /* Bordo destro arrotondato organico via pseudo-element */
+}
+
+/* Effetto onda liquid sul bordo destro del fill */
+.swipe-action--pour .swipe-action__fill::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  background: inherit;
+  border-radius: 50%;
+  filter: blur(4px);
+}
+
+/* Label del pour: freccia destro come hint */
+.swipe-action--pour .swipe-action__label::before {
+  content: '›› ';
+  color: var(--color-oro);
+  margin-right: 6px;
+  letter-spacing: 0.1em;
+}
+
+/* ══════════════════════════════════════════════════════
+   VARIANTE: CORK POP (--cork)
+   Thumb tappo oro, fill a gradiente caldo-pressione
+   ══════════════════════════════════════════════════════ */
+.swipe-action--cork {
+  --sa-fill-color:  rgba(180, 100, 0, 0.55);
+  --sa-fill-color2: rgba(90, 0, 22, 0.85);
+  --sa-border-color: rgba(255,215,0,0.22);
+  --sa-thumb-color: var(--color-oro);
+}
+
+.swipe-action--cork .swipe-action__fill {
+  background: linear-gradient(
+    90deg,
+    rgba(61, 0, 15, 0.90) 0%,
+    rgba(140, 60, 0, 0.70) 60%,
+    rgba(180, 110, 10, 0.55) 100%
+  );
+}
+
+/* ══════════════════════════════════════════════════════
+   STATI INTERATTIVI
+   ══════════════════════════════════════════════════════ */
+
+/* Dragging — cursore + glow thumb */
+.swipe-action.is-dragging {
+  cursor: grabbing;
+}
+
+.swipe-action.is-dragging .swipe-action__thumb {
+  cursor: grabbing;
+  box-shadow:
+    0 6px 28px rgba(0,0,0,0.55),
+    0 0 0 3px rgba(255,215,0,0.70),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+  transform: translateY(-50%) translateX(var(--_tx, 0px)) scale(1.06);
+}
+
+/* Returning — snap-back elastico */
+.swipe-action__thumb.is-returning {
+  transition: transform var(--sa-transition-spring);
+}
+
+/* Tension — shake al 68% per Cork Pop */
+.swipe-action.is-tension {
+  animation: swipe-shake 0.28s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+@keyframes swipe-shake {
+  0%   { transform: translateX(0); }
+  18%  { transform: translateX(-3px) rotate(-0.3deg); }
+  36%  { transform: translateX(3px)  rotate(0.3deg); }
+  54%  { transform: translateX(-2px) rotate(-0.2deg); }
+  72%  { transform: translateX(2px)  rotate(0.2deg); }
+  90%  { transform: translateX(-1px); }
+  100% { transform: translateX(0); }
+}
+
+/* Complete — stato di successo */
+.swipe-action.is-complete {
+  pointer-events: none;
+  border-color: var(--color-oro);
+}
+
+.swipe-action.is-complete .swipe-action__fill {
+  width: 100% !important;
+  transition: width 0.25s ease;
+}
+
+.swipe-action.is-complete .swipe-action__label {
+  opacity: 0;
+}
+
+.swipe-action.is-complete .swipe-action__label--success {
+  opacity: 1;
+  transition: opacity 0.35s ease 0.15s;
+}
+
+/* Complete + Pour: effetto flash brillante */
+.swipe-action--pour.is-complete .swipe-action__fill {
+  background: linear-gradient(90deg, #3d000f 0%, #8B0025 50%, #b0003a 100%);
+  box-shadow: inset 0 0 32px rgba(255,215,0,0.15);
+}
+
+/* Complete + Cork: gradiente pressione massima */
+.swipe-action--cork.is-complete .swipe-action__fill {
+  background: linear-gradient(90deg, #3d000f 0%, rgba(200,120,10,0.70) 100%);
+}
+
+/* Thumb eject per cork: vola a destra */
+.swipe-action--cork.is-complete .swipe-action__thumb {
+  transition: transform 0.32s cubic-bezier(0.55, 0, 1, 0.45),
+              opacity   0.22s ease 0.12s;
+  opacity: 0;
+}
+
+/* ── Bolle DOM per il trail durante il drag ── */
+.swipe-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.35);
+  border: 1px solid rgba(255, 215, 0, 0.50);
+  pointer-events: none;
+  animation: bubble-rise var(--dur, 0.9s) ease-out forwards;
+}
+
+@keyframes bubble-rise {
+  0%   { opacity: 0.7; transform: translateY(0) scale(1); }
+  60%  { opacity: 0.4; }
+  100% { opacity: 0;   transform: translateY(-18px) scale(0.4); }
+}
+
+/* ── Frecce hint (chevrons) che pulsano nella label ── */
+.swipe-action__label .sa-chevrons {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: 8px;
+  color: var(--color-oro);
+  opacity: 0.7;
+  animation: sa-chevron-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes sa-chevron-pulse {
+  0%, 100% { opacity: 0.4; transform: translateX(0); }
+  50%       { opacity: 0.9; transform: translateX(3px); }
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE — Mobile
+   ══════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .swipe-action {
+    --sa-thumb-sz: 48px;
+    --sa-h:        64px;
+    max-width: 100%;
+  }
+
+  .swipe-action__label,
+  .swipe-action__label--success {
+    font-size: 9px;
+    letter-spacing: 0.22em;
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   ACCESSIBILITÀ — prefers-reduced-motion
+   TUTTE le animazioni vengono disabilitate
+   ══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .swipe-action,
+  .swipe-action__fill,
+  .swipe-action__thumb,
+  .swipe-action__label,
+  .swipe-action__label--success,
+  .swipe-action--cork.is-complete .swipe-action__thumb {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .swipe-action.is-tension {
+    animation: none !important;
+  }
+
+  .swipe-bubble {
+    display: none !important;
+  }
+
+  .swipe-action__label .sa-chevrons {
+    animation: none !important;
+    opacity: 0.6;
+  }
+}

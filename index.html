@@ -278,9 +278,37 @@
                 serate con musica dal vivo, teatro e — in stagione — degustazioni in barca.
               </p>
 
-              <a href="#footer-contact" class="btn btn--outline-gold" id="cta-eventi-iscriviti">
-                Partecipa ad un Evento
-              </a>
+              <!-- ── Swipe Cork Pop: Partecipa ad un Evento ── -->
+              <div class="swipe-action swipe-action--cork" id="sa-eventi"
+                   role="button" tabindex="0"
+                   aria-label="Trascina per partecipare a un evento"
+                   aria-live="polite">
+
+                <div class="swipe-action__fill" id="sa-eventi-fill" aria-hidden="true"></div>
+                <div class="swipe-action__trail" id="sa-eventi-trail" aria-hidden="true"></div>
+
+                <span class="swipe-action__label" id="sa-eventi-label" aria-hidden="true">
+                  Partecipa a un Evento
+                  <span class="sa-chevrons" aria-hidden="true">›</span>
+                </span>
+                <span class="swipe-action__label swipe-action__label--success" id="sa-eventi-label-ok" aria-hidden="true">
+                  ✓ &nbsp;Apertura Modulo
+                </span>
+
+                <div class="swipe-action__thumb" id="sa-eventi-thumb" aria-hidden="true">
+                  <!-- Icona tappo sughero -->
+                  <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <rect x="10" y="13" width="12" height="9" rx="2" fill="currentColor" opacity="0.9"/>
+                    <rect x="8" y="10" width="16" height="5" rx="1.5" fill="currentColor"/>
+                    <rect x="10" y="11" width="12" height="2" rx="1" fill="white" opacity="0.22"/>
+                    <path d="M11 22 L10 26 M16 22 L16 26 M21 22 L22 26" stroke="currentColor" stroke-width="1" opacity="0.55" fill="none"/>
+                    <path d="M14 16.5 L16.5 16.5 M16.5 15 L18.5 16.5 L16.5 18" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+                  </svg>
+                </div>
+
+                <canvas class="swipe-action__canvas" id="sa-eventi-canvas" aria-hidden="true"></canvas>
+              </div>
+              <!-- ── Fine Swipe Cork Pop ── -->
             </div>
           </article>
 
@@ -321,9 +349,37 @@
               </div>
 
               <br>
-              <a href="#footer-contact" class="btn btn--primary" id="cta-degustazione" style="margin-top: var(--space-5);">
-                Prenota la Tua Degustazione
-              </a>
+              <!-- ── Swipe Wine Pour: Prenota la Degustazione ── -->
+              <div class="swipe-action swipe-action--pour" id="sa-degustazione"
+                   role="button" tabindex="0"
+                   aria-label="Trascina per prenotare la tua degustazione"
+                   aria-live="polite"
+                   style="margin-top: var(--space-5);">
+
+                <div class="swipe-action__fill" id="sa-degust-fill" aria-hidden="true"></div>
+                <div class="swipe-action__trail" id="sa-degust-trail" aria-hidden="true"></div>
+
+                <span class="swipe-action__label" id="sa-degust-label" aria-hidden="true">
+                  Prenota la Degustazione
+                </span>
+                <span class="swipe-action__label swipe-action__label--success" id="sa-degust-label-ok" aria-hidden="true">
+                  ✓ &nbsp;Reindirizzamento in corso…
+                </span>
+
+                <div class="swipe-action__thumb" id="sa-degust-thumb" aria-hidden="true">
+                  <!-- Icona calice vino -->
+                  <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                    <path d="M10 6 h12 l-2.5 9 a5.5 5.5 0 0 1-7 0 Z" fill="currentColor" opacity="0.75"/>
+                    <path d="M10 6 h12" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+                    <line x1="16" y1="21" x2="16" y2="27" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 27 h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <ellipse cx="16" cy="14" rx="4" ry="2.5" fill="#8B0025" opacity="0.6"/>
+                  </svg>
+                </div>
+
+                <canvas class="swipe-action__canvas" id="sa-degust-canvas" aria-hidden="true"></canvas>
+              </div>
+              <!-- ── Fine Swipe Wine Pour ── -->
 
             </div>
           </article>
@@ -450,9 +506,38 @@
             </div>
 
             <br>
-            <a href="#footer-contact" class="btn btn--primary" id="cta-advisory" style="margin-top: var(--space-4);">
-              Chiedi un Consiglio
-            </a>
+            <!-- ── Swipe Cork Pop: Chiedi un Consiglio ── -->
+            <div class="swipe-action swipe-action--cork" id="sa-advisory"
+                 role="button" tabindex="0"
+                 aria-label="Trascina per chiedere un consiglio"
+                 aria-live="polite"
+                 style="margin-top: var(--space-4); max-width: 360px;">
+
+              <div class="swipe-action__fill" id="sa-advisory-fill" aria-hidden="true"></div>
+              <div class="swipe-action__trail" id="sa-advisory-trail" aria-hidden="true"></div>
+
+              <span class="swipe-action__label" id="sa-advisory-label" aria-hidden="true">
+                Chiedi un Consiglio
+                <span class="sa-chevrons" aria-hidden="true">›</span>
+              </span>
+              <span class="swipe-action__label swipe-action__label--success" id="sa-advisory-label-ok" aria-hidden="true">
+                ✓ &nbsp;Apertura Contatti
+              </span>
+
+              <div class="swipe-action__thumb" id="sa-advisory-thumb" aria-hidden="true">
+                <!-- Icona tappo sughero -->
+                <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
+                  <rect x="10" y="13" width="12" height="9" rx="2" fill="currentColor" opacity="0.9"/>
+                  <rect x="8" y="10" width="16" height="5" rx="1.5" fill="currentColor"/>
+                  <rect x="10" y="11" width="12" height="2" rx="1" fill="white" opacity="0.22"/>
+                  <path d="M11 22 L10 26 M16 22 L16 26 M21 22 L22 26" stroke="currentColor" stroke-width="1" opacity="0.55" fill="none"/>
+                  <path d="M14 16.5 L16.5 16.5 M16.5 15 L18.5 16.5 L16.5 18" stroke="white" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+                </svg>
+              </div>
+
+              <canvas class="swipe-action__canvas" id="sa-advisory-canvas" aria-hidden="true"></canvas>
+            </div>
+            <!-- ── Fine Swipe Cork Pop ── -->
 
           </div>
         </div>

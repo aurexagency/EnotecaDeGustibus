@@ -635,3 +635,388 @@
       resizeCanvas();
 
     })(); // fine initSwipeButton
+
+
+    // ══════════════════════════════════════════════════════
+    // SWIPE-ACTION FACTORY — Wine Pour & Cork Pop
+    // ─────────────────────────────────────────────────────
+    // Gestisce i nuovi componenti .swipe-action in modo
+    // completamente riutilizzabile. Ogni istanza riceve:
+    //   { btnId, type: 'pour'|'cork', actionUrl, snapThreshold }
+    //
+    // Meccanica drag:
+    //   • Pointer Events con pointer capture (touch + mouse)
+    //   • Fill % in tempo reale su onPointerMove
+    //   • Bolle DOM nel trail durante il drag
+    //   • Shake CSS al 68% di progresso (effetto tensione)
+    //   • Se rilascio > snapThreshold (85%): snap 100% → azione
+    //   • Se rilascio < snapThreshold: spring-back a 0
+    //   • Completamento: particelle canvas (cork) / flash (pour)
+    //   • Accessibilità: Enter/Space → trigger immediato
+    //   • prefers-reduced-motion: animazioni skip, azione diretta
+    // ══════════════════════════════════════════════════════
+    (function initSwipeActions() {
+      'use strict';
+
+      // ── Reduced Motion globale ───────────────────────────
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ── Factory principale ───────────────────────────────
+      function createSwipeAction(config) {
+        const {
+          btnId,           // ID del container .swipe-action
+          type,            // 'pour' | 'cork'
+          actionUrl,       // URL di destinazione al completamento
+          snapThreshold,   // frazione 0–1 oltre cui scatta lo snap (default 0.85)
+          tensionAt,       // frazione 0–1 al quale scatta la tensione (default 0.68)
+        } = Object.assign({
+          type: 'cork',
+          snapThreshold: 0.85,
+          tensionAt: 0.68,
+        }, config);
+
+        // ── DOM refs ─────────────────────────────────────────
+        const btn         = document.getElementById(btnId);
+        if (!btn) return; // elemento non presente in questa pagina
+
+        // Ricostruiamo gli ID degli sotto-elementi basandoci sull'ID del btn
+        // oppure tramite querySelector (più robusto)
+        const fill        = btn.querySelector('.swipe-action__fill');
+        const trail       = btn.querySelector('.swipe-action__trail');
+        const thumb       = btn.querySelector('.swipe-action__thumb');
+        const labelNormal = btn.querySelector('.swipe-action__label:not(.swipe-action__label--success)');
+        const labelOk     = btn.querySelector('.swipe-action__label--success');
+        const canvas      = btn.querySelector('.swipe-action__canvas');
+
+        if (!fill || !thumb || !canvas) return;
+
+        const ctx = canvas.getContext('2d');
+
+        // ── Stato interno ─────────────────────────────────────
+        let isDragging   = false;
+        let isCompleted  = false;
+        let startX       = 0;
+        let currentX     = 0;
+        let maxX         = 0;
+        let lastBubbleT  = 0;
+        let bubbleRAF    = null;
+        let particleRAF  = null;
+        let particles    = [];
+        let tensionFired = false;
+
+        // ── Dimensionamento canvas ───────────────────────────
+        function resizeCanvas() {
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width  = canvas.offsetWidth  * dpr;
+          canvas.height = canvas.offsetHeight * dpr;
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.scale(dpr, dpr);
+        }
+
+        // ── Calcolo corsa massima ─────────────────────────────
+        function calcMaxX() {
+          const pad = 6; // --sa-pad
+          const tsz = parseFloat(getComputedStyle(thumb).width) || 56;
+          maxX = Math.max(0, btn.offsetWidth - tsz - pad * 2);
+        }
+
+        // ── Aggiorna thumb + fill ─────────────────────────────
+        function setThumbX(x) {
+          x = Math.max(0, Math.min(x, maxX));
+          currentX = x;
+          const p = maxX > 0 ? x / maxX : 0;
+
+          thumb.style.transform = `translateY(-50%) translateX(${x}px)`;
+          fill.style.width = `${p * 100}%`;
+
+          if (labelNormal) {
+            labelNormal.style.opacity = Math.max(0, 1 - p * 2.5).toFixed(2);
+          }
+
+          return p;
+        }
+
+        // ── Bolle DOM durante il drag ─────────────────────────
+        function spawnBubble(x) {
+          if (reducedMotion || !trail) return;
+          const bubble = document.createElement('span');
+          bubble.className = 'swipe-bubble';
+          const size = 3 + Math.random() * 5;
+          const dur  = (0.6 + Math.random() * 0.6).toFixed(2);
+          const yOff = 15 + Math.random() * 70; // % verticale entro pillola
+          bubble.style.cssText =
+            `width:${size}px;height:${size}px;` +
+            `left:${x - size / 2}px;top:${yOff}%;` +
+            `--dur:${dur}s;`;
+          trail.appendChild(bubble);
+          bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
+        }
+
+        function bubbleLoop(ts) {
+          if (!isDragging) return;
+          if (ts - lastBubbleT > 65) {
+            lastBubbleT = ts;
+            const tsz = parseFloat(getComputedStyle(thumb).width) || 56;
+            spawnBubble(6 + tsz + currentX - 4);
+          }
+          bubbleRAF = requestAnimationFrame(bubbleLoop);
+        }
+
+        // ── Effetto tensione ──────────────────────────────────
+        function triggerTension() {
+          if (tensionFired || reducedMotion) return;
+          tensionFired = true;
+          btn.classList.add('is-tension');
+          btn.addEventListener('animationend', () => btn.classList.remove('is-tension'), { once: true });
+        }
+
+        // ══════════════════════════════════════════════════════
+        // PARTICELLE CANVAS — Cork Pop burst
+        // ══════════════════════════════════════════════════════
+        function SAParticle(x, y) {
+          const angle = (Math.random() * 260 - 200) * (Math.PI / 180);
+          const speed = 1.5 + Math.random() * 5;
+          this.x  = x;  this.y = y;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed - 2.5;
+          this.r  = 2 + Math.random() * 4;
+          this.life  = 1.0;
+          this.decay = 0.016 + Math.random() * 0.020;
+          // Palette oro/avorio/ambra
+          const pal = ['255,215,0', '255,255,210', '255,235,100', '210,165,10'];
+          this.color = pal[Math.floor(Math.random() * pal.length)];
+        }
+        SAParticle.prototype.update = function () {
+          this.vy += 0.14;
+          this.x  += this.vx;
+          this.y  += this.vy;
+          this.life -= this.decay;
+          this.r   *= 0.984;
+        };
+        SAParticle.prototype.draw = function (c) {
+          c.beginPath();
+          c.arc(this.x, this.y, Math.max(0, this.r), 0, Math.PI * 2);
+          c.fillStyle = `rgba(${this.color},${this.life.toFixed(2)})`;
+          c.fill();
+        };
+
+        function spawnBurst(ox, oy) {
+          const count = reducedMotion ? 0 : (type === 'cork' ? 60 : 30);
+          particles = Array.from({ length: count }, () => new SAParticle(ox, oy));
+        }
+
+        function particleLoop() {
+          const w = canvas.offsetWidth;
+          const h = canvas.offsetHeight;
+          ctx.clearRect(0, 0, w, h);
+          particles = particles.filter(p => p.life > 0);
+          particles.forEach(p => { p.update(); p.draw(ctx); });
+          if (particles.length > 0) {
+            particleRAF = requestAnimationFrame(particleLoop);
+          } else {
+            ctx.clearRect(0, 0, w, h);
+          }
+        }
+
+        // ══════════════════════════════════════════════════════
+        // COMPLETAMENTO
+        // ══════════════════════════════════════════════════════
+        function complete() {
+          if (isCompleted) return;
+          isCompleted = true;
+          isDragging  = false;
+
+          if (bubbleRAF) { cancelAnimationFrame(bubbleRAF); bubbleRAF = null; }
+          btn.classList.remove('is-dragging', 'is-tension');
+          btn.classList.add('is-complete');
+
+          // Burst particelle
+          resizeCanvas();
+          const tsz = parseFloat(getComputedStyle(thumb).width) || 56;
+          const originX = 6 + tsz + maxX;
+          const originY = btn.offsetHeight / 2;
+          spawnBurst(originX, originY);
+          if (particleRAF) cancelAnimationFrame(particleRAF);
+          particleRAF = requestAnimationFrame(particleLoop);
+
+          // Aggiorna ARIA
+          btn.setAttribute('aria-label', 'Azione completata, apertura in corso');
+
+          // ── Cork: "eject" thumb fuori destra ─────────────
+          if (type === 'cork') {
+            thumb.style.transition = 'transform 0.30s cubic-bezier(0.55,0,1,0.45), opacity 0.20s ease 0.10s';
+            thumb.style.transform  = `translateY(-50%) translateX(${maxX + 80}px)`;
+            thumb.style.opacity    = '0';
+          }
+
+          // ── Pour: flash gold border ───────────────────────
+          if (type === 'pour') {
+            btn.style.boxShadow = '0 0 0 2px rgba(255,215,0,0.55), inset 0 0 28px rgba(255,215,0,0.10)';
+          }
+
+          // Redirect dopo 1.5 s
+          setTimeout(() => {
+            if (actionUrl) window.location.href = actionUrl;
+          }, 1500);
+        }
+
+        // ── Reset (non usato nel redirect, ma utile per debug) ─
+        function reset() {
+          isCompleted = false;
+          btn.classList.remove('is-complete');
+          btn.setAttribute('aria-label', btn.dataset.ariaOriginal || 'Trascina per procedere');
+          if (particleRAF) { cancelAnimationFrame(particleRAF); particleRAF = null; }
+          ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+          particles = [];
+          btn.style.boxShadow = '';
+          thumb.style.transition = '';
+          thumb.style.opacity    = '1';
+          thumb.classList.add('is-returning');
+          setThumbX(0);
+          fill.style.width = '0%';
+          if (labelNormal) labelNormal.style.opacity = '1';
+          thumb.addEventListener('transitionend', () => thumb.classList.remove('is-returning'), { once: true });
+        }
+
+        // ══════════════════════════════════════════════════════
+        // POINTER EVENTS
+        // ══════════════════════════════════════════════════════
+        function onPointerDown(e) {
+          if (isCompleted) return;
+          // Solo pulsante sinistro su mouse; touch è sempre valido
+          if (e.pointerType === 'mouse' && e.button !== 0) return;
+          e.preventDefault();
+
+          isDragging   = true;
+          tensionFired = false;
+          startX       = e.clientX;
+
+          calcMaxX();
+          resizeCanvas();
+
+          btn.classList.add('is-dragging');
+          btn.setPointerCapture(e.pointerId);
+
+          if (bubbleRAF) cancelAnimationFrame(bubbleRAF);
+          bubbleRAF = requestAnimationFrame(bubbleLoop);
+        }
+
+        function onPointerMove(e) {
+          if (!isDragging || isCompleted) return;
+          e.preventDefault();
+
+          const delta    = e.clientX - startX;
+          const progress = setThumbX(currentX + delta);
+          startX         = e.clientX;
+
+          // Tensione
+          if (progress > tensionAt && !tensionFired) {
+            triggerTension();
+          }
+
+          // Completamento immediato a 100%
+          if (progress >= 0.995) {
+            complete();
+          }
+        }
+
+        function onPointerUp(e) {
+          if (!isDragging || isCompleted) return;
+          isDragging = false;
+
+          if (bubbleRAF) { cancelAnimationFrame(bubbleRAF); bubbleRAF = null; }
+          btn.classList.remove('is-dragging');
+          btn.releasePointerCapture(e.pointerId);
+
+          const progress = maxX > 0 ? currentX / maxX : 0;
+
+          if (progress >= snapThreshold) {
+            // ── Snap al 100% e completa ──
+            thumb.classList.add('is-returning');
+            setThumbX(maxX);
+            thumb.addEventListener('transitionend', () => {
+              thumb.classList.remove('is-returning');
+              complete();
+            }, { once: true });
+            // Fallback: se transitionend non scatta (es. reduced-motion)
+            setTimeout(() => { if (!isCompleted) complete(); }, 600);
+          } else {
+            // ── Spring-back elastico ──
+            thumb.classList.add('is-returning');
+            setThumbX(0);
+            fill.style.width = '0%';
+            if (labelNormal) labelNormal.style.opacity = '1';
+            thumb.addEventListener('transitionend', () => thumb.classList.remove('is-returning'), { once: true });
+            tensionFired = false;
+          }
+        }
+
+        // ── Keyboard accessibility ──────────────────────────
+        btn.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            if (!isCompleted) {
+              calcMaxX();
+              resizeCanvas();
+              setThumbX(maxX);
+              if (reducedMotion) {
+                // Salta animazione, esegui azione subito
+                complete();
+              } else {
+                thumb.classList.add('is-returning');
+                setTimeout(complete, 120);
+              }
+            }
+          }
+        });
+
+        // ── Registra Pointer Events ─────────────────────────
+        btn.addEventListener('pointerdown',   onPointerDown,  { passive: false });
+        btn.addEventListener('pointermove',   onPointerMove,  { passive: false });
+        btn.addEventListener('pointerup',     onPointerUp);
+        btn.addEventListener('pointercancel', onPointerUp);
+
+        // ── Resize ─────────────────────────────────────────
+        window.addEventListener('resize', () => {
+          if (!isCompleted) { calcMaxX(); resizeCanvas(); }
+        }, { passive: true });
+
+        // ── Init ───────────────────────────────────────────
+        calcMaxX();
+        resizeCanvas();
+
+      } // fine createSwipeAction
+
+      // ══════════════════════════════════════════════════════
+      // INIZIALIZZAZIONE ISTANZE
+      // ══════════════════════════════════════════════════════
+
+      // 1. Cork Pop — "Partecipa a un Evento" (index.html → contatti.html)
+      createSwipeAction({
+        btnId:     'sa-eventi',
+        type:      'cork',
+        actionUrl: './contatti.html',
+      });
+
+      // 2. Wine Pour — "Prenota la Degustazione" (index.html → contatti.html)
+      createSwipeAction({
+        btnId:     'sa-degustazione',
+        type:      'pour',
+        actionUrl: './contatti.html',
+      });
+
+      // 3. Cork Pop — "Chiedi un Consiglio" (index.html #advisory → contatti.html)
+      createSwipeAction({
+        btnId:     'sa-advisory',
+        type:      'cork',
+        actionUrl: './contatti.html',
+      });
+
+      // 4. Cork Pop — "Chiedi un Consiglio" (chi-siamo.html → contatti.html)
+      createSwipeAction({
+        btnId:     'sa-chisiamo-consiglio',
+        type:      'cork',
+        actionUrl: './contatti.html',
+      });
+
+    })(); // fine initSwipeActions
