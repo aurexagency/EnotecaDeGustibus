@@ -991,18 +991,18 @@
       // INIZIALIZZAZIONE ISTANZE
       // ══════════════════════════════════════════════════════
 
-      // 1. Cork Pop — "Partecipa a un Evento" (index.html → contatti.html)
+      // 1. Cork Pop — "Partecipa a un Evento" (index.html → prenotazione-evento.html)
       createSwipeAction({
         btnId:     'sa-eventi',
         type:      'cork',
-        actionUrl: './contatti.html',
+        actionUrl: './prenotazione-evento.html',
       });
 
-      // 2. Wine Pour — "Prenota la Degustazione" (index.html → contatti.html)
+      // 2. Wine Pour — "Prenota la Degustazione" (index.html → prenotazione-degustazione.html)
       createSwipeAction({
         btnId:     'sa-degustazione',
         type:      'pour',
-        actionUrl: './contatti.html',
+        actionUrl: './prenotazione-degustazione.html',
       });
 
       // 3. Cork Pop — "Chiedi un Consiglio" (index.html #advisory → contatti.html)

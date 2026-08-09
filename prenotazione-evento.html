@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prenota un Evento — Enoteca Degustibus</title>
+  <meta name="description" content="Riserva il tuo posto agli eventi esclusivi dell'Enoteca Degustibus: masterclass, serate con i produttori, musica dal vivo e degustazioni in barca." />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+
+  <style>
+    body {
+      background-color: var(--color-bordeaux);
+      min-height: 100vh;
+    }
+
+    /* ─── Nav ─── */
+    .page-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      padding: var(--space-3) var(--space-6);
+      transition: background 0.5s ease, border-color 0.5s ease;
+    }
+    .page-nav.scrolled {
+      background: rgba(28, 0, 8, 0.90);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-line);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--color-avorio-dim);
+      transition: color 0.3s ease;
+    }
+    .back-link:hover { color: var(--color-oro); }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .back-link svg { transition: transform 0.3s ease; }
+
+    /* ═══════════════════════════════════════════════════════
+       LAYOUT 2 colonne
+       ═══════════════════════════════════════════════════════ */
+    .pe-wrapper {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* ─── Colonna Info ─── */
+    .pe-info {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--space-16) var(--space-10) var(--space-16) var(--space-8);
+      background: var(--color-bordeaux-deeper);
+      overflow: hidden;
+    }
+    /* Cerchi decorativi */
+    .pe-info::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -20%;
+      width: 65%; height: 65%;
+      border-radius: 50%;
+      border: 1px solid var(--color-line);
+      pointer-events: none;
+    }
+    .pe-info::after {
+      content: '';
+      position: absolute;
+      top: -30%; right: -30%;
+      width: 85%; height: 85%;
+      border-radius: 50%;
+      border: 1px solid var(--color-line);
+      pointer-events: none;
+      opacity: 0.4;
+    }
+    .pe-info__inner { position: relative; z-index: 2; }
+
+    .pe-info__eyebrow {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin-bottom: var(--space-4);
+    }
+    .pe-info__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(36px, 3.8vw, 56px);
+      line-height: 1.08;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-5);
+    }
+    .pe-info__title em { color: var(--color-oro); font-style: italic; }
+    .pe-info__body {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--color-avorio-dim);
+      max-width: 44ch;
+      margin-bottom: var(--space-8);
+    }
+    .pe-divider {
+      width: 48px; height: 1px;
+      background: var(--color-oro);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Elenco tipi evento */
+    .pe-event-types {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      border-top: 1px solid var(--color-line);
+      padding-top: var(--space-5);
+    }
+    .pe-event-type {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+    .pe-event-type__dot {
+      width: 5px; height: 5px;
+      background: var(--color-oro);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+    .pe-event-type__label {
+      font-family: var(--font-serif);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--color-avorio);
+      line-height: 1.5;
+    }
+    .pe-event-type__desc {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--color-avorio-dim);
+      letter-spacing: 0.03em;
+    }
+
+    /* ─── Colonna Form ─── */
+    .pe-form-col {
+      padding: calc(var(--space-16) + var(--space-6)) var(--space-8) var(--space-16);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .pe-form-header {
+      margin-bottom: var(--space-8);
+    }
+    .pe-form-header h2 {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(24px, 3vw, 36px);
+      color: var(--color-avorio);
+      margin-bottom: var(--space-1);
+      letter-spacing: 0.01em;
+    }
+    .pe-form-header p {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--color-avorio-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Floating Label Fields ── */
+    .field {
+      position: relative;
+      padding-top: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+    .field label {
+      position: absolute;
+      top: var(--space-3);
+      left: 0;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--color-avorio-dim);
+      letter-spacing: 0.06em;
+      pointer-events: none;
+      transform-origin: left top;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .field input:focus ~ label,
+    .field input:not(:placeholder-shown) ~ label,
+    .field select:focus ~ label,
+    .field select:valid ~ label {
+      transform: translateY(-22px) scale(0.78);
+      color: var(--color-oro);
+      letter-spacing: 0.20em;
+    }
+    .field input,
+    .field select {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255, 255, 240, 0.25);
+      padding: var(--space-1) 0 10px 0;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--color-avorio);
+      letter-spacing: 0.04em;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 0;
+      transition: border-color 0.3s ease;
+    }
+    .field input::placeholder { color: transparent; }
+    .field input:focus,
+    .field select:focus {
+      border-bottom-color: var(--color-oro);
+      box-shadow: 0 2px 0 -1px rgba(255, 215, 0, 0.2);
+    }
+    .field select option {
+      background: var(--color-bordeaux-darker, #2a0009);
+      color: var(--color-avorio);
+    }
+    .field--required label::after { content: ' *'; color: var(--color-oro); font-size: 10px; }
+    .field--select { position: relative; }
+    .field--select::after {
+      content: '';
+      position: absolute;
+      right: 0; bottom: 14px;
+      width: 8px; height: 8px;
+      border-right: 1px solid var(--color-oro);
+      border-bottom: 1px solid var(--color-oro);
+      transform: rotate(45deg);
+      pointer-events: none;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+    .form-separator {
+      height: 1px;
+      background: var(--color-line);
+      margin-block: var(--space-4);
+    }
+
+    /* ── Submit ── */
+    .form-submit-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-6);
+    }
+    .form-note {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 300;
+      color: rgba(255, 255, 240, 0.28);
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      max-width: 28ch;
+    }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-6);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      background: transparent;
+      color: var(--color-oro);
+      border: 1px solid var(--color-oro);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--color-oro);
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+    }
+    .btn-submit:hover::before,
+    .btn-submit:focus-visible::before { transform: translateX(0); }
+    .btn-submit:hover,
+    .btn-submit:focus-visible {
+      color: var(--color-bordeaux-deeper);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 215, 0, 0.20);
+      outline: none;
+    }
+    .btn-submit span, .btn-submit svg { position: relative; z-index: 1; }
+
+    /* ── Success ── */
+    .form-success {
+      display: none;
+      padding: var(--space-8);
+      border: 1px solid var(--color-line);
+      text-align: center;
+    }
+    .form-success.visible { display: block; }
+    .form-success__icon { font-size: 28px; color: var(--color-oro); margin-bottom: var(--space-3); display: block; }
+    .form-success__title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--color-avorio);
+      margin-bottom: var(--space-2);
+    }
+    .form-success__body { font-size: 13px; color: var(--color-avorio-dim); line-height: 1.75; }
+
+    /* ── Reveal ── */
+    .cr-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cr-reveal.cr-visible { opacity: 1; transform: translateY(0); }
+    .cr-reveal--d1 { transition-delay: 0.08s; }
+    .cr-reveal--d2 { transition-delay: 0.18s; }
+    .cr-reveal--d3 { transition-delay: 0.30s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .pe-wrapper { grid-template-columns: 1fr; }
+      .pe-info { position: static; height: auto; padding: calc(var(--space-12) + var(--space-6)) var(--space-6) var(--space-10); }
+      .pe-form-col { padding: var(--space-10) var(--space-6) var(--space-16); }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+    }
+    @media (max-width: 640px) {
+      .pe-info { padding-inline: var(--space-4); }
+      .pe-form-col { padding-inline: var(--space-4); }
+      .page-nav { padding: var(--space-2) var(--space-4); }
+      .form-submit-row { flex-direction: column; align-items: flex-start; }
+      .btn-submit { width: 100%; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cr-reveal { opacity: 1; transform: none; transition: none; }
+      .field label, .field input, .field select, .btn-submit { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="page-nav" id="page-nav" aria-label="Navigazione pagina">
+    <a href="./contatti.html" class="back-link" aria-label="Torna ai Contatti">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Contatti
+    </a>
+  </nav>
+
+
+  <main id="main-content">
+    <div class="pe-wrapper">
+
+      <!-- ═══════════════════════════════════════════════════
+           COLONNA SINISTRA — Info Evento
+           ═══════════════════════════════════════════════════ -->
+      <aside class="pe-info" aria-label="Informazioni sugli eventi Degustibus">
+        <div class="pe-info__inner">
+
+          <span class="pe-info__eyebrow cr-reveal">Enoteca Degustibus</span>
+
+          <h1 class="pe-info__title cr-reveal cr-reveal--d1" id="pe-hero-title">
+            Serate che<br>rimangono <em>impresse.</em>
+          </h1>
+
+          <div class="pe-divider cr-reveal cr-reveal--d1" aria-hidden="true"></div>
+
+          <p class="pe-info__body cr-reveal cr-reveal--d2">
+            I nostri eventi non sono semplici degustazioni: sono appuntamenti culturali
+            che uniscono il vino all'arte, alla musica e all'incontro autentico tra persone.
+            Riserva il tuo posto e vivi un'esperienza che non dimenticherai.
+          </p>
+
+          <!-- Tipi di evento -->
+          <div class="pe-event-types cr-reveal cr-reveal--d3" role="list" aria-label="Tipologie di eventi disponibili">
+
+            <div class="pe-event-type" role="listitem">
+              <div class="pe-event-type__dot" aria-hidden="true"></div>
+              <div>
+                <p class="pe-event-type__label">Masterclass con i Produttori</p>
+                <p class="pe-event-type__desc">In italiano, francese e inglese · Max 20 persone</p>
+              </div>
+            </div>
+
+            <div class="pe-event-type" role="listitem">
+              <div class="pe-event-type__dot" aria-hidden="true"></div>
+              <div>
+                <p class="pe-event-type__label">Serate con Musica dal Vivo</p>
+                <p class="pe-event-type__desc">Abbinamenti vino · musica · atmosfera esclusiva</p>
+              </div>
+            </div>
+
+            <div class="pe-event-type" role="listitem">
+              <div class="pe-event-type__dot" aria-hidden="true"></div>
+              <div>
+                <p class="pe-event-type__label">Degustazioni in Barca</p>
+                <p class="pe-event-type__desc">Disponibili in stagione estiva · Prenotazione anticipata</p>
+              </div>
+            </div>
+
+            <div class="pe-event-type" role="listitem">
+              <div class="pe-event-type__dot" aria-hidden="true"></div>
+              <div>
+                <p class="pe-event-type__label">Serate Teatrali e Tematiche</p>
+                <p class="pe-event-type__desc">Esperienze sensoriali curate nel dettaglio</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+
+      <!-- ═══════════════════════════════════════════════════
+           COLONNA DESTRA — Form Prenotazione Evento
+           ═══════════════════════════════════════════════════ -->
+      <section class="pe-form-col" aria-labelledby="pe-form-title">
+
+        <header class="pe-form-header cr-reveal">
+          <h2 id="pe-form-title">Riserva il tuo Posto</h2>
+          <p>I campi contrassegnati con * sono obbligatori.</p>
+        </header>
+
+        <!-- Messaggio di successo -->
+        <div class="form-success" id="pe-form-success" role="status" aria-live="polite" aria-hidden="true">
+          <span class="form-success__icon" aria-hidden="true">◈</span>
+          <p class="form-success__title">Prenotazione ricevuta.</p>
+          <p class="form-success__body">
+            Il tuo posto è stato richiesto. Alessandra ti contatterà entro 24 ore
+            per confermare la disponibilità e i dettagli dell'evento.
+          </p>
+        </div>
+
+        <form
+          class="cr-reveal cr-reveal--d1"
+          id="pe-booking-form"
+          action="#"
+          method="post"
+          novalidate
+          aria-label="Form prenotazione evento esclusivo"
+        >
+
+          <!-- ── Blocco 1: Dati Personali ── -->
+          <div class="form-row">
+            <div class="field field--required">
+              <input type="text" id="pe-nome" name="nome" placeholder=" " required autocomplete="given-name" aria-required="true" />
+              <label for="pe-nome">Nome</label>
+            </div>
+            <div class="field field--required">
+              <input type="text" id="pe-cognome" name="cognome" placeholder=" " required autocomplete="family-name" aria-required="true" />
+              <label for="pe-cognome">Cognome</label>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="field field--required">
+              <input type="email" id="pe-email" name="email" placeholder=" " required autocomplete="email" aria-required="true" />
+              <label for="pe-email">Indirizzo Email</label>
+            </div>
+            <div class="field field--required">
+              <input type="tel" id="pe-telefono" name="telefono" placeholder=" " required autocomplete="tel" aria-required="true" />
+              <label for="pe-telefono">Numero di Telefono</label>
+            </div>
+          </div>
+
+          <div class="form-separator" aria-hidden="true"></div>
+
+          <!-- ── Blocco 2: Selezione Evento ── -->
+          <div class="field field--required field--select">
+            <select id="pe-evento" name="evento" required aria-required="true">
+              <option value="" disabled selected></option>
+              <option value="masterclass-vino">Masterclass — Vino con il Produttore</option>
+              <option value="masterclass-distillati">Masterclass — Distillati e Grappe</option>
+              <option value="serata-musica">Serata con Musica dal Vivo</option>
+              <option value="degustazione-barca">Degustazione in Barca</option>
+              <option value="serata-teatrale">Serata Teatrale e Tematica</option>
+              <option value="incontro-produttore">Incontro con il Vignaiolo</option>
+              <option value="altro">Altro (specificare nel messaggio)</option>
+            </select>
+            <label for="pe-evento">Selezione Evento</label>
+          </div>
+
+          <div class="field field--required">
+            <input
+              type="number"
+              id="pe-partecipanti"
+              name="partecipanti"
+              placeholder=" "
+              min="1"
+              max="20"
+              required
+              aria-required="true"
+              aria-describedby="pe-partecipanti-hint"
+            />
+            <label for="pe-partecipanti">Numero di Partecipanti</label>
+          </div>
+          <p id="pe-partecipanti-hint" style="font-family:var(--font-sans);font-size:10px;color:rgba(255,255,240,0.30);letter-spacing:0.04em;margin-top:-12px;margin-bottom:var(--space-5);">
+            Max 20 partecipanti per evento. Per gruppi numerosi contattaci direttamente.
+          </p>
+
+          <!-- ── Submit ── -->
+          <div class="form-submit-row">
+            <p class="form-note">I campi * sono obbligatori. Riceverai una conferma via email.</p>
+            <button type="submit" class="btn-submit" id="pe-submit-btn" aria-label="Invia richiesta di prenotazione evento">
+              <span>Riserva il Posto</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+
+  <script>
+    // ── Nav scroll ───────────────────────────────────
+    const pageNav = document.getElementById('page-nav');
+    window.addEventListener('scroll', () => {
+      pageNav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Reveal ───────────────────────────────────────
+    const revealEls = document.querySelectorAll('.cr-reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('cr-visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // ── Form submit ──────────────────────────────────
+    const form = document.getElementById('pe-booking-form');
+    const formSuccess = document.getElementById('pe-form-success');
+
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome     = document.getElementById('pe-nome');
+        const cognome  = document.getElementById('pe-cognome');
+        const email    = document.getElementById('pe-email');
+        const telefono = document.getElementById('pe-telefono');
+        const evento   = document.getElementById('pe-evento');
+        const part     = document.getElementById('pe-partecipanti');
+
+        const valid = nome.value.trim()
+          && cognome.value.trim()
+          && email.validity.valid
+          && telefono.value.trim()
+          && evento.value
+          && part.value;
+
+        if (valid) {
+          form.style.display = 'none';
+          formSuccess.classList.add('visible');
+          formSuccess.setAttribute('aria-hidden', 'false');
+        } else {
+          // Attiva la validazione nativa del browser
+          form.reportValidity();
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>

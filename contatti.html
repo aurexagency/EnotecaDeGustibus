@@ -3,47 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contatti & Prenotazioni — Enoteca Degustibus</title>
-  <meta name="description" content="Prenota una degustazione o un evento all'Enoteca Degustibus. Compila il form per riservare la tua esperienza sensoriale curata da Alessandra, Sommelier AIS." />
+  <title>Contatti — Enoteca Degustibus</title>
+  <meta name="description" content="Contatta l'Enoteca Degustibus. Telefono, WhatsApp, email e form per richieste generiche. Prenota una degustazione o partecipa ai nostri eventi esclusivi." />
+  <meta name="robots" content="index, follow" />
 
-  <!-- Fonts: Cormorant Garamond + Inter — in sincronia con la Home -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <!-- DESIGN SYSTEM GLOBALE — palette, reset, utility -->
   <link rel="stylesheet" href="/style.css" />
 
   <style>
-
-    /* ═══════════════════════════════════════════════════════
-       OVERRIDE BODY — Canvas Bordeaux
-       ═══════════════════════════════════════════════════════ */
     body {
       background-color: var(--color-bordeaux);
       min-height: 100vh;
     }
 
-    /* ═══════════════════════════════════════════════════════
-       NAV MINIMALE
-       ═══════════════════════════════════════════════════════ */
+    /* ─── Nav ─── */
     .page-nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 50;
       padding: var(--space-3) var(--space-6);
       transition: background 0.5s ease, border-color 0.5s ease;
     }
-
     .page-nav.scrolled {
       background: rgba(28, 0, 8, 0.90);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--color-line);
     }
-
     .back-link {
       display: inline-flex;
       align-items: center;
@@ -56,201 +44,234 @@
       color: var(--color-avorio-dim);
       transition: color 0.3s ease;
     }
-
     .back-link:hover { color: var(--color-oro); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.3s ease; }
 
-    /* ═══════════════════════════════════════════════════════
-       LAYOUT PRINCIPALE — 2 colonne asimmetriche
-       ═══════════════════════════════════════════════════════ */
-    .ct-wrapper {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* ─── Hero ─── */
+    .ct-hero {
+      padding: calc(var(--space-16) + var(--space-8)) var(--space-8) var(--space-12);
+      text-align: center;
+      border-bottom: 1px solid var(--color-line);
     }
-
-    /* ─── Colonna Sinistra: Info & Mood ─── */
-    .ct-info {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: var(--space-16) var(--space-10) var(--space-16) var(--space-8);
-      background: var(--color-bordeaux-deeper);
-      overflow: hidden;
-    }
-
-    /* Decorazione geometrica di sfondo */
-    .ct-info::before {
-      content: '';
-      position: absolute;
-      bottom: -20%;
-      left: -15%;
-      width: 70%;
-      height: 70%;
-      border-radius: 50%;
-      border: 1px solid var(--color-line);
-      pointer-events: none;
-    }
-
-    .ct-info::after {
-      content: '';
-      position: absolute;
-      bottom: -30%;
-      left: -25%;
-      width: 90%;
-      height: 90%;
-      border-radius: 50%;
-      border: 1px solid var(--color-line);
-      pointer-events: none;
-      opacity: 0.5;
-    }
-
-    .ct-info__inner {
-      position: relative;
-      z-index: 2;
-    }
-
-    .ct-info__eyebrow {
+    .ct-hero__eyebrow {
       display: block;
       font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 500;
-      letter-spacing: 0.40em;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
       color: var(--color-oro);
       margin-bottom: var(--space-4);
     }
-
-    .ct-info__title {
+    .ct-hero__title {
       font-family: var(--font-serif);
       font-weight: 300;
       font-style: italic;
-      font-size: clamp(38px, 4vw, 58px);
-      line-height: 1.1;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 1.05;
       color: var(--color-avorio);
       margin-bottom: var(--space-5);
     }
-
-    .ct-info__title em {
-      color: var(--color-oro);
-      font-style: italic;
-    }
-
-    .ct-info__body {
+    .ct-hero__title em { color: var(--color-oro); font-style: italic; }
+    .ct-hero__sub {
       font-family: var(--font-sans);
       font-size: 14px;
       font-weight: 300;
-      line-height: 1.85;
       color: var(--color-avorio-dim);
-      max-width: 44ch;
-      margin-bottom: var(--space-8);
+      letter-spacing: 0.05em;
+      line-height: 1.9;
+      max-width: 52ch;
+      margin: 0 auto;
     }
 
-    /* Divisore Oro sottile */
-    .ct-divider {
-      width: 48px;
-      height: 1px;
-      background: var(--color-oro);
-      margin-bottom: var(--space-6);
+    /* ─── Contatti rapidi ─── */
+    .ct-quick {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: 1px solid var(--color-line);
     }
-
-    /* Blocco indirizzo e contatti */
-    .ct-contact-details {
+    .ct-quick__item {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
       gap: var(--space-3);
-      border-top: 1px solid var(--color-line);
-      padding-top: var(--space-5);
+      padding: var(--space-10) var(--space-6);
+      border-right: 1px solid var(--color-line);
+      text-decoration: none;
+      transition: background 0.35s ease;
+      text-align: center;
     }
-
-    .ct-contact-item {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
+    .ct-quick__item:last-child { border-right: none; }
+    .ct-quick__item:hover { background: rgba(255, 215, 0, 0.04); }
+    .ct-quick__item:hover .ct-quick__icon {
+      color: var(--color-oro);
+      transform: translateY(-3px);
     }
-
-    .ct-contact-item__label {
+    .ct-quick__icon {
+      font-size: 22px;
+      color: var(--color-avorio-dim);
+      transition: color 0.3s ease, transform 0.3s ease;
+      line-height: 1;
+    }
+    .ct-quick__label {
       font-family: var(--font-sans);
       font-size: 9px;
       font-weight: 500;
-      letter-spacing: 0.30em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--color-oro);
-      padding-top: 2px;
-      min-width: 64px;
     }
-
-    .ct-contact-item__value {
-      font-family: var(--font-sans);
-      font-size: 13px;
+    .ct-quick__value {
+      font-family: var(--font-serif);
+      font-size: 17px;
       font-weight: 300;
-      line-height: 1.7;
+      color: var(--color-avorio);
+      line-height: 1.3;
+    }
+    .ct-quick__hint {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 300;
       color: var(--color-avorio-dim);
+      letter-spacing: 0.04em;
     }
 
-    .ct-contact-item__value a {
-      color: var(--color-avorio-dim);
-      transition: color 0.25s ease;
+    /* ─── Section eyebrow ─── */
+    .ct-section-eyebrow {
+      text-align: center;
+      padding: var(--space-12) var(--space-6) var(--space-8);
     }
-
-    .ct-contact-item__value a:hover { color: var(--color-oro); }
-
-    /* ─── Colonna Destra: The Form Engine ─── */
-    .ct-form-col {
-      padding: calc(var(--space-16) + var(--space-6)) var(--space-8) var(--space-16);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .ct-section-eyebrow span {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.40em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin-bottom: var(--space-3);
     }
-
-    .ct-form-header {
-      margin-bottom: var(--space-8);
-    }
-
-    .ct-form-header h2 {
+    .ct-section-eyebrow h2 {
       font-family: var(--font-serif);
       font-weight: 300;
-      font-size: clamp(26px, 3vw, 36px);
+      font-size: clamp(24px, 3vw, 36px);
       color: var(--color-avorio);
-      margin-bottom: var(--space-1);
-      letter-spacing: 0.01em;
     }
 
-    .ct-form-header p {
+    /* ─── CTA Cards ─── */
+    .ct-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--color-line);
+      border-bottom: 1px solid var(--color-line);
+    }
+    .ct-card {
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-8) var(--space-6);
+      border-right: 1px solid var(--color-line);
+      text-decoration: none;
+      transition: background 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .ct-card:last-child { border-right: none; }
+    .ct-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--color-oro);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .ct-card:hover { background: rgba(255, 215, 0, 0.03); }
+    .ct-card:hover::before { transform: scaleX(1); }
+    .ct-card__num {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.20em;
+      color: var(--color-oro);
+      opacity: 0.6;
+      margin-bottom: var(--space-5);
+    }
+    .ct-card__title {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 300;
+      color: var(--color-avorio);
+      line-height: 1.2;
+      margin-bottom: var(--space-3);
+    }
+    .ct-card__desc {
       font-family: var(--font-sans);
       font-size: 12px;
       font-weight: 300;
       color: var(--color-avorio-dim);
-      letter-spacing: 0.05em;
+      line-height: 1.85;
+      letter-spacing: 0.03em;
+      flex: 1;
+      margin-bottom: var(--space-6);
     }
-
-    /* ═══════════════════════════════════════════════════════
-       FORM — Air Design con Floating Labels
-       ═══════════════════════════════════════════════════════ */
-    .booking-form {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+    .ct-card__arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      transition: gap 0.3s ease;
     }
+    .ct-card:hover .ct-card__arrow { gap: var(--space-3); }
+    .ct-card__arrow svg { width: 16px; height: 16px; transition: transform 0.3s ease; }
+    .ct-card:hover .ct-card__arrow svg { transform: translateX(4px); }
 
-    /* Gruppi a 2 colonne per i campi affiancati */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-3);
+    /* ─── Form generico ─── */
+    .ct-form-section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: var(--space-12) var(--space-6) var(--space-16);
     }
-
-    /* ─── Campo Floating Label ─── */
+    .ct-form-section header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+    .ct-form-section header span {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.40em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin-bottom: var(--space-3);
+    }
+    .ct-form-section header h2 {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(24px, 3vw, 34px);
+      color: var(--color-avorio);
+      margin-bottom: var(--space-2);
+    }
+    .ct-form-section header p {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--color-avorio-dim);
+      letter-spacing: 0.04em;
+    }
     .field {
       position: relative;
-      padding-top: var(--space-3);     /* Spazio per la label flottante */
-      margin-bottom: var(--space-5);   /* Respiro verticale tra i campi */
+      padding-top: var(--space-3);
+      margin-bottom: var(--space-5);
     }
-
     .field label {
       position: absolute;
       top: var(--space-3);
@@ -262,24 +283,17 @@
       letter-spacing: 0.06em;
       pointer-events: none;
       transform-origin: left top;
-      transition: transform 0.3s ease, color 0.3s ease, font-size 0.3s ease;
+      transition: transform 0.3s ease, color 0.3s ease;
     }
-
-    /* La label scatta in alto quando il campo è attivo o ha valore */
     .field input:focus ~ label,
     .field input:not(:placeholder-shown) ~ label,
     .field textarea:focus ~ label,
-    .field textarea:not(:placeholder-shown) ~ label,
-    .field select:focus ~ label,
-    .field select:valid ~ label {
+    .field textarea:not(:placeholder-shown) ~ label {
       transform: translateY(-22px) scale(0.78);
       color: var(--color-oro);
       letter-spacing: 0.20em;
     }
-
-    /* Input, select, textarea — design "aria" */
     .field input,
-    .field select,
     .field textarea {
       width: 100%;
       background: transparent;
@@ -292,203 +306,45 @@
       color: var(--color-avorio);
       letter-spacing: 0.04em;
       outline: none;
-      appearance: none;           /* Rimuove lo stile nativo del browser */
-      -webkit-appearance: none;
-      border-radius: 0;           /* Geometria rigorosa: niente arrotondamenti */
+      border-radius: 0;
       transition: border-color 0.3s ease;
     }
-
     .field input::placeholder,
-    .field textarea::placeholder {
-      color: transparent;         /* Placeholder nascosto — usiamo la floating label */
-    }
-
-    /* Focus state: border-bottom oro + glow sottile */
+    .field textarea::placeholder { color: transparent; }
     .field input:focus,
-    .field select:focus,
     .field textarea:focus {
       border-bottom-color: var(--color-oro);
       box-shadow: 0 2px 0 -1px rgba(255, 215, 0, 0.2);
     }
+    .field textarea { resize: none; min-height: 96px; line-height: 1.7; }
+    .field--required label::after { content: ' *'; color: var(--color-oro); font-size: 10px; }
 
-    /* Textarea */
-    .field textarea {
-      resize: none;
-      min-height: 80px;
-      line-height: 1.7;
-    }
-
-    /* Select — chevron personalizzato in Oro */
-    .field--select { position: relative; }
-
-    .field--select::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      bottom: 14px;
-      width: 8px;
-      height: 8px;
-      border-right: 1px solid var(--color-oro);
-      border-bottom: 1px solid var(--color-oro);
-      transform: rotate(45deg);
-      pointer-events: none;
-    }
-
-    .field select option {
-      background: var(--color-bordeaux-darker, #2a0009);
-      color: var(--color-avorio);
-    }
-
-    /* Date e Time — icona calendario nativa rimossa */
-    .field input[type="date"],
-    .field input[type="time"] {
-      color-scheme: dark;         /* Fa scurire il picker nativo del browser */
-    }
-
-    /* ─── Required marker ─── */
-    .field--required label::after {
-      content: ' *';
-      color: var(--color-oro);
-      font-size: 10px;
-    }
-
-    /* Separatore visivo tra blocchi del form */
-    .form-separator {
-      height: 1px;
-      background: var(--color-line);
-      margin-block: var(--space-4);
-    }
-
-    /* ─── Sezione Scelta Percorso — Radio custom ─── */
-    .form-section-label {
-      font-family: var(--font-sans);
-      font-size: 9px;
-      font-weight: 500;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--color-oro);
-      display: block;
-      margin-bottom: var(--space-4);
-    }
-
-    .percorso-group {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-      margin-bottom: var(--space-5);
-    }
-
-    /* Input radio nascosto + label custom */
-    .percorso-option {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-3);
-      cursor: pointer;
-      padding: var(--space-3) var(--space-4);
-      border: 1px solid var(--color-line);
-      transition: border-color 0.3s ease, background 0.3s ease;
-    }
-
-    .percorso-option:hover {
-      border-color: rgba(255, 215, 0, 0.30);
-      background: rgba(255, 215, 0, 0.04);
-    }
-
-    /* Quando il radio figlio è checked, la label si illumina */
-    .percorso-option:has(input[type="radio"]:checked) {
-      border-color: var(--color-oro);
-      background: rgba(255, 215, 0, 0.06);
-    }
-
-    .percorso-option input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* Indicatore radio custom */
-    .percorso-option__dot {
-      width: 16px;
-      height: 16px;
-      border: 1px solid rgba(255, 255, 240, 0.30);
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 2px;
-      position: relative;
-      transition: border-color 0.3s ease;
-    }
-
-    .percorso-option:has(input:checked) .percorso-option__dot {
-      border-color: var(--color-oro);
-    }
-
-    .percorso-option__dot::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      width: 7px;
-      height: 7px;
-      background: var(--color-oro);
-      border-radius: 50%;
-      transition: transform 0.25s ease;
-    }
-
-    .percorso-option:has(input:checked) .percorso-option__dot::after {
-      transform: translate(-50%, -50%) scale(1);
-    }
-
-    .percorso-option__text {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .percorso-option__name {
-      font-family: var(--font-serif);
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--color-avorio);
-      line-height: 1.2;
-    }
-
-    .percorso-option__desc {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      font-weight: 300;
-      color: var(--color-avorio-dim);
-      line-height: 1.6;
-      letter-spacing: 0.03em;
-    }
-
-    /* ─── Submit Button ─── */
-    .form-submit-row {
+    .form-submit-wrap {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: var(--space-3);
       margin-top: var(--space-6);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-line);
     }
-
     .form-note {
       font-family: var(--font-sans);
       font-size: 10px;
       font-weight: 300;
-      color: rgba(255, 255, 240, 0.30);
-      letter-spacing: 0.05em;
+      color: rgba(255, 255, 240, 0.28);
+      letter-spacing: 0.04em;
       line-height: 1.6;
       max-width: 28ch;
     }
-
     .btn-submit {
       display: inline-flex;
       align-items: center;
       gap: var(--space-2);
       padding: var(--space-2) var(--space-6);
       font-family: var(--font-sans);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.24em;
       text-transform: uppercase;
@@ -496,13 +352,10 @@
       color: var(--color-oro);
       border: 1px solid var(--color-oro);
       cursor: pointer;
-      transition: background 0.35s ease, color 0.35s ease, transform 0.35s ease,
-                  box-shadow 0.35s ease;
       position: relative;
       overflow: hidden;
+      transition: color 0.35s ease, transform 0.35s ease, box-shadow 0.35s ease;
     }
-
-    /* Shimmer interno al bottone */
     .btn-submit::before {
       content: '';
       position: absolute;
@@ -512,135 +365,90 @@
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       z-index: 0;
     }
-
     .btn-submit:hover::before,
-    .btn-submit:focus-visible::before {
-      transform: translateX(0);
-    }
-
+    .btn-submit:focus-visible::before { transform: translateX(0); }
     .btn-submit:hover,
     .btn-submit:focus-visible {
       color: var(--color-bordeaux-deeper);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(255, 215, 0, 0.20);
+      box-shadow: 0 8px 24px rgba(255, 215, 0, 0.18);
       outline: none;
     }
+    .btn-submit span, .btn-submit svg { position: relative; z-index: 1; }
 
-    .btn-submit span,
-    .btn-submit svg {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ─── Messaggio di conferma (nascosto di default) ─── */
     .form-success {
       display: none;
       padding: var(--space-6);
-      border: 1px solid var(--color-card-border);
+      border: 1px solid var(--color-line);
       text-align: center;
     }
-
-    .form-success.visible {
-      display: block;
-    }
-
-    .form-success__icon {
-      font-size: 28px;
-      color: var(--color-oro);
-      margin-bottom: var(--space-3);
-      display: block;
-    }
-
+    .form-success.visible { display: block; }
+    .form-success__icon { font-size: 26px; color: var(--color-oro); margin-bottom: var(--space-3); display: block; }
     .form-success__title {
       font-family: var(--font-serif);
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 300;
       font-style: italic;
       color: var(--color-avorio);
       margin-bottom: var(--space-2);
     }
+    .form-success__body { font-size: 13px; color: var(--color-avorio-dim); line-height: 1.75; }
 
-    .form-success__body {
-      font-size: 13px;
-      color: var(--color-avorio-dim);
-      line-height: 1.75;
+    /* ─── Indirizzo ─── */
+    .ct-address {
+      text-align: center;
+      padding: var(--space-8) var(--space-6);
+      border-top: 1px solid var(--color-line);
     }
+    .ct-address address {
+      font-style: normal;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--color-avorio-dim);
+      line-height: 2;
+      letter-spacing: 0.04em;
+    }
+    .ct-address a { color: var(--color-oro); }
 
-    /* ═══════════════════════════════════════════════════════
-       SCROLL REVEAL
-       ═══════════════════════════════════════════════════════ */
+    /* ─── Reveal ─── */
     .cr-reveal {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(20px);
       transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
                   transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
-
-    .cr-reveal.cr-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .cr-reveal.cr-visible { opacity: 1; transform: translateY(0); }
     .cr-reveal--d1 { transition-delay: 0.08s; }
     .cr-reveal--d2 { transition-delay: 0.18s; }
-    .cr-reveal--d3 { transition-delay: 0.28s; }
-    .cr-reveal--d4 { transition-delay: 0.40s; }
+    .cr-reveal--d3 { transition-delay: 0.30s; }
 
-    /* ═══════════════════════════════════════════════════════
-       RESPONSIVE
-       ═══════════════════════════════════════════════════════ */
-    @media (max-width: 1024px) {
-      .ct-wrapper {
-        grid-template-columns: 1fr;
-      }
-
-      .ct-info {
-        position: static;
-        height: auto;
-        padding: calc(var(--space-12) + var(--space-6)) var(--space-6) var(--space-10);
-      }
-
-      .ct-form-col {
-        padding: var(--space-10) var(--space-6) var(--space-16);
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .ct-quick { grid-template-columns: 1fr; }
+      .ct-quick__item { border-right: none; border-bottom: 1px solid var(--color-line); }
+      .ct-quick__item:last-child { border-bottom: none; }
+      .ct-cards { grid-template-columns: 1fr; }
+      .ct-card { border-right: none; border-bottom: 1px solid var(--color-line); }
+      .ct-card:last-child { border-bottom: none; }
     }
-
     @media (max-width: 640px) {
-      .ct-info { padding-inline: var(--space-4); }
-      .ct-form-col { padding-inline: var(--space-4); }
+      .ct-hero { padding-inline: var(--space-4); }
+      .ct-form-section { padding-inline: var(--space-4); }
       .page-nav { padding: var(--space-2) var(--space-4); }
-      .form-submit-row { flex-direction: column; align-items: flex-start; }
+      .form-submit-wrap { flex-direction: column; align-items: flex-start; }
       .btn-submit { width: 100%; justify-content: center; }
     }
-
-    /* ─── Reduced Motion ─── */
     @media (prefers-reduced-motion: reduce) {
-      .cr-reveal {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
-      .field label,
-      .field input,
-      .field select,
-      .field textarea,
-      .percorso-option,
-      .btn-submit { transition: none; }
+      .cr-reveal { opacity: 1; transform: none; transition: none; }
+      .ct-card::before, .ct-quick__icon, .ct-card__arrow, .btn-submit,
+      .field input, .field textarea, .field label { transition: none; }
     }
-
   </style>
 </head>
 
 <body>
 
-  <!-- ═══════════════════════════════════════════════════════
-       NAV MINIMALE — Solo link di ritorno
-       ═══════════════════════════════════════════════════════ -->
   <nav class="page-nav" id="page-nav" aria-label="Navigazione pagina">
     <a href="./index.html" class="back-link" aria-label="Torna alla Home di Degustibus">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
@@ -653,381 +461,200 @@
 
   <main id="main-content">
 
-    <div class="ct-wrapper">
+    <!-- ── Hero ── -->
+    <section class="ct-hero" aria-labelledby="ct-hero-title">
+      <span class="ct-hero__eyebrow cr-reveal">Siamo qui per te</span>
+      <h1 class="ct-hero__title cr-reveal cr-reveal--d1" id="ct-hero-title">
+        Ogni grande storia<br>inizia con un <em>contatto.</em>
+      </h1>
+      <p class="ct-hero__sub cr-reveal cr-reveal--d2">
+        Scrivici, chiamaci, o vieni a trovarci direttamente in enoteca.<br>
+        Alessandra risponde personalmente a ogni richiesta.
+      </p>
+    </section>
 
-      <!-- ═══════════════════════════════════════════════════
-           COLONNA SINISTRA — Info & Mood
-           ═══════════════════════════════════════════════════ -->
-      <aside class="ct-info" aria-label="Informazioni sull'enoteca">
-        <div class="ct-info__inner">
 
-          <span class="ct-info__eyebrow cr-reveal">Enoteca Degustibus</span>
+    <!-- ── Contatti Rapidi ── -->
+    <section aria-label="Contatti rapidi">
+      <div class="ct-quick cr-reveal cr-reveal--d2">
 
-          <h1 class="ct-info__title cr-reveal cr-reveal--d1">
-            Riserva la<br>
-            tua <em>Esperienza.</em>
-          </h1>
+        <a href="tel:+393454041576" class="ct-quick__item" aria-label="Chiama il numero 345 404 1576">
+          <span class="ct-quick__icon" aria-hidden="true">✆</span>
+          <span class="ct-quick__label">Telefono</span>
+          <span class="ct-quick__value">+39 345 404 1576</span>
+          <span class="ct-quick__hint">Lun – Sab · 10:00–19:30</span>
+        </a>
 
-          <div class="ct-divider cr-reveal cr-reveal--d1" aria-hidden="true"></div>
+        <a href="https://wa.me/393454041576" target="_blank" rel="noopener noreferrer" class="ct-quick__item" aria-label="Scrivici su WhatsApp al numero 345 404 1576">
+          <span class="ct-quick__icon" aria-hidden="true">◎</span>
+          <span class="ct-quick__label">WhatsApp</span>
+          <span class="ct-quick__value">345 404 1576</span>
+          <span class="ct-quick__hint">Risposta in giornata</span>
+        </a>
 
-          <p class="ct-info__body cr-reveal cr-reveal--d2">
-            Ogni degustazione è un percorso sensoriale unico, costruito attorno alle tue preferenze. Inviaci la tua richiesta e Alessandra ti contatterà personalmente per definire insieme l'esperienza perfetta.
+        <a href="mailto:degustibus.wine@gmail.com" class="ct-quick__item" aria-label="Invia email a degustibus.wine@gmail.com">
+          <span class="ct-quick__icon" aria-hidden="true">◈</span>
+          <span class="ct-quick__label">Email</span>
+          <span class="ct-quick__value">degustibus.wine@gmail.com</span>
+          <span class="ct-quick__hint">Risposta entro 24 ore</span>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- ── CTA Cards ── -->
+    <section aria-labelledby="ct-routes-title">
+      <div class="ct-section-eyebrow cr-reveal">
+        <span>Scegli la tua via</span>
+        <h2 id="ct-routes-title">Cosa stai cercando?</h2>
+      </div>
+
+      <div class="ct-cards">
+
+        <a href="./prenotazione-degustazione.html" class="ct-card cr-reveal" aria-label="Prenota una degustazione in enoteca">
+          <span class="ct-card__num">01</span>
+          <h3 class="ct-card__title">Prenota una<br>Degustazione</h3>
+          <p class="ct-card__desc">
+            Percorsi guidati con i produttori o sessioni conviviali su misura curate
+            da Alessandra. Per gruppi di amici, compleanni, team building e occasioni speciali.
           </p>
+          <span class="ct-card__arrow" aria-hidden="true">
+            Compila il form
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
 
-          <!-- Dettagli di contatto -->
-          <address class="ct-contact-details cr-reveal cr-reveal--d3">
-
-            <div class="ct-contact-item">
-              <span class="ct-contact-item__label">Dove</span>
-              <span class="ct-contact-item__value">
-                Via Guglielmo Oberdan 43a<br>
-                58100 Grosseto, Italy
-              </span>
-            </div>
-
-            <div class="ct-contact-item">
-              <span class="ct-contact-item__label">Scrivici</span>
-              <span class="ct-contact-item__value">
-                <a href="mailto:degustibus.wine@gmail.com" aria-label="Invia email a degustibus.wine@gmail.com">
-                  degustibus.wine@gmail.com
-                </a>
-              </span>
-            </div>
-
-            <div class="ct-contact-item">
-              <span class="ct-contact-item__label">Chiamaci</span>
-              <span class="ct-contact-item__value">
-                <a href="tel:+393454041576" aria-label="Chiama il numero 345 404 1576">
-                  345 404 1576
-                </a>
-              </span>
-            </div>
-
-            <div class="ct-contact-item">
-              <span class="ct-contact-item__label">Orari</span>
-              <span class="ct-contact-item__value">
-                Lun - Sab: 10:00 - 19:30
-              </span>
-            </div>
-
-          </address>
-
-        </div>
-      </aside>
-
-
-      <!-- ═══════════════════════════════════════════════════
-           COLONNA DESTRA — The Booking Engine
-           ═══════════════════════════════════════════════════ -->
-      <section class="ct-form-col" aria-labelledby="form-title">
-
-        <header class="ct-form-header cr-reveal">
-          <h2 id="form-title">Richiesta di Prenotazione</h2>
-          <p>I campi contrassegnati con * sono obbligatori.</p>
-        </header>
-
-        <!-- Messaggio di successo post-invio (hidden by default) -->
-        <div class="form-success" id="form-success" role="status" aria-live="polite" aria-hidden="true">
-          <span class="form-success__icon" aria-hidden="true">◈</span>
-          <p class="form-success__title">Richiesta ricevuta.</p>
-          <p class="form-success__body">
-            Grazie per averci contattato. Alessandra ti risponderà entro 24 ore per
-            confermare i dettagli della tua degustazione.
+        <a href="./prenotazione-evento.html" class="ct-card cr-reveal cr-reveal--d1" aria-label="Partecipa a un evento o masterclass">
+          <span class="ct-card__num">02</span>
+          <h3 class="ct-card__title">Partecipa a<br>un Evento</h3>
+          <p class="ct-card__desc">
+            Masterclass in italiano, francese e inglese, serate con musica dal vivo,
+            incontri con i produttori e degustazioni in barca. Esperienze culturali esclusive.
           </p>
+          <span class="ct-card__arrow" aria-hidden="true">
+            Riserva il tuo posto
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="mailto:degustibus.wine@gmail.com" class="ct-card cr-reveal cr-reveal--d2" aria-label="Scrivi per una richiesta generica">
+          <span class="ct-card__num">03</span>
+          <h3 class="ct-card__title">Richiesta<br>Generica</h3>
+          <p class="ct-card__desc">
+            Advisory per ristoranti, selezione cantine private, regali aziendali,
+            informazioni sui prodotti. Per ogni domanda che non rientra nelle categorie sopra.
+          </p>
+          <span class="ct-card__arrow" aria-hidden="true">
+            Scrivici qui sotto
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
+        </a>
+
+      </div>
+    </section>
+
+
+    <!-- ── Form Generico ── -->
+    <section class="ct-form-section" aria-labelledby="ct-form-title">
+      <header class="cr-reveal">
+        <span>Messaggio Generico</span>
+        <h2 id="ct-form-title">Scrivici direttamente</h2>
+        <p>Per tutto ciò che non rientra in una prenotazione. Risponderemo entro 24 ore.</p>
+      </header>
+
+      <div class="form-success" id="ct-form-success" role="status" aria-live="polite" aria-hidden="true">
+        <span class="form-success__icon" aria-hidden="true">◈</span>
+        <p class="form-success__title">Messaggio ricevuto.</p>
+        <p class="form-success__body">
+          Grazie per averci scritto. Alessandra risponderà al tuo messaggio entro 24 ore.
+        </p>
+      </div>
+
+      <form
+        class="cr-reveal cr-reveal--d1"
+        id="ct-generic-form"
+        action="#"
+        method="post"
+        novalidate
+        aria-label="Form messaggio generico"
+      >
+        <div class="field field--required">
+          <input type="text" id="ct-nome" name="nome" placeholder=" " required autocomplete="name" aria-required="true" />
+          <label for="ct-nome">Nome e Cognome</label>
+        </div>
+        <div class="field field--required">
+          <input type="email" id="ct-email" name="email" placeholder=" " required autocomplete="email" aria-required="true" />
+          <label for="ct-email">Indirizzo Email</label>
+        </div>
+        <div class="field field--required">
+          <textarea id="ct-messaggio" name="messaggio" placeholder=" " rows="5" required aria-required="true"></textarea>
+          <label for="ct-messaggio">Il tuo messaggio</label>
         </div>
 
-        <form
-          class="booking-form cr-reveal cr-reveal--d1"
-          id="booking-form"
-          action="#"
-          method="post"
-          novalidate
-          aria-label="Form di prenotazione degustazione"
-        >
+        <div class="form-submit-wrap">
+          <p class="form-note">I campi * sono obbligatori. Nessuno spam, privacy garantita.</p>
+          <button type="submit" class="btn-submit" id="ct-submit-btn" aria-label="Invia il tuo messaggio">
+            <span>Invia Messaggio</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </section>
 
-          <!-- ─── BLOCCO 1: Dati Personali ─── -->
-          <div class="form-row">
 
-            <!-- Nome e Cognome -->
-            <div class="field field--required">
-              <input
-                type="text"
-                id="full-name"
-                name="full_name"
-                placeholder=" "
-                required
-                autocomplete="name"
-                aria-required="true"
-                aria-describedby="full-name-hint"
-              />
-              <label for="full-name">Nome e Cognome</label>
-            </div>
-
-          </div>
-
-          <div class="form-row">
-
-            <!-- Email -->
-            <div class="field field--required">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder=" "
-                required
-                autocomplete="email"
-                aria-required="true"
-              />
-              <label for="email">Indirizzo Email</label>
-            </div>
-
-            <!-- Telefono -->
-            <div class="field field--required">
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder=" "
-                required
-                autocomplete="tel"
-                aria-required="true"
-              />
-              <label for="phone">Numero di Telefono</label>
-            </div>
-
-          </div>
-
-          <div class="form-separator" aria-hidden="true"></div>
-
-          <!-- ─── BLOCCO 2: Dettagli della Visita ─── -->
-          <div class="form-row">
-
-            <!-- Numero di Persone -->
-            <div class="field field--required field--select">
-              <select
-                id="num-persons"
-                name="num_persons"
-                required
-                aria-required="true"
-              >
-                <option value="" disabled selected></option>
-                <option value="1">1 persona</option>
-                <option value="2">2 persone</option>
-                <option value="3">3 persone</option>
-                <option value="4">4 persone</option>
-                <option value="5">5 persone</option>
-                <option value="6-10">6 – 10 persone</option>
-                <option value="11-20">11 – 20 persone (max guidata)</option>
-              </select>
-              <label for="num-persons">Numero di Persone</label>
-            </div>
-
-            <!-- Orario di Arrivo -->
-            <div class="field field--required">
-              <input
-                type="time"
-                id="arrival-time"
-                name="arrival_time"
-                placeholder=" "
-                required
-                aria-required="true"
-                min="10:00"
-                max="20:00"
-              />
-              <label for="arrival-time">Orario di Arrivo Preferito</label>
-            </div>
-
-          </div>
-
-          <div class="form-separator" aria-hidden="true"></div>
-
-          <!-- ─── BLOCCO 3: Scelta del Percorso ─── -->
-          <fieldset style="border: none; padding: 0; margin: 0 0 var(--space-2);">
-            <legend>
-              <span class="form-section-label" id="percorso-legend">
-                Scelta del Percorso di Degustazione
-              </span>
-            </legend>
-
-            <div class="percorso-group" role="radiogroup" aria-labelledby="percorso-legend">
-
-              <!-- Opzione 1: Degustazione Guidata -->
-              <label class="percorso-option" for="percorso-guidata">
-                <input
-                  type="radio"
-                  id="percorso-guidata"
-                  name="percorso"
-                  value="guidata_produttore"
-                  aria-describedby="desc-guidata"
-                />
-                <span class="percorso-option__dot" aria-hidden="true"></span>
-                <span class="percorso-option__text">
-                  <span class="percorso-option__name">Degustazione Guidata con il Produttore</span>
-                  <span class="percorso-option__desc" id="desc-guidata">
-                    Sessioni tematiche condotte dai vignaioli. Massimo 20 partecipanti. Calendario fisso.
-                  </span>
-                </span>
-              </label>
-
-              <!-- Opzione 2: Degustazione Conviviale -->
-              <label class="percorso-option" for="percorso-conviviale">
-                <input
-                  type="radio"
-                  id="percorso-conviviale"
-                  name="percorso"
-                  value="conviviale_misura"
-                  aria-describedby="desc-conviviale"
-                />
-                <span class="percorso-option__dot" aria-hidden="true"></span>
-                <span class="percorso-option__text">
-                  <span class="percorso-option__name">Degustazione Conviviale su Misura</span>
-                  <span class="percorso-option__desc" id="desc-conviviale">
-                    Percorso personalizzato curato da Alessandra. Ideale per celebrazioni e team building.
-                  </span>
-                </span>
-              </label>
-
-              <!-- Opzione 3: Evento / Masterclass -->
-              <label class="percorso-option" for="percorso-evento">
-                <input
-                  type="radio"
-                  id="percorso-evento"
-                  name="percorso"
-                  value="evento_masterclass"
-                  aria-describedby="desc-evento"
-                />
-                <span class="percorso-option__dot" aria-hidden="true"></span>
-                <span class="percorso-option__text">
-                  <span class="percorso-option__name">Partecipazione a Evento / Masterclass</span>
-                  <span class="percorso-option__desc" id="desc-evento">
-                    Serate d'élite, masterclass in italiano, francese e inglese, degustazioni in barca.
-                  </span>
-                </span>
-              </label>
-
-              <!-- Opzione 4: Consulenza Advisory -->
-              <label class="percorso-option" for="percorso-advisory">
-                <input
-                  type="radio"
-                  id="percorso-advisory"
-                  name="percorso"
-                  value="advisory_privato"
-                  aria-describedby="desc-advisory"
-                />
-                <span class="percorso-option__dot" aria-hidden="true"></span>
-                <span class="percorso-option__text">
-                  <span class="percorso-option__name">Consulenza Advisory Privata</span>
-                  <span class="percorso-option__desc" id="desc-advisory">
-                    Carta dei vini, cantina privata, regali aziendali, one-to-one con Alessandra.
-                  </span>
-                </span>
-              </label>
-
-            </div>
-          </fieldset>
-
-          <div class="form-separator" aria-hidden="true"></div>
-
-          <!-- ─── BLOCCO 4: Note Aggiuntive ─── -->
-
-          <!-- Allergie / Intolleranze (opzionale) -->
-          <div class="field">
-            <textarea
-              id="allergie"
-              name="allergie"
-              placeholder=" "
-              rows="3"
-              autocomplete="off"
-              aria-label="Allergie o intolleranze alimentari (opzionale)"
-            ></textarea>
-            <label for="allergie">Allergie o Intolleranze <span style="font-size:10px; opacity:0.5;">(opzionale)</span></label>
-          </div>
-
-          <!-- ─── Submit ─── -->
-          <div class="form-submit-row">
-            <p class="form-note">
-              I tuoi dati sono trattati nel rispetto della Privacy Policy.<br>
-              Non inviamo spam.
-            </p>
-            <button
-              type="submit"
-              class="btn-submit"
-              id="btn-submit"
-              aria-label="Invia la richiesta di prenotazione"
-            >
-              <span>Invia Richiesta</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </button>
-          </div>
-
-        </form>
-
-      </section>
-    </div>
+    <!-- ── Indirizzo ── -->
+    <aside class="ct-address cr-reveal" aria-label="Indirizzo e orari dell'enoteca">
+      <address>
+        Via Guglielmo Oberdan 43a · 58100 Grosseto, Italy<br>
+        Lunedì – Sabato: 10:00–19:30<br>
+        <a href="mailto:degustibus.wine@gmail.com" aria-label="Scrivi a degustibus.wine@gmail.com">degustibus.wine@gmail.com</a>
+      </address>
+    </aside>
 
   </main>
 
 
-  <!-- ═══════════════════════════════════════════════════════
-       JAVASCRIPT — Nav scroll + Scroll Reveal + Form UX
-       (Vanilla JS puro, nessuna dipendenza esterna)
-       ═══════════════════════════════════════════════════════ -->
   <script>
-    'use strict';
-
-    // ── Nav: diventa solida allo scroll ──────────────────
     const pageNav = document.getElementById('page-nav');
     window.addEventListener('scroll', () => {
-      pageNav.classList.toggle('scrolled', window.scrollY > 32);
+      pageNav.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
 
-    // ── Scroll Reveal ─────────────────────────────────────
-    const crElements = document.querySelectorAll('.cr-reveal');
-    const crObserver = new IntersectionObserver((entries) => {
+    const revealEls = document.querySelectorAll('.cr-reveal');
+    const revealObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('cr-visible');
-          crObserver.unobserve(entry.target);
+          revealObs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.10, rootMargin: '0px 0px -32px 0px' });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObs.observe(el));
 
-    crElements.forEach(el => crObserver.observe(el));
-
-    // ── Form: Submit Handler ──────────────────────────────
-    const bookingForm = document.getElementById('booking-form');
-    const formSuccess = document.getElementById('form-success');
-    const btnSubmit   = document.getElementById('btn-submit');
-
-    bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // Validazione base HTML5
-      if (!bookingForm.checkValidity()) {
-        bookingForm.reportValidity();
-        return;
-      }
-
-      // Simula invio: transizione verso conferma
-      btnSubmit.disabled = true;
-      btnSubmit.querySelector('span').textContent = 'Invio in corso…';
-
-      // Simula una chiamata API (sostituire con fetch reale)
-      setTimeout(() => {
-        bookingForm.style.transition = 'opacity 0.4s ease';
-        bookingForm.style.opacity = '0';
-
-        setTimeout(() => {
-          bookingForm.style.display = 'none';
-          formSuccess.style.display = 'block';
-          formSuccess.removeAttribute('aria-hidden');
+    const form = document.getElementById('ct-generic-form');
+    const formSuccess = document.getElementById('ct-form-success');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const nome = document.getElementById('ct-nome');
+        const email = document.getElementById('ct-email');
+        const msg = document.getElementById('ct-messaggio');
+        if (nome.value.trim() && email.validity.valid && msg.value.trim()) {
+          form.style.display = 'none';
           formSuccess.classList.add('visible');
-          formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 400);
-      }, 900);
-    });
+          formSuccess.setAttribute('aria-hidden', 'false');
+        }
+      });
+    }
   </script>
 
 </body>
