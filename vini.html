@@ -703,6 +703,31 @@
       border: none !important;
     }
 
+    /* ═══════════════════════════════════════════════════════
+       LIGHTBOX — Didascalia multi-riga elegante
+       ═══════════════════════════════════════════════════════ */
+    .lightbox__caption {
+      white-space: pre-line;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-size: 12px;
+      font-family: var(--font-sans);
+      color: var(--color-avorio-dim);
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding-inline: var(--space-4);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lightbox,
+      .lightbox__figure,
+      .lightbox__img {
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+
   </style>
 </head>
 
@@ -784,7 +809,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/1.png"
                   alt="Bottiglia Bollinger PN AYC 18"
-                  data-caption="Bollinger PN AYC 18. [Spazio elegante per la didascalia in breve...]"
+                  data-caption="BOLLINGER PN AYC 18&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir  |  Servizio: 6/8 °C&#10;Nel bicchiere questa edizione è caratterizzata da note di miele, gelatine di frutta e mela cotogna, aromi di marzapane e arancia rossa; completano il bouquet un naso ricco di spezie dolci e note rinfrescanti. Al palato è serio, sobrio e ricco. Questo vino, pensato per essere condiviso tra appassionati, è la pura espressione di un vitigno unita a quella di un grande terroir della Champagne."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -811,6 +836,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/2.png"
                   alt="Bottiglia Perrier-Jouët Blanc de Blancs"
+                  data-caption="PERRIER-JOUËT BLANC DE BLANCS&#10;Denominazione: Champagne AOC  |  Vitigno: Chardonnay  |  Servizio: 6/8 °C&#10;Nel bicchiere troviamo aromi decisi di fiori di cespugli selvatici come sambuco, acacia, caprifoglio e un tocco di agrumi. Al palato è fresco, pungente e vigoroso, con un finale dall'intensità minerale. Questo vino vivace ha un'immensa energia e vitalità."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -837,6 +863,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/3.png"
                   alt="Bottiglia Épître Blanc de Noirs Act 18"
+                  data-caption="ÉPÎTRE BLANC DE NOIRS ACT 18&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir  |  Servizio: 6/8 °C&#10;Champagne dal colore dorato con perlage fine e persistente; al naso troviamo una spiccata nota di mela gialla matura e profumata, accanto a note di pasticceria e mandorla. In bocca risulta succoso, fresco e leggermente sapido. Il periodo di conservazione è compreso tra i 5 e i 15 anni, dove vi garantirà altresì grandi esperienze di degustazione."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -863,6 +890,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/4.png"
                   alt="Bottiglia Krug Grande Cuvée"
+                  data-caption="KRUG GRANDE CUVÉE&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Chardonnay, Pinot Meunier  |  Servizio: 6/8 °C&#10;Finezza e potenza, eleganza e intensità, un binomio perfetto per il simbolo dell'eccellenza artigianale della Maison Krug. Olfatto elegante, con intense note di pane tostato, torrone, marzapane, sentori di frutta matura e secca. Sorso di ottima struttura, compatta, ben sostenuta da un'acidità vivace e morbida, al tempo stesso lunga e persistente."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -889,6 +917,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/5.png"
                   alt="Bottiglia Piper-Heidsieck Cuvée Brut"
+                  data-caption="PIPER-HEIDSIECK CUVÉE BRUT&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Pinot Meunier, Chardonnay  |  Servizio: 8/10 °C&#10;Champagne dal profumo espressivo, classico e immediato, con note di frutta fresca, agrumi e delicate sfumature di erbe aromatiche e frutta secca. Al gusto risulta fresco, equilibrato, vivace, sapido e minerale con sapori di frutta fresca di agrumi."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -915,6 +944,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/6.png"
                   alt="Bottiglia Piper-Heidsieck Essentiel Blanc de Blancs"
+                  data-caption="PIPER-HEIDSIECK ESSENTIEL&#10;Denominazione: Champagne AOC  |  Vitigno: Chardonnay  |  Servizio: 6/8 °C&#10;Questo champagne presenta un profilo preciso, fresco e minerale; la parte aromatica si esprime su fresche note di yuzu e lime, accompagnate da tocchi di fiori bianchi, acacia, mandorla e pane tostato. Il finale è fresco e minerale. La scelta di un invecchiamento prolungato e di un dosaggio extra brut è la conseguenza della filosofia che ispira la gamma Essentiel."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -941,6 +971,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/7.png"
                   alt="Bottiglia Ayala Brut Majeur"
+                  data-caption="AYALA BRUT MAJEURE&#10;Denominazione: Champagne AOC  |  Vitigno: Chardonnay, Pinot Noir  |  Servizio: 6/8 °C&#10;Puro e bilanciato, riflette la ricchezza dei diversi terroir, offrendo un'ampia palette aromatica di agrumi, frutti a polpa bianca e delicate note floreali. Espressivo e preciso, questo è lo champagne da aperitivo per eccellenza, ma si abbina perfettamente anche a primi piatti di pesce, pollame e formaggi valorizzando ogni momento di degustazione con freschezza e vivacità."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -967,6 +998,7 @@
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/8.png"
                   alt="Bottiglia Louis Brochet Héritage Brut"
+                  data-caption="LOUIS BROCHET HÉRITAGE BRUT&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Chardonnay, Pinot Meunier  |  Servizio: 6/8 °C&#10;Uno champagne dagli aromi di frutta a polpa gialla, ma con tocchi esotici e note agrumate; al palato risulta splendidamente pulito e restituisce gli aromi fruttati e freschi. Vino vivace, con buona freschezza e fine struttura; le bollicine sono ben integrate e conferiscono un'amichevole leggerezza."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -992,7 +1024,8 @@
                 <img
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/9.png"
-                  alt="Bottiglia Louis Roederer Cristal 2015"
+                  alt="Bottiglia Louis Roederer Cristal"
+                  data-caption="LOUIS ROEDERER CRISTAL&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Chardonnay  |  Servizio: 8/10 °C&#10;Elaborato unicamente nelle grandi annate, Cristal esprime un notevole equilibrio, con una persistenza in bocca assolutamente unica. Questo champagne rivela un equilibrio raro e magico, tra intensità di profumi puri, vibrazione energetica, palato succoso e finale salino e gessoso. Può essere conservato per più di 20 anni senza perdere nulla della sua freschezza e del suo carattere."
                   loading="lazy"
                   decoding="async"
                   width="400"
@@ -1018,7 +1051,8 @@
                 <img
                   class="champ-card__img zoomable-image"
                   src="/assets/champagne 2/10.png"
-                  alt="Bottiglia Diogène Tissier & Fils Saveur de Juliette"
+                  alt="Bottiglia Diogène Tissier &amp; Fils Saveur de Juliette"
+                  data-caption="DIOGÈNE TISSIER &amp; FILS — SAVEUR DE JULIETTE BRUT&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Pinot Meunier  |  Servizio: 6/8 °C&#10;La Cuvée Saveur De Juliette è un seducente e affascinante incontro tra Pinot Noir e Pinot Meunier, grazie alla grande artigianalità e sensibilità del suo produttore Vincent che ha voluto offrirci un delizioso Blanc De Noirs come toccante omaggio alla sua nonna Juliette. Uno champagne carezzevole, ampio, con aromi molto maturi e un'elegante nota tostata sul finale."
                   loading="lazy"
                   decoding="async"
                   width="400"
