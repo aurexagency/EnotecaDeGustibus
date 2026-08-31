@@ -704,25 +704,12 @@
     }
 
     /* ═══════════════════════════════════════════════════════
-       LIGHTBOX — Didascalia multi-riga elegante
+       LIGHTBOX — Override inline (stili definitivi in style.css)
        ═══════════════════════════════════════════════════════ */
-    .lightbox__caption {
-      white-space: pre-line;
-      max-width: 650px;
-      margin: 0 auto;
-      line-height: 1.7;
-      font-size: 12px;
-      font-family: var(--font-sans);
-      color: var(--color-avorio-dim);
-      letter-spacing: 0.04em;
-      text-align: center;
-      padding-inline: var(--space-4);
-    }
-
+    /* I nuovi stili split-layout sono definiti in style.css */
     @media (prefers-reduced-motion: reduce) {
       .lightbox,
-      .lightbox__figure,
-      .lightbox__img {
+      .lightbox__container {
         transition: none !important;
         animation: none !important;
       }
@@ -1982,45 +1969,199 @@
 
 
   <!-- ═══════════════════════════════════════════════════════
-       LIGHTBOX MODALE — Struttura nascosta (gestita da JS)
+       LIGHTBOX MODALE — Split Layout (45% visual | 55% scheda)
        ═══════════════════════════════════════════════════════ -->
   <div
     id="lightbox-modal"
     class="lightbox"
     role="dialog"
     aria-modal="true"
-    aria-label="Visualizzazione immagine ingrandita"
+    aria-labelledby="lightbox-title"
     aria-hidden="true"
   >
+    <!-- Overlay cliccabile per chiusura -->
     <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
-    <figure class="lightbox__figure" role="group" aria-label="Immagine prodotto ingrandita">
-      <img class="lightbox__img" id="lightbox-img" src="" alt="" loading="eager" />
-      <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
-    </figure>
-    <button class="lightbox__close" id="lightbox-close" aria-label="Chiudi immagine ingrandita" type="button">
+
+    <!-- Contenitore split a due colonne -->
+    <div class="lightbox__container" role="group" aria-label="Scheda prodotto ingrandita">
+
+      <!-- Colonna Sinistra: Visuale / Bottiglia -->
+      <div class="lightbox__visual">
+        <img
+          class="lightbox__img"
+          id="lightbox-img"
+          src=""
+          alt=""
+          loading="eager"
+        />
+      </div>
+
+      <!-- Colonna Destra: Scheda Editoriale -->
+      <div class="lightbox__sheet">
+
+        <!-- Eyebrow: categoria in oro -->
+        <p class="lightbox__eyebrow" id="lightbox-eyebrow" aria-label="Categoria"></p>
+
+        <!-- Separatore dorato -->
+        <div class="lightbox__rule" aria-hidden="true"></div>
+
+        <!-- Nome bottiglia -->
+        <h2 class="lightbox__title" id="lightbox-title"></h2>
+
+        <!-- Bento-grid specifiche tecniche -->
+        <dl class="lightbox__specs-grid" aria-label="Specifiche tecniche">
+          <div class="lightbox__spec">
+            <dt class="lightbox__spec-label">Denominazione</dt>
+            <dd class="lightbox__spec-value" id="lightbox-spec-denominazione">—</dd>
+          </div>
+          <div class="lightbox__spec">
+            <dt class="lightbox__spec-label">Vitigno / Uve</dt>
+            <dd class="lightbox__spec-value" id="lightbox-spec-vitigno">—</dd>
+          </div>
+          <div class="lightbox__spec">
+            <dt class="lightbox__spec-label">Servizio</dt>
+            <dd class="lightbox__spec-value" id="lightbox-spec-servizio">—</dd>
+          </div>
+        </dl>
+
+        <!-- Note Organolettiche -->
+        <div class="lightbox__notes">
+          <p class="lightbox__notes-label">Note Organolettiche</p>
+          <p class="lightbox__notes-text" id="lightbox-notes"></p>
+        </div>
+
+      </div><!-- /lightbox__sheet -->
+    </div><!-- /lightbox__container -->
+
+    <!-- Pulsante chiusura X in alto a destra -->
+    <button
+      class="lightbox__close"
+      id="lightbox-close"
+      aria-label="Chiudi scheda prodotto"
+      type="button"
+    >
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
         <path d="M18 6L6 18M6 6l12 12"/>
       </svg>
     </button>
   </div>
 
-  <!-- Lightbox JS (inline per compatibilità con UIkit/jQuery esistente) -->
+  <!-- Lightbox JS — Split Layout · Popolamento dinamico scheda editoriale -->
   <script>
     (function initLightbox() {
-      var lightbox     = document.getElementById('lightbox-modal');
-      var overlay      = document.getElementById('lightbox-overlay');
-      var closeBtn     = document.getElementById('lightbox-close');
-      var lightboxImg  = document.getElementById('lightbox-img');
-      var lightboxCapt = document.getElementById('lightbox-caption');
+      'use strict';
+
+      var lightbox   = document.getElementById('lightbox-modal');
+      var overlay    = document.getElementById('lightbox-overlay');
+      var closeBtn   = document.getElementById('lightbox-close');
+      var lbImg      = document.getElementById('lightbox-img');
+      var lbEyebrow  = document.getElementById('lightbox-eyebrow');
+      var lbTitle    = document.getElementById('lightbox-title');
+      var lbDenom    = document.getElementById('lightbox-spec-denominazione');
+      var lbVitigno  = document.getElementById('lightbox-spec-vitigno');
+      var lbServizio = document.getElementById('lightbox-spec-servizio');
+      var lbNotes    = document.getElementById('lightbox-notes');
       if (!lightbox) return;
+
       var previousFocus = null;
+
+      /**
+       * Analizza il data-caption strutturato e restituisce un oggetto dati.
+       *
+       * Formato atteso (prima riga: nome; seconda riga: specs pipe-separated; terza riga+: note):
+       * "NOME BOTTIGLIA\nDenominazione: X  |  Vitigno: Y  |  Servizio: Z\nTesto note..."
+       *
+       * Oppure, se l'immagine espone attributi data-* singoli, li usa direttamente.
+       */
+      function parseBottigliaDati(imgEl) {
+        // Dati strutturati espliciti (via attributi data-* singoli) hanno priorità
+        if (imgEl.dataset.nome) {
+          return {
+            eyebrow   : imgEl.dataset.categoria || 'Selezione Degustibus',
+            nome      : imgEl.dataset.nome,
+            denom     : imgEl.dataset.denominazione || '—',
+            vitigno   : imgEl.dataset.vitigno       || '—',
+            servizio  : imgEl.dataset.servizio      || '—',
+            note      : imgEl.dataset.note          || ''
+          };
+        }
+
+        // Fallback: parsing della stringa data-caption legacy
+        var raw = imgEl.dataset.caption || '';
+        if (!raw) {
+          return {
+            eyebrow  : 'Selezione Degustibus',
+            nome     : imgEl.alt || '—',
+            denom    : '—',
+            vitigno  : '—',
+            servizio : '—',
+            note     : ''
+          };
+        }
+
+        // Decodifica entità HTML (&#10; → \n)
+        var tmp = document.createElement('div');
+        tmp.innerHTML = raw;
+        var decoded = tmp.textContent || tmp.innerText || raw;
+
+        var lines = decoded.split('\n').map(function(l){ return l.trim(); });
+        var nomeLine    = lines[0] || imgEl.alt || '—';
+        var specsLine   = lines[1] || '';
+        var notesLines  = lines.slice(2).join(' ').trim();
+
+        // Determina eyebrow dalla card padre
+        var cuveeEl = imgEl.closest('.champ-card');
+        var eyebrow = 'Selezione Degustibus';
+        if (cuveeEl) {
+          var cuveeTag = cuveeEl.querySelector('.champ-card__cuvee');
+          if (cuveeTag) eyebrow = cuveeTag.textContent.trim().toUpperCase() + '  //  Selezione Degustibus';
+        }
+
+        // Parsing specs: "Denominazione: X  |  Vitigno: Y  |  Servizio: Z"
+        var denom    = '—';
+        var vitigno  = '—';
+        var servizio = '—';
+        if (specsLine) {
+          var parts = specsLine.split('|').map(function(p){ return p.trim(); });
+          parts.forEach(function(part) {
+            var colonIdx = part.indexOf(':');
+            if (colonIdx === -1) return;
+            var key = part.slice(0, colonIdx).trim().toLowerCase();
+            var val = part.slice(colonIdx + 1).trim();
+            if (key === 'denominazione') denom   = val;
+            else if (key === 'vitigno')  vitigno = val;
+            else if (key === 'servizio') servizio = val;
+          });
+        }
+
+        return {
+          eyebrow  : eyebrow,
+          nome     : nomeLine,
+          denom    : denom,
+          vitigno  : vitigno,
+          servizio : servizio,
+          note     : notesLines
+        };
+      }
 
       function openLightbox(triggerImg) {
         previousFocus = document.activeElement;
-        var hiResSrc = triggerImg.dataset.highres || triggerImg.src;
-        lightboxImg.src = hiResSrc;
-        lightboxImg.alt = triggerImg.alt || '';
-        lightboxCapt.textContent = triggerImg.dataset.caption || triggerImg.alt || '';
+
+        var src = triggerImg.dataset.highres || triggerImg.src;
+        var dati = parseBottigliaDati(triggerImg);
+
+        // Popola colonna visual
+        lbImg.src = src;
+        lbImg.alt = triggerImg.alt || dati.nome;
+
+        // Popola scheda editoriale
+        lbEyebrow.textContent  = dati.eyebrow;
+        lbTitle.textContent    = dati.nome;
+        lbDenom.textContent    = dati.denom;
+        lbVitigno.textContent  = dati.vitigno;
+        lbServizio.textContent = dati.servizio;
+        lbNotes.textContent    = dati.note;
+
         document.body.style.overflow = 'hidden';
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
@@ -2031,23 +2172,31 @@
         lightbox.classList.remove('is-open');
         lightbox.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
-        if (previousFocus) { previousFocus.focus({ preventScroll: true }); previousFocus = null; }
-        setTimeout(function(){
-          lightboxImg.src = '';
-          lightboxImg.alt = '';
-          lightboxCapt.textContent = '';
+        if (previousFocus) {
+          previousFocus.focus({ preventScroll: true });
+          previousFocus = null;
+        }
+        // Pulisce il DOM dopo la transizione (550ms)
+        setTimeout(function() {
+          lbImg.src = '';
+          lbImg.alt = '';
+          lbEyebrow.textContent  = '';
+          lbTitle.textContent    = '';
+          lbDenom.textContent    = '—';
+          lbVitigno.textContent  = '—';
+          lbServizio.textContent = '—';
+          lbNotes.textContent    = '';
         }, 550);
       }
 
+      // Delegazione click: immagini zoomabili e CTA delle card
       document.addEventListener('click', function(e) {
         var img = e.target.closest('.zoomable-image');
         var cta = e.target.closest('.champ-card__cta');
         if (cta) {
           e.preventDefault();
           var card = cta.closest('.champ-card');
-          if (card) {
-            img = card.querySelector('.zoomable-image');
-          }
+          if (card) img = card.querySelector('.zoomable-image');
         }
         if (!img) return;
         e.preventDefault();

@@ -1293,8 +1293,8 @@
     }
 
     /* ═══════════════════════════════════════════════════════
-       LIGHTBOX MODALE — Sistema Lightbox Quiet Luxury
-       Overlay bordeaux scuro + blur + fade-in cinematico
+       LIGHTBOX MODALE — Split Layout · Quiet Luxury Edition
+       45% visual · 55% scheda editoriale · Palette brand
        ═══════════════════════════════════════════════════════ */
 
     /* — Contenitore principale: nascosto di default — */
@@ -1306,89 +1306,206 @@
       align-items: center;
       justify-content: center;
       padding: var(--space-6);
-
-      /* Nascosto: pointer-events off, invisible */
       visibility: hidden;
       pointer-events: none;
       opacity: 0;
-
-      /* Transizione d'ingresso cinematica */
       transition: opacity 0.50s cubic-bezier(0.4, 0, 0.2, 1),
                   visibility 0.50s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* — Stato aperto — */
     .lightbox.is-open {
       visibility: visible;
       pointer-events: auto;
       opacity: 1;
     }
 
-    /* — Overlay: bordeaux scurissimo + blur sottostante — */
+    /* — Overlay: bordeaux scurissimo + blur — */
     .lightbox__overlay {
       position: absolute;
       inset: 0;
-      background: rgba(38, 0, 10, 0.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      /* Linee geometriche di sfondo come texture del brand */
-      background-image:
-        rgba(38, 0, 10, 0.92),
-        linear-gradient(var(--color-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+      background: rgba(20, 0, 6, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       cursor: zoom-out;
     }
 
-    /* — Figure contenitore — */
-    .lightbox__figure {
+    /* ── Contenitore split a 2 colonne ── */
+    .lightbox__container {
       position: relative;
       z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--space-3);
-      max-width: min(90vw, 900px);
-      max-height: 90vh;
-
-      /* Animazione fade-in + leggero scale up */
-      transform: scale(0.88);
+      display: grid;
+      grid-template-columns: 45% 55%;
+      width: min(96vw, 1080px);
+      max-height: 88vh;
+      border: 1px solid rgba(255, 245, 240, 0.12);
+      background: #1A0008;
+      /* Animazione fade-in + scale cinematico */
+      transform: scale(0.90) translateY(16px);
       opacity: 0;
       transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-                  opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-      /* Bordo sottile avorio — rigore geometrico */
-      border: 1px solid var(--color-avorio-border);
-      padding: var(--space-1);
-      background: rgba(38, 0, 10, 0.60);
+                  opacity  0.45s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
     }
 
-    /* Quando la modale è aperta, la figure scala a 1 */
-    .lightbox.is-open .lightbox__figure {
-      transform: scale(1);
+    .lightbox.is-open .lightbox__container {
+      transform: scale(1) translateY(0);
       opacity: 1;
     }
 
-    /* — Immagine ingrandita — */
+    /* ── Colonna Sinistra: Visual ── */
+    .lightbox__visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-6);
+      background:
+        linear-gradient(160deg, #280010 0%, #100004 100%);
+      border-right: 1px solid rgba(255, 245, 240, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Griglia geometrica sottile nel visual */
+    .lightbox__visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,245,240,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,245,240,0.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    /* Alone dorato sottile in basso a sinistra */
+    .lightbox__visual::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      left: -80px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
     .lightbox__img {
       display: block;
+      position: relative;
+      z-index: 1;
       max-width: 100%;
-      max-height: calc(90vh - 80px);
+      max-height: calc(88vh - 80px);
       width: auto;
       height: auto;
       object-fit: contain;
-      /* Nessun transform sull'immagine stessa — il movimento è sulla figure */
+      filter: drop-shadow(0 32px 64px rgba(0,0,0,0.70));
     }
 
-    /* — Didascalia — */
-    .lightbox__caption {
+    /* ── Colonna Destra: Scheda Editoriale ── */
+    .lightbox__sheet {
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-8) var(--space-8) var(--space-8) var(--space-7);
+      overflow-y: auto;
+      gap: var(--space-5);
+      /* Scrollbar elegante */
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,215,0,0.25) transparent;
+    }
+
+    .lightbox__sheet::-webkit-scrollbar { width: 3px; }
+    .lightbox__sheet::-webkit-scrollbar-track { background: transparent; }
+    .lightbox__sheet::-webkit-scrollbar-thumb {
+      background: rgba(255,215,0,0.25);
+      border-radius: 0;
+    }
+
+    /* Eyebrow: tagline dorata superiore */
+    .lightbox__eyebrow {
       font-family: var(--font-sans);
-      font-size: 10px;
-      font-weight: 400;
+      font-size: 9px;
+      font-weight: 500;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--color-avorio-dim);
-      text-align: center;
-      padding: var(--space-1) var(--space-3) var(--space-2);
-      min-height: 24px;
+      color: var(--color-oro);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Separatore sottile oro */
+    .lightbox__rule {
+      width: 40px;
+      height: 1px;
+      background: var(--color-oro);
+      flex-shrink: 0;
+      margin: calc(-1 * var(--space-2)) 0;
+    }
+
+    /* Titolo bottiglia: Serif alto contrasto */
+    .lightbox__title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      font-size: clamp(22px, 2.4vw, 34px);
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      color: var(--color-avorio);
+      margin: 0;
+    }
+
+    /* Grid specs tecnici: 3 bento-box scuri */
+    .lightbox__specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+    }
+
+    .lightbox__spec {
+      background: rgba(255,245,240,0.04);
+      border: 1px solid rgba(255,245,240,0.10);
+      padding: var(--space-3) var(--space-3);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .lightbox__spec-label {
+      font-family: var(--font-sans);
+      font-size: 7px;
+      font-weight: 500;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      opacity: 0.80;
+    }
+
+    .lightbox__spec-value {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--color-avorio);
+      line-height: 1.4;
+    }
+
+    /* Sezione Note Organolettiche */
+    .lightbox__notes-label {
+      font-family: var(--font-sans);
+      font-size: 8px;
+      font-weight: 500;
+      letter-spacing: 0.30em;
+      text-transform: uppercase;
+      color: var(--color-oro);
+      margin: 0 0 var(--space-2);
+    }
+
+    .lightbox__notes-text {
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 0.03em;
+      line-height: 1.85;
+      color: rgba(255, 245, 240, 0.65);
+      margin: 0;
     }
 
     /* — Pulsante di chiusura X — */
@@ -1396,19 +1513,18 @@
       position: fixed;
       top: var(--space-5);
       right: var(--space-5);
-      z-index: 2;
+      z-index: 10000;
       width: 48px;
       height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: transparent;
-      border: 1px solid var(--color-avorio-border);
+      background: rgba(20, 0, 6, 0.80);
+      border: 1px solid rgba(255, 245, 240, 0.18);
       cursor: pointer;
       color: var(--color-avorio);
       transition: color 0.30s ease,
                   border-color 0.30s ease,
-                  transform 0.30s ease,
                   background 0.30s ease;
     }
 
@@ -1418,12 +1534,11 @@
       transition: transform 0.30s ease;
     }
 
-    /* Hover: diventa oro con leggero scale */
     .lightbox__close:hover,
     .lightbox__close:focus-visible {
       color: var(--color-oro);
       border-color: var(--color-oro);
-      background: var(--color-oro-dim);
+      background: rgba(255,215,0,0.08);
       outline: none;
     }
 
@@ -1432,10 +1547,53 @@
       transform: rotate(90deg) scale(1.1);
     }
 
-    /* ── Reduced Motion: disabilita tutte le transizioni del Lightbox ── */
+    /* ── Responsive mobile (<768px): layout a colonna singola ── */
+    @media (max-width: 767px) {
+      .lightbox {
+        padding: 0;
+        align-items: flex-end;
+      }
+
+      .lightbox__container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        width: 100vw;
+        max-height: 94vh;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 0;
+      }
+
+      .lightbox__visual {
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 245, 240, 0.08);
+        padding: var(--space-5) var(--space-5);
+      }
+
+      .lightbox__img {
+        max-height: 36vh;
+      }
+
+      .lightbox__sheet {
+        padding: var(--space-5) var(--space-5) var(--space-8);
+        gap: var(--space-4);
+      }
+
+      .lightbox__specs-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .lightbox__title {
+        font-size: clamp(20px, 5vw, 28px);
+      }
+    }
+
+    /* ── Reduced Motion: lightbox senza animazioni ── */
     @media (prefers-reduced-motion: reduce) {
       .lightbox,
-      .lightbox__figure,
+      .lightbox__container,
       .lightbox__close,
       .lightbox__close svg,
       .zoomable-image,
@@ -1443,9 +1601,8 @@
         transition: none !important;
         animation: none !important;
       }
-      /* Anche in reduced motion la modale funziona: solo niente animazione */
-      .lightbox.is-open .lightbox__figure {
-        transform: scale(1);
+      .lightbox.is-open .lightbox__container {
+        transform: scale(1) translateY(0);
         opacity: 1;
       }
     }
