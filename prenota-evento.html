@@ -476,6 +476,13 @@
           aria-label="Form prenotazione evento esclusivo"
         >
 
+          <!-- ── Web3Forms — Campi nascosti ── -->
+          <input type="hidden" name="access_key" value="d77d3161-a74b-4a02-94bb-e0454a75b426" />
+          <input type="hidden" name="subject" value="Nuova Richiesta Evento — Degustibus" />
+          <input type="hidden" name="from_name" value="Enoteca Degustibus" />
+          <input type="hidden" name="replyto" id="pe-replyto" value="" />
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true" />
+
           <!-- ── Blocco 1: Dati Personali ── -->
           <div class="form-row">
             <div class="field field--required">
@@ -544,6 +551,13 @@
               </svg>
             </button>
           </div>
+          <!-- Messaggio di errore discreto -->
+          <p
+            id="pe-form-error"
+            role="alert"
+            aria-live="assertive"
+            style="display:none; font-family:var(--font-sans); font-size:11px; color:rgba(255,150,150,0.85); letter-spacing:0.04em; margin-top:var(--space-4);"
+          ></p>
 
         </form>
       </section>
@@ -571,34 +585,86 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(el => revealObs.observe(el));
 
-    // ── Form submit ──────────────────────────────────
-    const form = document.getElementById('pe-booking-form');
+    // ── Form submit — Web3Forms async fetch ─────────
+    const form       = document.getElementById('pe-booking-form');
     const formSuccess = document.getElementById('pe-form-success');
+    const submitBtn  = document.getElementById('pe-submit-btn');
+    const submitSpan = submitBtn ? submitBtn.querySelector('span') : null;
+    const errorEl    = document.getElementById('pe-form-error');
+
+    // Sincronizza l'hidden replyto con l'email in tempo reale
+    const emailInput   = document.getElementById('pe-email');
+    const replytoInput = document.getElementById('pe-replyto');
+    if (emailInput && replytoInput) {
+      emailInput.addEventListener('input', () => {
+        replytoInput.value = emailInput.value;
+      });
+    }
 
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const nome     = document.getElementById('pe-nome');
-        const cognome  = document.getElementById('pe-cognome');
-        const email    = document.getElementById('pe-email');
-        const telefono = document.getElementById('pe-telefono');
-        const evento   = document.getElementById('pe-evento');
-        const part     = document.getElementById('pe-partecipanti');
+        if (errorEl) errorEl.style.display = 'none';
 
-        const valid = nome.value.trim()
-          && cognome.value.trim()
-          && email.validity.valid
-          && telefono.value.trim()
-          && evento.value
-          && part.value;
+        // ── Validazione client-side ─────────────────
+        const nome      = document.getElementById('pe-nome');
+        const cognome   = document.getElementById('pe-cognome');
+        const email     = document.getElementById('pe-email');
+        const telefono  = document.getElementById('pe-telefono');
+        const evento    = document.getElementById('pe-evento');
+        const part      = document.getElementById('pe-partecipanti');
 
-        if (valid) {
-          form.style.display = 'none';
-          formSuccess.classList.add('visible');
-          formSuccess.setAttribute('aria-hidden', 'false');
-        } else {
-          // Attiva la validazione nativa del browser
+        const valid =
+          nome.value.trim() &&
+          cognome.value.trim() &&
+          email.validity.valid &&
+          telefono.value.trim() &&
+          evento.value &&
+          part.value;
+
+        if (!valid) {
           form.reportValidity();
+          return;
+        }
+
+        // ── Loading state ───────────────────────────
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        if (submitSpan) submitSpan.textContent = 'Invio in corso…';
+
+        // ── Payload ─────────────────────────────────
+        const payload = new FormData(form);
+        payload.append('nome_completo', `${nome.value.trim()} ${cognome.value.trim()}`);
+
+        // ── Chiamata API Web3Forms ───────────────────
+        try {
+          const res  = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body:   payload,
+          });
+          const json = await res.json();
+
+          if (res.ok && json.success) {
+            // ── Stato successo ───────────────────────
+            submitBtn.classList.remove('is-loading');
+            submitBtn.classList.add('is-success');
+            form.style.display = 'none';
+            formSuccess.classList.add('visible');
+            formSuccess.setAttribute('aria-hidden', 'false');
+            formSuccess.focus();
+          } else {
+            throw new Error(json.message || 'Invio non riuscito.');
+          }
+        } catch (err) {
+          // ── Stato errore — ripristina bottone ───────
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+          if (submitSpan) submitSpan.textContent = 'Riserva il Posto';
+          if (errorEl) {
+            errorEl.textContent = 'Si è verificato un errore. Riprova o scrivici a degustibus.wine@gmail.com';
+            errorEl.style.display = 'block';
+          }
+          console.error('[Degustibus Form]', err);
         }
       });
     }

@@ -643,6 +643,13 @@
           aria-label="Form prenotazione percorso degustazione"
         >
 
+          <!-- ── Web3Forms — Campi nascosti ── -->
+          <input type="hidden" name="access_key" value="d77d3161-a74b-4a02-94bb-e0454a75b426" />
+          <input type="hidden" name="subject" value="Nuova Prenotazione Degustazione — Degustibus" />
+          <input type="hidden" name="from_name" value="Enoteca Degustibus" />
+          <input type="hidden" name="replyto" id="pd-replyto" value="" />
+          <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" aria-hidden="true" />
+
           <!-- ── Blocco 1: Dati Personali ── -->
           <div class="form-row">
             <div class="field field--required">
@@ -787,6 +794,13 @@
               </svg>
             </button>
           </div>
+          <!-- Messaggio di errore discreto -->
+          <p
+            id="pd-form-error"
+            role="alert"
+            aria-live="assertive"
+            style="display:none; font-family:var(--font-sans); font-size:11px; color:rgba(255,150,150,0.85); letter-spacing:0.04em; margin-top:var(--space-4);"
+          ></p>
 
         </form>
       </section>
@@ -824,15 +838,28 @@
       dateInput.setAttribute('min', `${yyyy}-${mm}-${dd}`);
     }
 
-    // ── Form submit ──────────────────────────────────
-    const form = document.getElementById('pd-booking-form');
+    // ── Form submit — Web3Forms async fetch ─────────
+    const form       = document.getElementById('pd-booking-form');
     const formSuccess = document.getElementById('pd-form-success');
-    const submitBtn = document.getElementById('pd-submit-btn');
+    const submitBtn  = document.getElementById('pd-submit-btn');
+    const submitSpan = submitBtn ? submitBtn.querySelector('span') : null;
+    const errorEl    = document.getElementById('pd-form-error');
+
+    // Sincronizza l'hidden replyto con l'email in tempo reale
+    const emailInput = document.getElementById('pd-email');
+    const replytoInput = document.getElementById('pd-replyto');
+    if (emailInput && replytoInput) {
+      emailInput.addEventListener('input', () => {
+        replytoInput.value = emailInput.value;
+      });
+    }
 
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (errorEl) errorEl.style.display = 'none';
 
+        // ── Validazione client-side ─────────────────
         const fields = {
           nome:     document.getElementById('pd-nome'),
           cognome:  document.getElementById('pd-cognome'),
@@ -842,26 +869,56 @@
           orario:   document.getElementById('pd-orario'),
           persone:  document.getElementById('pd-persone'),
         };
-
         const percorso = form.querySelector('input[name="percorso"]:checked');
 
-        const allValid = Object.values(fields).every(f => f.value.trim() && f.validity.valid)
-          && fields.email.validity.valid
-          && percorso;
+        const allValid =
+          Object.values(fields).every(f => f.value.trim() && f.validity.valid) &&
+          percorso;
 
-        if (allValid) {
-          // Feedback visivo sul bottone
-          submitBtn.classList.add('is-loading');
-          submitBtn.querySelector('span').textContent = 'Invio in corso…';
+        if (!allValid) {
+          form.reportValidity();
+          return;
+        }
 
-          // Simula invio (300ms) poi mostra successo
-          setTimeout(() => {
+        // ── Loading state ───────────────────────────
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        if (submitSpan) submitSpan.textContent = 'Invio in corso…';
+
+        // ── Payload ─────────────────────────────────
+        const payload = new FormData(form);
+        // Aggiungo campo calcolato «Nome completo» per leggibilità nella mail
+        payload.append('nome_completo', `${fields.nome.value.trim()} ${fields.cognome.value.trim()}`);
+
+        // ── Chiamata API Web3Forms ───────────────────
+        try {
+          const res  = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            body:   payload,
+          });
+          const json = await res.json();
+
+          if (res.ok && json.success) {
+            // ── Stato successo ───────────────────────
+            submitBtn.classList.remove('is-loading');
+            submitBtn.classList.add('is-success');
             form.style.display = 'none';
             formSuccess.classList.add('visible');
             formSuccess.setAttribute('aria-hidden', 'false');
-          }, 600);
-        } else {
-          form.reportValidity();
+            formSuccess.focus();
+          } else {
+            throw new Error(json.message || 'Invio non riuscito.');
+          }
+        } catch (err) {
+          // ── Stato errore — ripristina bottone ───────
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+          if (submitSpan) submitSpan.textContent = 'Prenota la mia Degustazione';
+          if (errorEl) {
+            errorEl.textContent = 'Si è verificato un errore. Riprova o scrivici direttamente a degustibus.wine@gmail.com';
+            errorEl.style.display = 'block';
+          }
+          console.error('[Degustibus Form]', err);
         }
       });
     }
