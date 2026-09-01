@@ -11,8 +11,8 @@ export default defineConfig({
         contatti: resolve(__dirname, 'contatti.html'),
         distillati: resolve(__dirname, 'distillati.html'),
         birraolio: resolve(__dirname, 'birra-olio.html'),
-        prenotazioneevento: resolve(__dirname, 'prenotazione-evento.html'),
-        prenotazionedegustazione: resolve(__dirname, 'prenotazione-degustazione.html'),
+        prenotazioneevento: resolve(__dirname, 'prenota-evento.html'),
+        prenotazionedegustazione: resolve(__dirname, 'prenota-degustazione.html'),
       }
     }
   }
