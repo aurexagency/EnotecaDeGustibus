@@ -995,28 +995,28 @@
       createSwipeAction({
         btnId:     'sa-eventi',
         type:      'cork',
-        actionUrl: './prenotazione-evento.html',
+        actionUrl: '/prenota-evento.html',
       });
 
       // 2. Wine Pour — "Prenota la Degustazione" (index.html → prenotazione-degustazione.html)
       createSwipeAction({
         btnId:     'sa-degustazione',
         type:      'pour',
-        actionUrl: './prenotazione-degustazione.html',
+        actionUrl: '/prenota-degustazione.html',
       });
 
       // 3. Cork Pop — "Chiedi un Consiglio" (index.html #advisory → contatti.html)
       createSwipeAction({
         btnId:     'sa-advisory',
         type:      'cork',
-        actionUrl: './contatti.html',
+        actionUrl: '/contatti.html',
       });
 
       // 4. Cork Pop — "Chiedi un Consiglio" (chi-siamo.html → contatti.html)
       createSwipeAction({
         btnId:     'sa-chisiamo-consiglio',
         type:      'cork',
-        actionUrl: './contatti.html',
+        actionUrl: '/contatti.html',
       });
 
     })(); // fine initSwipeActions
