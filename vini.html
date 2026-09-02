@@ -5,7 +5,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I Nostri Vini — Enoteca Degustibus</title>
-  <meta name="description" content="La selezione di vini d'eccellenza dell'Enoteca Degustibus: Champagne, Bollicine, Vini Bianchi e Vini Rossi accuratamente selezionati da Alessandra.">
+
+  <!-- Iubenda Privacy Controls and Cookie Solution -->
+  <script type="text/javascript" src="https://embeds.iubenda.com/widgets/eda43f6e-8db8-4043-b099-cc54a4fa5f26.js"></script>
+  <meta name="description"
+    content="La selezione di vini d'eccellenza dell'Enoteca Degustibus: Champagne, Bollicine, Vini Bianchi e Vini Rossi accuratamente selezionati da Alessandra.">
   <meta name="robots" content="index, follow">
 
   <!-- UIkit Core CSS -->
@@ -23,7 +27,6 @@
 
   <!-- Stili specifici pagina vini -->
   <style>
-
     /* ═══════════════════════════════════════════════════════
        LAYOUT PAGINA
        ═══════════════════════════════════════════════════════ */
@@ -256,11 +259,9 @@
     /* Placeholder immagine — nessuna <img> in questa fase */
     .wine-card__visual {
       aspect-ratio: 3 / 4;
-      background: linear-gradient(
-        160deg,
-        var(--color-bordeaux-dark) 0%,
-        var(--color-bordeaux-deeper) 100%
-      );
+      background: linear-gradient(160deg,
+          var(--color-bordeaux-dark) 0%,
+          var(--color-bordeaux-deeper) 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -311,12 +312,10 @@
       left: -60%;
       width: 40%;
       height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 215, 0, 0.04),
-        transparent
-      );
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(255, 215, 0, 0.04),
+          transparent);
       transform: skewX(-15deg);
       transition: left 0.6s ease;
       pointer-events: none;
@@ -423,7 +422,7 @@
       opacity: 0;
       transform: translateY(28px);
       transition: opacity 0.70s cubic-bezier(0.4, 0, 0.2, 1),
-                  transform 0.70s cubic-bezier(0.4, 0, 0.2, 1);
+        transform 0.70s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .vr.vr--visible {
@@ -431,10 +430,21 @@
       transform: translateY(0);
     }
 
-    .vr--d1 { transition-delay: 0.08s; }
-    .vr--d2 { transition-delay: 0.16s; }
-    .vr--d3 { transition-delay: 0.24s; }
-    .vr--d4 { transition-delay: 0.32s; }
+    .vr--d1 {
+      transition-delay: 0.08s;
+    }
+
+    .vr--d2 {
+      transition-delay: 0.16s;
+    }
+
+    .vr--d3 {
+      transition-delay: 0.24s;
+    }
+
+    .vr--d4 {
+      transition-delay: 0.32s;
+    }
 
     /* ═══════════════════════════════════════════════════════
        RESPONSIVE
@@ -477,6 +487,7 @@
         transform: none;
         transition: none;
       }
+
       .wine-card,
       .wine-card__name,
       .wine-card__vintage,
@@ -500,7 +511,8 @@
     .champ-card {
       display: flex;
       flex-direction: column;
-      align-items: center;       /* Bottiglia e testo centrati */
+      align-items: center;
+      /* Bottiglia e testo centrati */
       gap: 0;
       cursor: pointer;
       background: transparent !important;
@@ -515,7 +527,8 @@
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
-      overflow: visible !important;  /* ← CRITICO: bottiglia libera di espandersi */
+      overflow: visible !important;
+      /* ← CRITICO: bottiglia libera di espandersi */
       position: relative;
       width: 100%;
       /* L'altezza si auto-adatta all'immagine */
@@ -526,9 +539,12 @@
     .champ-card__img {
       display: block;
       width: 100%;
-      height: auto;              /* Mantiene le proporzioni native */
-      object-fit: contain;       /* Bottiglia intera, mai tagliata */
-      transform-origin: center bottom;  /* Zoom sale verso l'alto */
+      height: auto;
+      /* Mantiene le proporzioni native */
+      object-fit: contain;
+      /* Bottiglia intera, mai tagliata */
+      transform-origin: center bottom;
+      /* Zoom sale verso l'alto */
       transition: transform 0.50s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
     }
@@ -544,8 +560,10 @@
     .champ-card__img.zoomable-image {
       cursor: zoom-in;
     }
+
     .champ-card__img.zoomable-image:hover {
-      transform: none; /* lo scale lo gestisce .champ-card:hover sopra */
+      transform: none;
+      /* lo scale lo gestisce .champ-card:hover sopra */
     }
 
     /* ── Testo: centrato, distanziato dalla bottiglia ── */
@@ -553,7 +571,8 @@
       padding: var(--space-3) var(--space-2) var(--space-4);
       display: flex;
       flex-direction: column;
-      align-items: center;       /* Centra testo sotto la bottiglia */
+      align-items: center;
+      /* Centra testo sotto la bottiglia */
       text-align: center;
       gap: 0;
       width: 100%;
@@ -637,10 +656,10 @@
       margin-left: calc(-1 * var(--space-5));
     }
 
-    #champagne .uk-grid-large > *,
-    #bollicine .uk-grid-large > *,
-    #vini-bianchi .uk-grid-large > *,
-    #vini-rossi .uk-grid-large > * {
+    #champagne .uk-grid-large>*,
+    #bollicine .uk-grid-large>*,
+    #vini-bianchi .uk-grid-large>*,
+    #vini-rossi .uk-grid-large>* {
       padding-left: var(--space-5);
     }
 
@@ -651,10 +670,18 @@
        ═══════════════════════════════════════════════════════ */
 
     /* Li della griglia UIkit — nessun background ereditato */
-    #champagne .uk-grid > li, #champagne .uk-grid > li > *, #champagne .uk-grid-large > li,
-    #bollicine .uk-grid > li, #bollicine .uk-grid > li > *, #bollicine .uk-grid-large > li,
-    #vini-bianchi .uk-grid > li, #vini-bianchi .uk-grid > li > *, #vini-bianchi .uk-grid-large > li,
-    #vini-rossi .uk-grid > li, #vini-rossi .uk-grid > li > *, #vini-rossi .uk-grid-large > li {
+    #champagne .uk-grid>li,
+    #champagne .uk-grid>li>*,
+    #champagne .uk-grid-large>li,
+    #bollicine .uk-grid>li,
+    #bollicine .uk-grid>li>*,
+    #bollicine .uk-grid-large>li,
+    #vini-bianchi .uk-grid>li,
+    #vini-bianchi .uk-grid>li>*,
+    #vini-bianchi .uk-grid-large>li,
+    #vini-rossi .uk-grid>li,
+    #vini-rossi .uk-grid>li>*,
+    #vini-rossi .uk-grid-large>li {
       background: transparent !important;
       background-color: transparent !important;
       box-shadow: none !important;
@@ -662,10 +689,26 @@
     }
 
     /* Classi card di UIkit se applicate accidentalmente */
-    #champagne .uk-card, #champagne .uk-card-default, #champagne .uk-card-primary, #champagne .uk-card-secondary, #champagne [class*="uk-card"],
-    #bollicine .uk-card, #bollicine .uk-card-default, #bollicine .uk-card-primary, #bollicine .uk-card-secondary, #bollicine [class*="uk-card"],
-    #vini-bianchi .uk-card, #vini-bianchi .uk-card-default, #vini-bianchi .uk-card-primary, #vini-bianchi .uk-card-secondary, #vini-bianchi [class*="uk-card"],
-    #vini-rossi .uk-card, #vini-rossi .uk-card-default, #vini-rossi .uk-card-primary, #vini-rossi .uk-card-secondary, #vini-rossi [class*="uk-card"] {
+    #champagne .uk-card,
+    #champagne .uk-card-default,
+    #champagne .uk-card-primary,
+    #champagne .uk-card-secondary,
+    #champagne [class*="uk-card"],
+    #bollicine .uk-card,
+    #bollicine .uk-card-default,
+    #bollicine .uk-card-primary,
+    #bollicine .uk-card-secondary,
+    #bollicine [class*="uk-card"],
+    #vini-bianchi .uk-card,
+    #vini-bianchi .uk-card-default,
+    #vini-bianchi .uk-card-primary,
+    #vini-bianchi .uk-card-secondary,
+    #vini-bianchi [class*="uk-card"],
+    #vini-rossi .uk-card,
+    #vini-rossi .uk-card-default,
+    #vini-rossi .uk-card-primary,
+    #vini-rossi .uk-card-secondary,
+    #vini-rossi [class*="uk-card"] {
       background: transparent !important;
       box-shadow: none !important;
       border: none !important;
@@ -673,10 +716,22 @@
     }
 
     /* UIkit panels e box generici */
-    #champagne .uk-panel, #champagne .uk-box-shadow-small, #champagne .uk-box-shadow-medium, #champagne .uk-box-shadow-large,
-    #bollicine .uk-panel, #bollicine .uk-box-shadow-small, #bollicine .uk-box-shadow-medium, #bollicine .uk-box-shadow-large,
-    #vini-bianchi .uk-panel, #vini-bianchi .uk-box-shadow-small, #vini-bianchi .uk-box-shadow-medium, #vini-bianchi .uk-box-shadow-large,
-    #vini-rossi .uk-panel, #vini-rossi .uk-box-shadow-small, #vini-rossi .uk-box-shadow-medium, #vini-rossi .uk-box-shadow-large {
+    #champagne .uk-panel,
+    #champagne .uk-box-shadow-small,
+    #champagne .uk-box-shadow-medium,
+    #champagne .uk-box-shadow-large,
+    #bollicine .uk-panel,
+    #bollicine .uk-box-shadow-small,
+    #bollicine .uk-box-shadow-medium,
+    #bollicine .uk-box-shadow-large,
+    #vini-bianchi .uk-panel,
+    #vini-bianchi .uk-box-shadow-small,
+    #vini-bianchi .uk-box-shadow-medium,
+    #vini-bianchi .uk-box-shadow-large,
+    #vini-rossi .uk-panel,
+    #vini-rossi .uk-box-shadow-small,
+    #vini-rossi .uk-box-shadow-medium,
+    #vini-rossi .uk-box-shadow-large {
       box-shadow: none !important;
       background: transparent !important;
     }
@@ -693,10 +748,18 @@
 
     /* Reset definitivo su tutti i discendenti della sezione:
        nessun background-color sopravvive */
-    #champagne article, #champagne .champ-card, #champagne .champ-card__frame,
-    #bollicine article, #bollicine .champ-card, #bollicine .champ-card__frame,
-    #vini-bianchi article, #vini-bianchi .champ-card, #vini-bianchi .champ-card__frame,
-    #vini-rossi article, #vini-rossi .champ-card, #vini-rossi .champ-card__frame {
+    #champagne article,
+    #champagne .champ-card,
+    #champagne .champ-card__frame,
+    #bollicine article,
+    #bollicine .champ-card,
+    #bollicine .champ-card__frame,
+    #vini-bianchi article,
+    #vini-bianchi .champ-card,
+    #vini-bianchi .champ-card__frame,
+    #vini-rossi article,
+    #vini-rossi .champ-card,
+    #vini-rossi .champ-card__frame {
       background: transparent !important;
       background-color: transparent !important;
       box-shadow: none !important;
@@ -708,13 +771,13 @@
        ═══════════════════════════════════════════════════════ */
     /* I nuovi stili split-layout sono definiti in style.css */
     @media (prefers-reduced-motion: reduce) {
+
       .lightbox,
       .lightbox__container {
         transition: none !important;
         animation: none !important;
       }
     }
-
   </style>
 </head>
 
@@ -725,8 +788,9 @@
        ═══════════════════════════════════════════════════════ -->
   <nav class="page-nav" id="page-nav" aria-label="Navigazione pagina">
     <a href="./index.html" class="back-link" aria-label="Torna alla Home di Degustibus">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+        aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
       </svg>
       Home
     </a>
@@ -782,26 +846,17 @@
              uk-flex-center garantisce centratura ultima riga parziale -->
         <ul
           class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
-          uk-grid
-          role="list"
-          aria-label="Selezione Champagne"
-          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
-        >
+          uk-grid role="list" aria-label="Selezione Champagne"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80">
 
           <!-- ── Bottiglia 1 ── -->
           <li role="listitem">
             <article class="champ-card" aria-label="Bollinger PN AYC 18">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/1.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/1.png"
                   alt="Bottiglia Bollinger PN AYC 18"
                   data-caption="BOLLINGER PN AYC 18&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir  |  Servizio: 6/8 °C&#10;Nel bicchiere questa edizione è caratterizzata da note di miele, gelatine di frutta e mela cotogna, aromi di marzapane e arancia rossa; completano il bouquet un naso ricco di spezie dolci e note rinfrescanti. Al palato è serio, sobrio e ricco. Questo vino, pensato per essere condiviso tra appassionati, è la pura espressione di un vitigno unita a quella di un grande terroir della Champagne."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -809,7 +864,10 @@
                 <p class="champ-card__grapes">Pinot Noir</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Bollinger PN AYC 18">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -819,16 +877,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Perrier-Jouët Blanc de Blancs">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/2.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/2.png"
                   alt="Bottiglia Perrier-Jouët Blanc de Blancs"
                   data-caption="PERRIER-JOUËT BLANC DE BLANCS&#10;Denominazione: Champagne AOC  |  Vitigno: Chardonnay  |  Servizio: 6/8 °C&#10;Nel bicchiere troviamo aromi decisi di fiori di cespugli selvatici come sambuco, acacia, caprifoglio e un tocco di agrumi. Al palato è fresco, pungente e vigoroso, con un finale dall'intensità minerale. Questo vino vivace ha un'immensa energia e vitalità."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -836,7 +888,10 @@
                 <p class="champ-card__grapes">Blanc de Blancs</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Perrier-Jouët Blanc de Blancs">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -846,16 +901,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Épître Blanc de Noirs Act 18">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/3.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/3.png"
                   alt="Bottiglia Épître Blanc de Noirs Act 18"
                   data-caption="ÉPÎTRE BLANC DE NOIRS ACT 18&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir  |  Servizio: 6/8 °C&#10;Champagne dal colore dorato con perlage fine e persistente; al naso troviamo una spiccata nota di mela gialla matura e profumata, accanto a note di pasticceria e mandorla. In bocca risulta succoso, fresco e leggermente sapido. Il periodo di conservazione è compreso tra i 5 e i 15 anni, dove vi garantirà altresì grandi esperienze di degustazione."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -863,7 +912,10 @@
                 <p class="champ-card__grapes">Blanc de Noirs</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Épître Blanc de Noirs Act 18">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -873,16 +925,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Krug Grande Cuvée">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/4.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/4.png"
                   alt="Bottiglia Krug Grande Cuvée"
                   data-caption="KRUG GRANDE CUVÉE&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Chardonnay, Pinot Meunier  |  Servizio: 6/8 °C&#10;Finezza e potenza, eleganza e intensità, un binomio perfetto per il simbolo dell'eccellenza artigianale della Maison Krug. Olfatto elegante, con intense note di pane tostato, torrone, marzapane, sentori di frutta matura e secca. Sorso di ottima struttura, compatta, ben sostenuta da un'acidità vivace e morbida, al tempo stesso lunga e persistente."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -890,7 +936,10 @@
                 <p class="champ-card__grapes">Brut</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Krug Grande Cuvée">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -900,16 +949,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Piper-Heidsieck Cuvée Brut">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/5.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/5.png"
                   alt="Bottiglia Piper-Heidsieck Cuvée Brut"
                   data-caption="PIPER-HEIDSIECK CUVÉE BRUT&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Pinot Meunier, Chardonnay  |  Servizio: 8/10 °C&#10;Champagne dal profumo espressivo, classico e immediato, con note di frutta fresca, agrumi e delicate sfumature di erbe aromatiche e frutta secca. Al gusto risulta fresco, equilibrato, vivace, sapido e minerale con sapori di frutta fresca di agrumi."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -917,7 +960,10 @@
                 <p class="champ-card__grapes">Brut</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Piper-Heidsieck Cuvée Brut">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -927,16 +973,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Piper-Heidsieck Essentiel Blanc de Blancs">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/6.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/6.png"
                   alt="Bottiglia Piper-Heidsieck Essentiel Blanc de Blancs"
                   data-caption="PIPER-HEIDSIECK ESSENTIEL&#10;Denominazione: Champagne AOC  |  Vitigno: Chardonnay  |  Servizio: 6/8 °C&#10;Questo champagne presenta un profilo preciso, fresco e minerale; la parte aromatica si esprime su fresche note di yuzu e lime, accompagnate da tocchi di fiori bianchi, acacia, mandorla e pane tostato. Il finale è fresco e minerale. La scelta di un invecchiamento prolungato e di un dosaggio extra brut è la conseguenza della filosofia che ispira la gamma Essentiel."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -944,7 +984,10 @@
                 <p class="champ-card__grapes">Blanc de Blancs Extra Brut</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Piper-Heidsieck Essentiel Blanc de Blancs">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -954,16 +997,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Ayala Brut Majeur">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/7.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/7.png"
                   alt="Bottiglia Ayala Brut Majeur"
                   data-caption="AYALA BRUT MAJEURE&#10;Denominazione: Champagne AOC  |  Vitigno: Chardonnay, Pinot Noir  |  Servizio: 6/8 °C&#10;Puro e bilanciato, riflette la ricchezza dei diversi terroir, offrendo un'ampia palette aromatica di agrumi, frutti a polpa bianca e delicate note floreali. Espressivo e preciso, questo è lo champagne da aperitivo per eccellenza, ma si abbina perfettamente anche a primi piatti di pesce, pollame e formaggi valorizzando ogni momento di degustazione con freschezza e vivacità."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -971,7 +1008,10 @@
                 <p class="champ-card__grapes">Brut</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Ayala Brut Majeur">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -981,16 +1021,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Louis Brochet Héritage Brut">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/8.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/8.png"
                   alt="Bottiglia Louis Brochet Héritage Brut"
                   data-caption="LOUIS BROCHET HÉRITAGE BRUT&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Chardonnay, Pinot Meunier  |  Servizio: 6/8 °C&#10;Uno champagne dagli aromi di frutta a polpa gialla, ma con tocchi esotici e note agrumate; al palato risulta splendidamente pulito e restituisce gli aromi fruttati e freschi. Vino vivace, con buona freschezza e fine struttura; le bollicine sono ben integrate e conferiscono un'amichevole leggerezza."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -998,7 +1032,10 @@
                 <p class="champ-card__grapes">Brut</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Louis Brochet Héritage Brut">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1008,16 +1045,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Louis Roederer Cristal 2015">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/9.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/9.png"
                   alt="Bottiglia Louis Roederer Cristal"
                   data-caption="LOUIS ROEDERER CRISTAL&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Chardonnay  |  Servizio: 8/10 °C&#10;Elaborato unicamente nelle grandi annate, Cristal esprime un notevole equilibrio, con una persistenza in bocca assolutamente unica. Questo champagne rivela un equilibrio raro e magico, tra intensità di profumi puri, vibrazione energetica, palato succoso e finale salino e gessoso. Può essere conservato per più di 20 anni senza perdere nulla della sua freschezza e del suo carattere."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -1025,7 +1056,10 @@
                 <p class="champ-card__grapes">Cristal</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Louis Roederer Cristal 2015">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1035,16 +1069,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Diogène Tissier & Fils Saveur de Juliette">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/champagne 2/10.png"
+                <img class="champ-card__img zoomable-image" src="/assets/champagne 2/10.png"
                   alt="Bottiglia Diogène Tissier &amp; Fils Saveur de Juliette"
                   data-caption="DIOGÈNE TISSIER &amp; FILS — SAVEUR DE JULIETTE BRUT&#10;Denominazione: Champagne AOC  |  Vitigno: Pinot Noir, Pinot Meunier  |  Servizio: 6/8 °C&#10;La Cuvée Saveur De Juliette è un seducente e affascinante incontro tra Pinot Noir e Pinot Meunier, grazie alla grande artigianalità e sensibilità del suo produttore Vincent che ha voluto offrirci un delizioso Blanc De Noirs come toccante omaggio alla sua nonna Juliette. Uno champagne carezzevole, ampio, con aromi molto maturi e un'elegante nota tostata sul finale."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Champagne</p>
@@ -1052,7 +1080,10 @@
                 <p class="champ-card__grapes">Saveur de Juliette Brut Blanc de Noirs</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Diogène Tissier & Fils Saveur de Juliette">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1064,7 +1095,7 @@
     </section>
 
 
-    
+
     <!-- ═══════════════════════════════════════════════════════
          SEZIONE 02 — BOLLICINE
          ═══════════════════════════════════════════════════════ -->
@@ -1080,7 +1111,8 @@
               <em>Bollicine</em>
             </h2>
             <p class="wine-section__desc">
-              Metodo classico e charmat d'autore. Franciacorta, Trentodoc, Altissimo Metodo Classico e rarità internazionali. Effervescenza come arte, non come consuetudine.
+              Metodo classico e charmat d'autore. Franciacorta, Trentodoc, Altissimo Metodo Classico e rarità
+              internazionali. Effervescenza come arte, non come consuetudine.
             </p>
           </div>
           <span class="wine-section__count" aria-hidden="true">02</span>
@@ -1088,25 +1120,16 @@
 
         <ul
           class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
-          uk-grid
-          role="list"
-          aria-label="Selezione Bollicine"
-          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
-        >
+          uk-grid role="list" aria-label="Selezione Bollicine"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80">
           <!-- ── Bottiglia 1: Mirabella DØM ── -->
           <li role="listitem">
             <article class="champ-card" aria-label="Mirabella DØM Brut Nature">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/1.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/1.png"
                   alt="Bottiglia Mirabella DØM Brut Nature"
                   data-caption="Mirabella DØM Brut Nature&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay, Pinot Nero, Pinot Bianco | Servizio: 6/8 °C&#10;Aroma altamente ricco di note mielose, combinate con sentori di vaniglia e piacevoli profumi di frutta esotica. Al palato vellutato e secco, caratterizzato da aromi di pesche, melone e un vago ricordo di lieviti, frutta secca e croste di pane. Spumante rinfrescante, ben equilibrato e di carattere, il DØM rappresenta una delle eccellenze italiane tra le bollicine Metodo Classico."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1114,7 +1137,10 @@
                 <p class="champ-card__grapes">Chardonnay, Pinot Nero, Pinot Bianco</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Mirabella DØM Brut Nature">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1124,16 +1150,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Ghercina Albarè Alta Langa">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/2.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/2.png"
                   alt="Bottiglia Ghercina Albarè Alta Langa"
                   data-caption="Ghercina Albarè Alta Langa&#10;Denominazione: Alta Langa DOCG | Vitigno: Pinot Nero, Chardonnay | Servizio: 6/8 °C&#10;Vino ancorato al territorio dell’Alta Langa e all’eleganza che questo gli conferisce, ricco di aromi secondari; la frutta secca e il miele emergono e lo avvolgono con una sapidità intrigante. L’acidità in perfetto equilibrio evidenzia una piacevole freschezza. Ottimo compagno per un aperitivo, ma anche perfetto per accompagnare crostacei e piatti di pesce."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Alta Langa DOCG</p>
@@ -1141,7 +1161,10 @@
                 <p class="champ-card__grapes">Pinot Nero, Chardonnay</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Ghercina Albarè Alta Langa">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1151,16 +1174,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Majolini Pas Dosé Millesimato Aligi Sassu">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/3.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/3.png"
                   alt="Bottiglia Majolini Pas Dosé Millesimato Aligi Sassu"
                   data-caption="Majolini Pas Dosé Millesimato Aligi Sassu&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay | Servizio: 6/8 °C&#10;Vino che rende omaggio allo scultore Aligi Sassu (1912 – 2000), questo Franciacorta ha uno stile intransigente, secco e puro. Lo valorizzano la bollicina fine, gli accenti agrumati e un carattere essenziale che richiama la cultura del silenzio delle cantine sotterranee."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1168,7 +1185,10 @@
                 <p class="champ-card__grapes">Chardonnay</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Majolini Pas Dosé Millesimato Aligi Sassu">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1178,16 +1198,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Ferrari Perlé Millesimato">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/4.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/4.png"
                   alt="Bottiglia Ferrari Perlé Millesimato"
                   data-caption="Ferrari Perlé Millesimato&#10;Denominazione: TrentoDoc | Vitigno: Chardonnay | Servizio: 6/8 °C&#10;TrentoDoc millesimato dal perlage finissimo e persistente, bouquet intenso di particolare finezza, con sentori di fiori di mandorlo e mela renetta, leggermente speziato con accenno a crosta di pane. Seducente ed elegante, con una sensazione vellutata molto lunga in cui si avverte una leggera nota fruttata e tutte le sfumature aromatiche tipiche dello Chardonnay."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">TrentoDoc</p>
@@ -1195,7 +1209,10 @@
                 <p class="champ-card__grapes">Chardonnay</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Ferrari Perlé Millesimato">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1205,16 +1222,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Majolini Blanc de Noirs">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/5.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/5.png"
                   alt="Bottiglia Majolini Blanc de Noirs"
                   data-caption="Majolini Blanc de Noirs&#10;Denominazione: Franciacorta DOCG | Vitigno: Pinot Nero | Servizio: 8/10 °C&#10;Espressione della Franciacorta complessa e decisa, con note di frutta secca, fieno e miele, dal gusto complesso e verticale. Il Pinot Nero è all’interno di un quadro fatto di sapori di campagna, di vita rallentata, di stagioni che si esibiscono sul palcoscenico della natura."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1222,7 +1233,10 @@
                 <p class="champ-card__grapes">Pinot Nero</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Majolini Blanc de Noirs">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1232,16 +1246,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Monte Rossa Coupé Non Dosato">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/6.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/6.png"
                   alt="Bottiglia Monte Rossa Coupé Non Dosato"
                   data-caption="Monte Rossa Coupé Non Dosato&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay, Pinot Nero | Servizio: 6/8 °C&#10;Un nome evocativo che rimanda ad un immaginario fatto di passione, stile e spensieratezza. Un Franciacorta luminoso e con riflessi di buccia di lime, il Coupé al naso emana un profumo soave, con richiami ai fiori di sambuco e pesca bianca. Nel bicchiere si evolve, svelando tocchi vegetali e marini con chiusura di mandorla fresca; al palato colpisce il contrasto tra cremosità e l’equilibrio del perlage, con un’alta nota di freschezza."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1249,7 +1257,10 @@
                 <p class="champ-card__grapes">Chardonnay, Pinot Nero</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Monte Rossa Coupé Non Dosato">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1259,16 +1270,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Monte Rossa Flamingo">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/7.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/7.png"
                   alt="Bottiglia Monte Rossa Flamingo"
                   data-caption="Monte Rossa Flamingo&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay, Pinot Nero | Servizio: 6/8 °C&#10;Il Flamingo è l’iconico e irresistibile Rosé della famiglia Monte Rossa. Dal colore rosa pastello luminoso, passiamo a un naso tagliente di melograno e sfumature di rafano con chiusura di anice stellato. All’assaggio è cremoso con note di arancia rossa, teso e selvatico, è proprio il racconto di un’affascinante storia di divertimento e passione della quale Flamingo è il protagonista."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1276,7 +1281,10 @@
                 <p class="champ-card__grapes">Chardonnay, Pinot Nero</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Monte Rossa Flamingo">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1286,16 +1294,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Monte Rossa P.R. Brut Blanc de Blancs">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/8.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/8.png"
                   alt="Bottiglia Monte Rossa P.R. Brut Blanc de Blancs"
                   data-caption="Monte Rossa P.R. Brut Blanc de Blancs&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay | Servizio: 6/8 °C&#10;Il P.R. è nato per festeggiare i 35 anni di attività di Monte Rossa: è il frutto dell’appassionata ricerca dell’armonia tra l’ampiezza, la struttura, la complessità del vino di Riserva e l’eleganza, la suadenza, la finezza che caratterizzano lo Chardonnay. Rappresenta l’espressione tipica della filosofia produttiva dell’azienda, volta a trovare e a proporre sempre l’eccellenza."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1303,7 +1305,10 @@
                 <p class="champ-card__grapes">Chardonnay</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Monte Rossa P.R. Brut Blanc de Blancs">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1313,16 +1318,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Monte Rossa Settedue">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/9.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/9.png"
                   alt="Bottiglia Monte Rossa Settedue"
                   data-caption="Monte Rossa Settedue&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay, Pinot Nero | Servizio: 8/10 °C&#10;Il nome Settedue rievoca l’anno di nascita di Monte Rossa. Il Settedue è l’ultimo nato della Casa e la filosofia con cui è stato concepito privilegia la sobrietà e l’eleganza, esprimendosi perciò in modo autentico, diretto e sincero. Il dosaggio minimo di zucchero sottolinea il carattere deciso, esaltandone la tensione e la profondità. Con sentori di mela verde e kiwi, e con un’armoniosa acidità che accompagna il sorso, questo vino unisce vigore tecnico e profondità espressiva."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1330,7 +1329,10 @@
                 <p class="champ-card__grapes">Chardonnay, Pinot Nero</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Monte Rossa Settedue">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1340,16 +1342,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Monte Rossa Cabochon Brut">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/10.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/10.png"
                   alt="Bottiglia Monte Rossa Cabochon Brut"
                   data-caption="Monte Rossa Cabochon Brut&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay, Pinot Nero | Servizio: 6/8 °C&#10;La costellazione Cabochon nasce dal desiderio di avere un’attenta selezione dei cru e di un nuovo sistema di vinificazione che introduce la barrique per la prima fermentazione del mosto. Cabochon è il punto di arrivo di un percorso emozionante e virtuoso, il desiderio che unito alla determinazione si è trasformato in un brillante firmamento. Giallo paglierino, perlage fine e resistente, note di fiore bianco, frutta gialla e ampia persistenza fanno dei Cabochon i fuoriserie della Franciacorta."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
@@ -1357,7 +1353,10 @@
                 <p class="champ-card__grapes">Chardonnay, Pinot Nero</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Monte Rossa Cabochon Brut">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1367,24 +1366,22 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Monte Rossa Cabochon Brut Nature Doppiozero Millesimato">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bollicine 3/11.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bollicine 3/11.png"
                   alt="Bottiglia Monte Rossa Cabochon Brut Nature Doppiozero Millesimato"
                   data-caption="Monte Rossa Cabochon Brut Nature Doppiozero Millesimato&#10;Denominazione: Franciacorta DOCG | Vitigno: Chardonnay, Pinot Nero | Servizio: 8/10 °C&#10;Cabochon Doppiozero è un’etichetta di ineguagliabile prestigio. Il profumo è ricco, intense ed elegante, con sentori di frutta gialla, frutta secca, agrumi, miele e crosta di pane. Il gusto è morbido, corposo e intenso, in grado di regalare un’esperienza unica ed emozionante. Il suo carattere deciso e prorompente ne fa un vino di grande spessore e di forte intensità."
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Franciacorta DOCG</p>
                 <h3 class="champ-card__name">Monte Rossa Cabochon Brut Nature Doppiozero Millesimato</h3>
                 <p class="champ-card__grapes">Chardonnay, Pinot Nero</p>
-                <a href="#" class="champ-card__cta" aria-label="Scopri Monte Rossa Cabochon Brut Nature Doppiozero Millesimato">
+                <a href="#" class="champ-card__cta"
+                  aria-label="Scopri Monte Rossa Cabochon Brut Nature Doppiozero Millesimato">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1408,33 +1405,24 @@
               <em>Vini Bianchi</em>
             </h2>
             <p class="wine-section__desc">
-              Mineralità, freschezza e struttura. Un viaggio tra i grandi vitigni autoctoni italiani e le espressioni più raffinate della viticoltura europea.
+              Mineralità, freschezza e struttura. Un viaggio tra i grandi vitigni autoctoni italiani e le espressioni
+              più raffinate della viticoltura europea.
             </p>
           </div>
           <span class="wine-section__count" aria-hidden="true">03</span>
         </header>
 
-                <ul
+        <ul
           class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
-          uk-grid
-          role="list"
-          aria-label="Selezione Vini Bianchi"
-          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
-        >
+          uk-grid role="list" aria-label="Selezione Vini Bianchi"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80">
           <!-- ── Bottiglia 1 ── -->
           <li role="listitem">
             <article class="champ-card" aria-label="Kuen Hof Veltliner">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/1.png"
-                  alt="Bottiglia Kuen Hof Veltliner"
-                  data-caption="Kuen Hof Veltliner — Südtirol Eisacktaler DOC 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/1.png"
+                  alt="Bottiglia Kuen Hof Veltliner" data-caption="Kuen Hof Veltliner — Südtirol Eisacktaler DOC 2023"
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1442,7 +1430,10 @@
                 <p class="champ-card__grapes">Südtirol Eisacktaler DOC · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Kuen Hof Veltliner">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1451,16 +1442,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Garlider Pinot Grigio">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/2.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/2.png"
                   alt="Bottiglia Garlider Pinot Grigio"
-                  data-caption="Garlider Pinot Grigio — Weinberg Dolomiten IGT 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Garlider Pinot Grigio — Weinberg Dolomiten IGT 2022" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1468,7 +1453,10 @@
                 <p class="champ-card__grapes">Weinberg Dolomiten IGT · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Garlider Pinot Grigio">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1477,16 +1465,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Peter Dipoli Voglar">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/3.png"
-                  alt="Bottiglia Peter Dipoli Voglar"
-                  data-caption="Peter Dipoli Voglar — Sauvignon Alto Adige DOC 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/3.png"
+                  alt="Bottiglia Peter Dipoli Voglar" data-caption="Peter Dipoli Voglar — Sauvignon Alto Adige DOC 2022"
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1494,7 +1475,10 @@
                 <p class="champ-card__grapes">Sauvignon Alto Adige DOC · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Peter Dipoli Voglar">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1503,16 +1487,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Gorgona">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/4.png"
-                  alt="Bottiglia Gorgona"
-                  data-caption="Gorgona — Frescobaldi Costa Toscana IGT 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/4.png" alt="Bottiglia Gorgona"
+                  data-caption="Gorgona — Frescobaldi Costa Toscana IGT 2022" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1520,7 +1497,10 @@
                 <p class="champ-card__grapes">Frescobaldi Costa Toscana IGT · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Gorgona">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1529,16 +1509,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Castelfeder Raif">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/5.png"
-                  alt="Bottiglia Castelfeder Raif"
-                  data-caption="Castelfeder Raif — Sauvignon Vigneti delle Dolomiti IGT 2024"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/5.png" alt="Bottiglia Castelfeder Raif"
+                  data-caption="Castelfeder Raif — Sauvignon Vigneti delle Dolomiti IGT 2024" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1546,7 +1519,10 @@
                 <p class="champ-card__grapes">Sauvignon Vigneti delle Dolomiti IGT · 2024</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Castelfeder Raif">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1555,16 +1531,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Rocca del Principe Nonna Volpe">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/6.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/6.png"
                   alt="Bottiglia Rocca del Principe Nonna Volpe"
-                  data-caption="Rocca del Principe Nonna Volpe — Irpinia Coda di Volpe DOP"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Rocca del Principe Nonna Volpe — Irpinia Coda di Volpe DOP" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1572,7 +1542,10 @@
                 <p class="champ-card__grapes">Irpinia Coda di Volpe DOP</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Rocca del Principe Nonna Volpe">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1581,16 +1554,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Pfitscher Stoass">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/7.png"
-                  alt="Bottiglia Pfitscher Stoass"
-                  data-caption="Pfitscher Stoass — Gewürztraminer Alto Adige Südtirol DOC"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/7.png" alt="Bottiglia Pfitscher Stoass"
+                  data-caption="Pfitscher Stoass — Gewürztraminer Alto Adige Südtirol DOC" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1598,7 +1564,10 @@
                 <p class="champ-card__grapes">Gewürztraminer Alto Adige DOC</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Pfitscher Stoass">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1607,16 +1576,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Tiefenbrunner Merus">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/8.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/8.png"
                   alt="Bottiglia Tiefenbrunner Merus"
-                  data-caption="Tiefenbrunner Merus — Pinot Grigio Südtirol DOC 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Tiefenbrunner Merus — Pinot Grigio Südtirol DOC 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1624,7 +1587,10 @@
                 <p class="champ-card__grapes">Pinot Grigio Südtirol DOC · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Tiefenbrunner Merus">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1633,16 +1599,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="J. Hofstätter Joseph">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/9.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/9.png"
                   alt="Bottiglia J. Hofstätter Joseph"
-                  data-caption="J. Hofstätter Joseph — Gewürztraminer Südtirol DOC 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="J. Hofstätter Joseph — Gewürztraminer Südtirol DOC 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1650,7 +1610,10 @@
                 <p class="champ-card__grapes">Gewürztraminer Alto Adige DOC · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri J. Hofstätter Joseph">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1659,16 +1622,8 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Cottanera">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/10.png"
-                  alt="Bottiglia Cottanera"
-                  data-caption="Cottanera — Etna Bianco DOC"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/10.png" alt="Bottiglia Cottanera"
+                  data-caption="Cottanera — Etna Bianco DOC" loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1676,7 +1631,10 @@
                 <p class="champ-card__grapes">Etna Bianco DOC</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Cottanera">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1685,16 +1643,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Kaltern Carned">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/11.png"
-                  alt="Bottiglia Kaltern Carned"
-                  data-caption="Kaltern Carned — Kerner Südtirol Alto Adige DOC 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/11.png" alt="Bottiglia Kaltern Carned"
+                  data-caption="Kaltern Carned — Kerner Südtirol Alto Adige DOC 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1702,7 +1653,10 @@
                 <p class="champ-card__grapes">Kerner Alto Adige DOC · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Kaltern Carned">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1711,16 +1665,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Leya Terlaner">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/12.png"
-                  alt="Bottiglia Leya Terlaner"
-                  data-caption="Leya Terlaner — Alto Adige Terlano DOC Riserva"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/12.png" alt="Bottiglia Leya Terlaner"
+                  data-caption="Leya Terlaner — Alto Adige Terlano DOC Riserva" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1728,7 +1675,10 @@
                 <p class="champ-card__grapes">Alto Adige Terlano DOC Riserva</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Leya Terlaner">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1737,16 +1687,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Kuen Hof Kaiton">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/13.png"
-                  alt="Bottiglia Kuen Hof Kaiton"
-                  data-caption="Kuen Hof Kaiton — Riesling Südtirol Eisacktaler DOC 2024"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/13.png" alt="Bottiglia Kuen Hof Kaiton"
+                  data-caption="Kuen Hof Kaiton — Riesling Südtirol Eisacktaler DOC 2024" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1754,7 +1697,10 @@
                 <p class="champ-card__grapes">Riesling Südtirol Eisacktaler DOC · 2024</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Kuen Hof Kaiton">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1763,16 +1709,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Weingut Abraham">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/14.png"
-                  alt="Bottiglia Weingut Abraham"
-                  data-caption="Weingut Abraham — Sauvignon Fumé Alto Adige DOC 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/14.png" alt="Bottiglia Weingut Abraham"
+                  data-caption="Weingut Abraham — Sauvignon Fumé Alto Adige DOC 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1780,7 +1719,10 @@
                 <p class="champ-card__grapes">Sauvignon Fumé Alto Adige DOC · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Weingut Abraham">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1789,16 +1731,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Anascosta Chard&#039;O&#039;">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/15.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/15.png"
                   alt="Bottiglia Anascosta Chard&#039;O&#039;"
-                  data-caption="Anascosta Chard&#039;O&#039; — Toscana Chardonnay IGT 2021"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Anascosta Chard&#039;O&#039; — Toscana Chardonnay IGT 2021" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1806,7 +1742,10 @@
                 <p class="champ-card__grapes">Toscana Chardonnay IGT · 2021</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Anascosta Chard&#039;O&#039;">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1815,16 +1754,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Capichera Vign&#039;Angena">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/16.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/16.png"
                   alt="Bottiglia Capichera Vign&#039;Angena"
-                  data-caption="Capichera Vign&#039;Angena — Vermentino di Gallura Superiore DOCG 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Capichera Vign&#039;Angena — Vermentino di Gallura Superiore DOCG 2023" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1832,7 +1765,10 @@
                 <p class="champ-card__grapes">Vermentino di Gallura DOCG · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Capichera Vign&#039;Angena">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1841,16 +1777,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Is Argiolas">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/17.png"
-                  alt="Bottiglia Is Argiolas"
-                  data-caption="Is Argiolas — Vermentino di Sardegna DOC 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/17.png" alt="Bottiglia Is Argiolas"
+                  data-caption="Is Argiolas — Vermentino di Sardegna DOC 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1858,7 +1787,10 @@
                 <p class="champ-card__grapes">Vermentino di Sardegna DOC · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Is Argiolas">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1867,16 +1799,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Anascosta Rosamatto">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/18.png"
-                  alt="Bottiglia Anascosta Rosamatto"
-                  data-caption="Anascosta Rosamatto — Gris Rosé Toscana IGT 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/18.png"
+                  alt="Bottiglia Anascosta Rosamatto" data-caption="Anascosta Rosamatto — Gris Rosé Toscana IGT 2022"
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1884,7 +1809,10 @@
                 <p class="champ-card__grapes">Gris Rosé Toscana IGT · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Anascosta Rosamatto">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1893,16 +1821,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Emilio Primo Bianco">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/19.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/19.png"
                   alt="Bottiglia Emilio Primo Bianco"
-                  data-caption="Emilio Primo Bianco — Terre del Marchesato Toscana IGT 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Emilio Primo Bianco — Terre del Marchesato Toscana IGT 2023" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1910,7 +1832,10 @@
                 <p class="champ-card__grapes">Terre del Marchesato IGT · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Emilio Primo Bianco">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1919,16 +1844,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Chanson Clos des Marconnets">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/20.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/20.png"
                   alt="Bottiglia Chanson Clos des Marconnets"
-                  data-caption="Domaine Chanson Clos des Marconnets — Beaune Premier Cru 2018"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Domaine Chanson Clos des Marconnets — Beaune Premier Cru 2018" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1936,7 +1855,10 @@
                 <p class="champ-card__grapes">Beaune Premier Cru · 2018</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Chanson Clos des Marconnets">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1945,16 +1867,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Trenel">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/21.png"
-                  alt="Bottiglia Trenel"
-                  data-caption="Trenel — Bourgogne Chardonnay AOP 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/21.png" alt="Bottiglia Trenel"
+                  data-caption="Trenel — Bourgogne Chardonnay AOP 2022" loading="lazy" decoding="async" width="400"
+                  height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1962,7 +1877,10 @@
                 <p class="champ-card__grapes">Bourgogne Chardonnay AOP · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Trenel">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1971,16 +1889,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Chanson Beaune-Bastion">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/22.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/22.png"
                   alt="Bottiglia Chanson Beaune-Bastion"
-                  data-caption="Domaine Chanson Beaune-Bastion — Beaune Premier Cru 2018"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Domaine Chanson Beaune-Bastion — Beaune Premier Cru 2018" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -1988,7 +1900,10 @@
                 <p class="champ-card__grapes">Beaune Premier Cru · 2018</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Chanson Beaune-Bastion">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -1997,16 +1912,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Domaine Leflaive">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/23.png"
-                  alt="Bottiglia Domaine Leflaive"
-                  data-caption="Domaine Leflaive — Puligny-Montrachet Bourgogne 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/23.png"
+                  alt="Bottiglia Domaine Leflaive" data-caption="Domaine Leflaive — Puligny-Montrachet Bourgogne 2023"
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2014,7 +1922,10 @@
                 <p class="champ-card__grapes">Puligny-Montrachet Blanc · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Domaine Leflaive">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2023,16 +1934,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Domaine de Bellene">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/24.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/24.png"
                   alt="Bottiglia Domaine de Bellene"
-                  data-caption="Domaine de Bellene — Côte de Nuits-Villages Vieilles Vignes 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Domaine de Bellene — Côte de Nuits-Villages Vieilles Vignes 2022" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2040,7 +1945,10 @@
                 <p class="champ-card__grapes">Côte de Nuits-Villages Blanc · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Domaine de Bellene">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2049,16 +1957,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Scheidecker &amp; Fils">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/25.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/25.png"
                   alt="Bottiglia Scheidecker &amp; Fils"
-                  data-caption="Domaine Scheidecker &amp; Fils — Pinot Gris Alsace AOP 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Domaine Scheidecker &amp; Fils — Pinot Gris Alsace AOP 2023" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2066,7 +1968,10 @@
                 <p class="champ-card__grapes">Pinot Gris Alsace AOP · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Scheidecker &amp; Fils">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2075,16 +1980,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="L&#039;Églantière">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/26.png"
-                  alt="Bottiglia L&#039;Églantière"
-                  data-caption="Jean Durup L&#039;Églantière — Chablis AOP 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/26.png"
+                  alt="Bottiglia L&#039;Églantière" data-caption="Jean Durup L&#039;Églantière — Chablis AOP 2023"
+                  loading="lazy" decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2092,7 +1990,10 @@
                 <p class="champ-card__grapes">Jean Durup Chablis AOP · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri L&#039;Églantière">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2101,16 +2002,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Louis Latour">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/27.png"
-                  alt="Bottiglia Louis Latour"
-                  data-caption="Maison Louis Latour — Ardèche Chardonnay 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/27.png" alt="Bottiglia Louis Latour"
+                  data-caption="Maison Louis Latour — Ardèche Chardonnay 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2118,7 +2012,10 @@
                 <p class="champ-card__grapes">Ardèche Chardonnay · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Louis Latour">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2127,16 +2024,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Zind-Humbrecht">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/28.png"
-                  alt="Bottiglia Zind-Humbrecht"
-                  data-caption="Domaine Zind-Humbrecht — Gewurztraminer Turckheim Alsace AOP 2020"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/28.png" alt="Bottiglia Zind-Humbrecht"
+                  data-caption="Domaine Zind-Humbrecht — Gewurztraminer Turckheim Alsace AOP 2020" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2144,7 +2034,10 @@
                 <p class="champ-card__grapes">Gewurztraminer Turckheim Alsace · 2020</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Zind-Humbrecht">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2153,16 +2046,9 @@
           <li role="listitem">
             <article class="champ-card" aria-label="La Chablisienne">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/29.png"
-                  alt="Bottiglia La Chablisienne"
-                  data-caption="La Chablisienne Les Vénérables — Chablis AOP 2022"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/29.png" alt="Bottiglia La Chablisienne"
+                  data-caption="La Chablisienne Les Vénérables — Chablis AOP 2022" loading="lazy" decoding="async"
+                  width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2170,7 +2056,10 @@
                 <p class="champ-card__grapes">Les Vénérables Chablis AOP · 2022</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri La Chablisienne">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2179,16 +2068,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Château Doisy Daëne">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/30.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/30.png"
                   alt="Bottiglia Château Doisy Daëne"
-                  data-caption="Château Doisy Daëne — Barsac Sauternes Grand Cru Classé 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Château Doisy Daëne — Barsac Sauternes Grand Cru Classé 2023" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2196,7 +2079,10 @@
                 <p class="champ-card__grapes">Barsac Sauternes Grand Cru · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Château Doisy Daëne">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2205,16 +2091,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Ribeauvillé Pinot Gris">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/31.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/31.png"
                   alt="Bottiglia Ribeauvillé Pinot Gris"
-                  data-caption="Cave de Ribeauvillé Pinot Gris — Alsace AOP Collection 2023"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Cave de Ribeauvillé Pinot Gris — Alsace AOP Collection 2023" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2222,7 +2102,10 @@
                 <p class="champ-card__grapes">Cave de Ribeauvillé Alsace · 2023</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Ribeauvillé Pinot Gris">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2231,16 +2114,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Charles Baur Pfersigberg">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/32.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/32.png"
                   alt="Bottiglia Charles Baur Pfersigberg"
-                  data-caption="Domaine Charles Baur Pfersigberg — Gewurztraminer Alsace Grand Cru 2019"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Domaine Charles Baur Pfersigberg — Gewurztraminer Alsace Grand Cru 2019" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2248,7 +2125,10 @@
                 <p class="champ-card__grapes">Gewurztraminer Alsace Grand Cru · 2019</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Charles Baur Pfersigberg">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2257,16 +2137,10 @@
           <li role="listitem">
             <article class="champ-card" aria-label="Ribeauvillé Pinot Blanc">
               <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-                <img
-                  class="champ-card__img zoomable-image"
-                  src="/assets/bianchi/33.png"
+                <img class="champ-card__img zoomable-image" src="/assets/bianchi/33.png"
                   alt="Bottiglia Ribeauvillé Pinot Blanc"
-                  data-caption="Cave de Ribeauvillé Pinot Blanc — Alsace AOP Collection 2024"
-                  loading="lazy"
-                  decoding="async"
-                  width="400"
-                  height="600"
-                >
+                  data-caption="Cave de Ribeauvillé Pinot Blanc — Alsace AOP Collection 2024" loading="lazy"
+                  decoding="async" width="400" height="600">
               </div>
               <div class="champ-card__info">
                 <p class="champ-card__cuvee">Vino Bianco</p>
@@ -2274,7 +2148,10 @@
                 <p class="champ-card__grapes">Cave de Ribeauvillé Alsace · 2024</p>
                 <a href="#" class="champ-card__cta" aria-label="Scopri Ribeauvillé Pinot Blanc">
                   Scopri
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </article>
@@ -2298,640 +2175,549 @@
               <em>Vini Rossi</em>
             </h2>
             <p class="wine-section__desc">
-              Corpo, eleganza e potenziale di invecchiamento. Dai grandi Nebbiolo piemontesi ai nobili blend toscani, fino alle espressioni più identitarie del Sud.
+              Corpo, eleganza e potenziale di invecchiamento. Dai grandi Nebbiolo piemontesi ai nobili blend toscani,
+              fino alle espressioni più identitarie del Sud.
             </p>
           </div>
           <span class="wine-section__count" aria-hidden="true">04</span>
         </header>
 
         <ul
-  class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
-  uk-grid
-  role="list"
-  aria-label="Selezione Vini Rossi"
-  uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80"
->
-  <!-- ── Bottiglia 1 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Oddero">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/1.png"
-          alt="Bottiglia Oddero"
-          data-caption="Oddero — Barolo DOCG 2020"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Oddero</h3>
-        <p class="champ-card__grapes">Barolo DOCG · 2020</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Oddero">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          class="uk-grid uk-grid-large uk-flex-center uk-child-width-1-2 uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l"
+          uk-grid role="list" aria-label="Selezione Vini Rossi"
+          uk-scrollspy="target: li; cls: uk-animation-slide-bottom-small; delay: 80">
+          <!-- ── Bottiglia 1 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Oddero">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/1.png" alt="Bottiglia Oddero"
+                  data-caption="Oddero — Barolo DOCG 2020" loading="lazy" decoding="async" width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Oddero</h3>
+                <p class="champ-card__grapes">Barolo DOCG · 2020</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Oddero">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 2 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Guado al Tasso">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/2.png"
-          alt="Bottiglia Guado al Tasso"
-          data-caption="Guado al Tasso — Bolgheri DOC Superiore 2014"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Guado al Tasso</h3>
-        <p class="champ-card__grapes">Bolgheri DOC Superiore · 2014</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Guado al Tasso">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 2 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Guado al Tasso">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/2.png" alt="Bottiglia Guado al Tasso"
+                  data-caption="Guado al Tasso — Bolgheri DOC Superiore 2014" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Guado al Tasso</h3>
+                <p class="champ-card__grapes">Bolgheri DOC Superiore · 2014</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Guado al Tasso">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 3 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Poggio di Sotto">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/3.png"
-          alt="Bottiglia Poggio di Sotto"
-          data-caption="Poggio di Sotto — Brunello di Montalcino DOCG 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Poggio di Sotto</h3>
-        <p class="champ-card__grapes">Brunello di Montalcino DOCG · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Poggio di Sotto">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 3 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Poggio di Sotto">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/3.png" alt="Bottiglia Poggio di Sotto"
+                  data-caption="Poggio di Sotto — Brunello di Montalcino DOCG 2021" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Poggio di Sotto</h3>
+                <p class="champ-card__grapes">Brunello di Montalcino DOCG · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Poggio di Sotto">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 4 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Sassicaia">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/4.png"
-          alt="Bottiglia Sassicaia"
-          data-caption="Sassicaia — Bolgheri Sassicaia DOC 2019"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Sassicaia</h3>
-        <p class="champ-card__grapes">Bolgheri Sassicaia DOC · 2019</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Sassicaia">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 4 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Sassicaia">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/4.png" alt="Bottiglia Sassicaia"
+                  data-caption="Sassicaia — Bolgheri Sassicaia DOC 2019" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Sassicaia</h3>
+                <p class="champ-card__grapes">Bolgheri Sassicaia DOC · 2019</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Sassicaia">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 5 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Argiano">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/5.png"
-          alt="Bottiglia Argiano"
-          data-caption="Argiano — Brunello di Montalcino DOCG 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Argiano</h3>
-        <p class="champ-card__grapes">Brunello di Montalcino DOCG · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Argiano">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 5 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Argiano">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/5.png" alt="Bottiglia Argiano"
+                  data-caption="Argiano — Brunello di Montalcino DOCG 2021" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Argiano</h3>
+                <p class="champ-card__grapes">Brunello di Montalcino DOCG · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Argiano">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 6 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Speri Sant'Urbano">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/6.png"
-          alt="Bottiglia Speri Sant'Urbano"
-          data-caption="Speri Sant'Urbano — Amarone della Valpolicella DOCG Classico 2018"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Speri Sant'Urbano</h3>
-        <p class="champ-card__grapes">Amarone Classico DOCG · 2018</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Speri Sant'Urbano">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 6 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Speri Sant'Urbano">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/6.png"
+                  alt="Bottiglia Speri Sant'Urbano"
+                  data-caption="Speri Sant'Urbano — Amarone della Valpolicella DOCG Classico 2018" loading="lazy"
+                  decoding="async" width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Speri Sant'Urbano</h3>
+                <p class="champ-card__grapes">Amarone Classico DOCG · 2018</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Speri Sant'Urbano">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 7 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Aldone">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/7.png"
-          alt="Bottiglia Aldone"
-          data-caption="Aldone — Terre del Marchesato Toscana IGT 2023"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Aldone</h3>
-        <p class="champ-card__grapes">Terre del Marchesato IGT · 2023</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Aldone">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 7 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Aldone">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/7.png" alt="Bottiglia Aldone"
+                  data-caption="Aldone — Terre del Marchesato Toscana IGT 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Aldone</h3>
+                <p class="champ-card__grapes">Terre del Marchesato IGT · 2023</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Aldone">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 8 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Saffredi">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/8.png"
-          alt="Bottiglia Saffredi"
-          data-caption="Saffredi — Fattoria Le Pupille Maremma Toscana 2022"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Saffredi</h3>
-        <p class="champ-card__grapes">Fattoria Le Pupille · 2022</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Saffredi">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 8 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Saffredi">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/8.png" alt="Bottiglia Saffredi"
+                  data-caption="Saffredi — Fattoria Le Pupille Maremma Toscana 2022" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Saffredi</h3>
+                <p class="champ-card__grapes">Fattoria Le Pupille · 2022</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Saffredi">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 9 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Franchesato">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/9.png"
-          alt="Bottiglia Franchesato"
-          data-caption="Franchesato — Terre del Marchesato Toscana IGT 2023"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Franchesato</h3>
-        <p class="champ-card__grapes">Terre del Marchesato IGT · 2023</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Franchesato">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 9 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Franchesato">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/9.png" alt="Bottiglia Franchesato"
+                  data-caption="Franchesato — Terre del Marchesato Toscana IGT 2023" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Franchesato</h3>
+                <p class="champ-card__grapes">Terre del Marchesato IGT · 2023</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Franchesato">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 10 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Non Confunditur">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/10.png"
-          alt="Bottiglia Non Confunditur"
-          data-caption="Non Confunditur — Argiano Toscana IGT 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Non Confunditur</h3>
-        <p class="champ-card__grapes">Argiano Toscana IGT · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Non Confunditur">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 10 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Non Confunditur">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/10.png" alt="Bottiglia Non Confunditur"
+                  data-caption="Non Confunditur — Argiano Toscana IGT 2021" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Non Confunditur</h3>
+                <p class="champ-card__grapes">Argiano Toscana IGT · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Non Confunditur">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 11 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Sassoalloro Oro">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/11.png"
-          alt="Bottiglia Sassoalloro Oro"
-          data-caption="Sassoalloro Oro — Jacopo Biondi Santi Toscana IGT 2020"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Sassoalloro Oro</h3>
-        <p class="champ-card__grapes">Jacopo Biondi Santi · 2020</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Sassoalloro Oro">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 11 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Sassoalloro Oro">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/11.png" alt="Bottiglia Sassoalloro Oro"
+                  data-caption="Sassoalloro Oro — Jacopo Biondi Santi Toscana IGT 2020" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Sassoalloro Oro</h3>
+                <p class="champ-card__grapes">Jacopo Biondi Santi · 2020</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Sassoalloro Oro">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 12 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Silvano Bolmida Bussia">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/12.png"
-          alt="Bottiglia Silvano Bolmida Bussia"
-          data-caption="Silvano Bolmida Bussia — Barolo DOCG Riserva 2016"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Silvano Bolmida Bussia</h3>
-        <p class="champ-card__grapes">Barolo Riserva DOCG · 2016</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Silvano Bolmida Bussia">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 12 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Silvano Bolmida Bussia">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/12.png"
+                  alt="Bottiglia Silvano Bolmida Bussia"
+                  data-caption="Silvano Bolmida Bussia — Barolo DOCG Riserva 2016" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Silvano Bolmida Bussia</h3>
+                <p class="champ-card__grapes">Barolo Riserva DOCG · 2016</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Silvano Bolmida Bussia">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 13 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Biondi-Santi">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/13.png"
-          alt="Bottiglia Biondi-Santi"
-          data-caption="Biondi-Santi — Brunello di Montalcino DOCG 2018"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Biondi-Santi</h3>
-        <p class="champ-card__grapes">Brunello di Montalcino DOCG · 2018</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Biondi-Santi">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 13 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Biondi-Santi">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/13.png" alt="Bottiglia Biondi-Santi"
+                  data-caption="Biondi-Santi — Brunello di Montalcino DOCG 2018" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Biondi-Santi</h3>
+                <p class="champ-card__grapes">Brunello di Montalcino DOCG · 2018</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Biondi-Santi">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 14 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Poggio alle Nani">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/14.png"
-          alt="Bottiglia Poggio alle Nani"
-          data-caption="Poggio alle Nani — Le Mortelle Maremma Toscana DOC 2017"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Poggio alle Nani</h3>
-        <p class="champ-card__grapes">Le Mortelle Maremma DOC · 2017</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Poggio alle Nani">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 14 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Poggio alle Nani">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/14.png"
+                  alt="Bottiglia Poggio alle Nani"
+                  data-caption="Poggio alle Nani — Le Mortelle Maremma Toscana DOC 2017" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Poggio alle Nani</h3>
+                <p class="champ-card__grapes">Le Mortelle Maremma DOC · 2017</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Poggio alle Nani">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 15 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Marianova">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/15.png"
-          alt="Bottiglia Marianova"
-          data-caption="Marianova — Michele Satta Bolgheri DOC Superiore 2018"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Marianova</h3>
-        <p class="champ-card__grapes">Michele Satta Bolgheri Superiore · 2018</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Marianova">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 15 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Marianova">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/15.png" alt="Bottiglia Marianova"
+                  data-caption="Marianova — Michele Satta Bolgheri DOC Superiore 2018" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Marianova</h3>
+                <p class="champ-card__grapes">Michele Satta Bolgheri Superiore · 2018</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Marianova">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 16 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Schidione">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/16.png"
-          alt="Bottiglia Schidione"
-          data-caption="Schidione — Jacopo Biondi Santi Toscana IGT 2020"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Schidione</h3>
-        <p class="champ-card__grapes">Jacopo Biondi Santi · 2020</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Schidione">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 16 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Schidione">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/16.png" alt="Bottiglia Schidione"
+                  data-caption="Schidione — Jacopo Biondi Santi Toscana IGT 2020" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Schidione</h3>
+                <p class="champ-card__grapes">Jacopo Biondi Santi · 2020</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Schidione">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 17 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Avignonesi Nobile">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/17.png"
-          alt="Bottiglia Avignonesi Nobile"
-          data-caption="Avignonesi Nobile — Vino Nobile di Montepulciano DOCG 2020"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Avignonesi Nobile</h3>
-        <p class="champ-card__grapes">Vino Nobile di Montepulciano DOCG · 2020</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Avignonesi Nobile">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 17 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Avignonesi Nobile">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/17.png"
+                  alt="Bottiglia Avignonesi Nobile"
+                  data-caption="Avignonesi Nobile — Vino Nobile di Montepulciano DOCG 2020" loading="lazy"
+                  decoding="async" width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Avignonesi Nobile</h3>
+                <p class="champ-card__grapes">Vino Nobile di Montepulciano DOCG · 2020</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Avignonesi Nobile">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 18 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Luce">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/18.png"
-          alt="Bottiglia Luce"
-          data-caption="Luce — Tenuta Luce Toscana IGT 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Luce</h3>
-        <p class="champ-card__grapes">Tenuta Luce Toscana IGT · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Luce">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 18 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Luce">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/18.png" alt="Bottiglia Luce"
+                  data-caption="Luce — Tenuta Luce Toscana IGT 2021" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Luce</h3>
+                <p class="champ-card__grapes">Tenuta Luce Toscana IGT · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Luce">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 19 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Tignanello">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/19.png"
-          alt="Bottiglia Tignanello"
-          data-caption="Tignanello — Marchesi Antinori Toscana IGT 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Tignanello</h3>
-        <p class="champ-card__grapes">Marchesi Antinori · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Tignanello">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 19 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Tignanello">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/19.png" alt="Bottiglia Tignanello"
+                  data-caption="Tignanello — Marchesi Antinori Toscana IGT 2021" loading="lazy" decoding="async"
+                  width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Tignanello</h3>
+                <p class="champ-card__grapes">Marchesi Antinori · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Tignanello">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 20 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Grattamacco">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/20.png"
-          alt="Bottiglia Grattamacco"
-          data-caption="Grattamacco — Bolgheri DOC Superiore 2022"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Grattamacco</h3>
-        <p class="champ-card__grapes">Bolgheri DOC Superiore · 2022</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Grattamacco">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 20 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Grattamacco">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/20.png" alt="Bottiglia Grattamacco"
+                  data-caption="Grattamacco — Bolgheri DOC Superiore 2022" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Grattamacco</h3>
+                <p class="champ-card__grapes">Bolgheri DOC Superiore · 2022</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Grattamacco">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 21 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Ornellaia">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/21.png"
-          alt="Bottiglia Ornellaia"
-          data-caption="Ornellaia — Bolgheri DOC Superiore 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Ornellaia</h3>
-        <p class="champ-card__grapes">Bolgheri DOC Superiore · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Ornellaia">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 21 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Ornellaia">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/21.png" alt="Bottiglia Ornellaia"
+                  data-caption="Ornellaia — Bolgheri DOC Superiore 2021" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Ornellaia</h3>
+                <p class="champ-card__grapes">Bolgheri DOC Superiore · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Ornellaia">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 22 ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Redigaffi">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/22.png"
-          alt="Bottiglia Redigaffi"
-          data-caption="Redigaffi — Tua Rita Toscana IGT 2021"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Redigaffi</h3>
-        <p class="champ-card__grapes">Tua Rita Toscana IGT · 2021</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Redigaffi">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
+          <!-- ── Bottiglia 22 ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Redigaffi">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/22.png" alt="Bottiglia Redigaffi"
+                  data-caption="Redigaffi — Tua Rita Toscana IGT 2021" loading="lazy" decoding="async" width="400"
+                  height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Redigaffi</h3>
+                <p class="champ-card__grapes">Tua Rita Toscana IGT · 2021</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Redigaffi">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
 
-  <!-- ── Bottiglia 23 (se presente file 23.png) ── -->
-  <li role="listitem">
-    <article class="champ-card" aria-label="Selezione Pregiata">
-      <div class="champ-card__frame uk-transition-toggle" tabindex="0">
-        <img
-          class="champ-card__img zoomable-image"
-          src="/assets/rossi 2/23.png"
-          alt="Bottiglia Selezione Pregiata"
-          data-caption="Selezione Pregiata — Vino Rosso d'Autore"
-          loading="lazy"
-          decoding="async"
-          width="400"
-          height="600"
-        >
-      </div>
-      <div class="champ-card__info">
-        <p class="champ-card__cuvee">Vino Rosso</p>
-        <h3 class="champ-card__name">Selezione Pregiata</h3>
-        <p class="champ-card__grapes">Vino Rosso d'Autore</p>
-        <a href="#" class="champ-card__cta" aria-label="Scopri Selezione Pregiata">
-          Scopri
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </article>
-  </li>
-</ul>
+          <!-- ── Bottiglia 23 (se presente file 23.png) ── -->
+          <li role="listitem">
+            <article class="champ-card" aria-label="Selezione Pregiata">
+              <div class="champ-card__frame uk-transition-toggle" tabindex="0">
+                <img class="champ-card__img zoomable-image" src="/assets/rossi 2/23.png"
+                  alt="Bottiglia Selezione Pregiata" data-caption="Selezione Pregiata — Vino Rosso d'Autore"
+                  loading="lazy" decoding="async" width="400" height="600">
+              </div>
+              <div class="champ-card__info">
+                <p class="champ-card__cuvee">Vino Rosso</p>
+                <h3 class="champ-card__name">Selezione Pregiata</h3>
+                <p class="champ-card__grapes">Vino Rosso d'Autore</p>
+                <a href="#" class="champ-card__cta" aria-label="Scopri Selezione Pregiata">
+                  Scopri
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
 
       </div>
     </section>
@@ -2950,7 +2736,7 @@
           nella scoperta delle etichette più adatte ai tuoi gusti.
         </p>
         <div style="display: inline-flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center;" class="vr vr--d3">
-          <a href="/prenota-degustazione.html" class="btn btn--primary" id="cta-vini-prenota" aria-label="Prenota una degustazione">
+          <a href="./contatti.html" class="btn btn--primary" id="cta-vini-prenota" aria-label="Prenota una degustazione">
             Prenota una Degustazione
           </a>
           <a href="./index.html" class="btn btn--ghost" id="cta-vini-home" aria-label="Torna alla home">
@@ -2996,14 +2782,8 @@
   <!-- ═══════════════════════════════════════════════════════
        LIGHTBOX MODALE — Split Layout (45% visual | 55% scheda)
        ═══════════════════════════════════════════════════════ -->
-  <div
-    id="lightbox-modal"
-    class="lightbox"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="lightbox-title"
-    aria-hidden="true"
-  >
+  <div id="lightbox-modal" class="lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title"
+    aria-hidden="true">
     <!-- Overlay cliccabile per chiusura -->
     <div class="lightbox__overlay" id="lightbox-overlay" aria-hidden="true"></div>
 
@@ -3012,13 +2792,7 @@
 
       <!-- Colonna Sinistra: Visuale / Bottiglia -->
       <div class="lightbox__visual">
-        <img
-          class="lightbox__img"
-          id="lightbox-img"
-          src=""
-          alt=""
-          loading="eager"
-        />
+        <img class="lightbox__img" id="lightbox-img" src="" alt="" loading="eager" />
       </div>
 
       <!-- Colonna Destra: Scheda Editoriale -->
@@ -3059,14 +2833,9 @@
     </div><!-- /lightbox__container -->
 
     <!-- Pulsante chiusura X in alto a destra -->
-    <button
-      class="lightbox__close"
-      id="lightbox-close"
-      aria-label="Chiudi scheda prodotto"
-      type="button"
-    >
+    <button class="lightbox__close" id="lightbox-close" aria-label="Chiudi scheda prodotto" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-        <path d="M18 6L6 18M6 6l12 12"/>
+        <path d="M18 6L6 18M6 6l12 12" />
       </svg>
     </button>
   </div>
@@ -3076,16 +2845,16 @@
     (function initLightbox() {
       'use strict';
 
-      var lightbox   = document.getElementById('lightbox-modal');
-      var overlay    = document.getElementById('lightbox-overlay');
-      var closeBtn   = document.getElementById('lightbox-close');
-      var lbImg      = document.getElementById('lightbox-img');
-      var lbEyebrow  = document.getElementById('lightbox-eyebrow');
-      var lbTitle    = document.getElementById('lightbox-title');
-      var lbDenom    = document.getElementById('lightbox-spec-denominazione');
-      var lbVitigno  = document.getElementById('lightbox-spec-vitigno');
+      var lightbox = document.getElementById('lightbox-modal');
+      var overlay = document.getElementById('lightbox-overlay');
+      var closeBtn = document.getElementById('lightbox-close');
+      var lbImg = document.getElementById('lightbox-img');
+      var lbEyebrow = document.getElementById('lightbox-eyebrow');
+      var lbTitle = document.getElementById('lightbox-title');
+      var lbDenom = document.getElementById('lightbox-spec-denominazione');
+      var lbVitigno = document.getElementById('lightbox-spec-vitigno');
       var lbServizio = document.getElementById('lightbox-spec-servizio');
-      var lbNotes    = document.getElementById('lightbox-notes');
+      var lbNotes = document.getElementById('lightbox-notes');
       if (!lightbox) return;
 
       var previousFocus = null;
@@ -3102,12 +2871,12 @@
         // Dati strutturati espliciti (via attributi data-* singoli) hanno priorità
         if (imgEl.dataset.nome) {
           return {
-            eyebrow   : imgEl.dataset.categoria || 'Selezione Degustibus',
-            nome      : imgEl.dataset.nome,
-            denom     : imgEl.dataset.denominazione || '—',
-            vitigno   : imgEl.dataset.vitigno       || '—',
-            servizio  : imgEl.dataset.servizio      || '—',
-            note      : imgEl.dataset.note          || ''
+            eyebrow: imgEl.dataset.categoria || 'Selezione Degustibus',
+            nome: imgEl.dataset.nome,
+            denom: imgEl.dataset.denominazione || '—',
+            vitigno: imgEl.dataset.vitigno || '—',
+            servizio: imgEl.dataset.servizio || '—',
+            note: imgEl.dataset.note || ''
           };
         }
 
@@ -3115,12 +2884,12 @@
         var raw = imgEl.dataset.caption || '';
         if (!raw) {
           return {
-            eyebrow  : 'Selezione Degustibus',
-            nome     : imgEl.alt || '—',
-            denom    : '—',
-            vitigno  : '—',
-            servizio : '—',
-            note     : ''
+            eyebrow: 'Selezione Degustibus',
+            nome: imgEl.alt || '—',
+            denom: '—',
+            vitigno: '—',
+            servizio: '—',
+            note: ''
           };
         }
 
@@ -3129,10 +2898,10 @@
         tmp.innerHTML = raw;
         var decoded = tmp.textContent || tmp.innerText || raw;
 
-        var lines = decoded.split('\n').map(function(l){ return l.trim(); });
-        var nomeLine    = lines[0] || imgEl.alt || '—';
-        var specsLine   = lines[1] || '';
-        var notesLines  = lines.slice(2).join(' ').trim();
+        var lines = decoded.split('\n').map(function (l) { return l.trim(); });
+        var nomeLine = lines[0] || imgEl.alt || '—';
+        var specsLine = lines[1] || '';
+        var notesLines = lines.slice(2).join(' ').trim();
 
         // Determina eyebrow dalla card padre
         var cuveeEl = imgEl.closest('.champ-card');
@@ -3143,29 +2912,29 @@
         }
 
         // Parsing specs: "Denominazione: X  |  Vitigno: Y  |  Servizio: Z"
-        var denom    = '—';
-        var vitigno  = '—';
+        var denom = '—';
+        var vitigno = '—';
         var servizio = '—';
         if (specsLine) {
-          var parts = specsLine.split('|').map(function(p){ return p.trim(); });
-          parts.forEach(function(part) {
+          var parts = specsLine.split('|').map(function (p) { return p.trim(); });
+          parts.forEach(function (part) {
             var colonIdx = part.indexOf(':');
             if (colonIdx === -1) return;
             var key = part.slice(0, colonIdx).trim().toLowerCase();
             var val = part.slice(colonIdx + 1).trim();
-            if (key === 'denominazione') denom   = val;
-            else if (key === 'vitigno')  vitigno = val;
+            if (key === 'denominazione') denom = val;
+            else if (key === 'vitigno') vitigno = val;
             else if (key === 'servizio') servizio = val;
           });
         }
 
         return {
-          eyebrow  : eyebrow,
-          nome     : nomeLine,
-          denom    : denom,
-          vitigno  : vitigno,
-          servizio : servizio,
-          note     : notesLines
+          eyebrow: eyebrow,
+          nome: nomeLine,
+          denom: denom,
+          vitigno: vitigno,
+          servizio: servizio,
+          note: notesLines
         };
       }
 
@@ -3180,17 +2949,17 @@
         lbImg.alt = triggerImg.alt || dati.nome;
 
         // Popola scheda editoriale
-        lbEyebrow.textContent  = dati.eyebrow;
-        lbTitle.textContent    = dati.nome;
-        lbDenom.textContent    = dati.denom;
-        lbVitigno.textContent  = dati.vitigno;
+        lbEyebrow.textContent = dati.eyebrow;
+        lbTitle.textContent = dati.nome;
+        lbDenom.textContent = dati.denom;
+        lbVitigno.textContent = dati.vitigno;
         lbServizio.textContent = dati.servizio;
-        lbNotes.textContent    = dati.note;
+        lbNotes.textContent = dati.note;
 
         document.body.style.overflow = 'hidden';
         lightbox.classList.add('is-open');
         lightbox.setAttribute('aria-hidden', 'false');
-        setTimeout(function(){ closeBtn.focus(); }, 60);
+        setTimeout(function () { closeBtn.focus(); }, 60);
       }
 
       function closeLightbox() {
@@ -3202,20 +2971,20 @@
           previousFocus = null;
         }
         // Pulisce il DOM dopo la transizione (550ms)
-        setTimeout(function() {
+        setTimeout(function () {
           lbImg.src = '';
           lbImg.alt = '';
-          lbEyebrow.textContent  = '';
-          lbTitle.textContent    = '';
-          lbDenom.textContent    = '—';
-          lbVitigno.textContent  = '—';
+          lbEyebrow.textContent = '';
+          lbTitle.textContent = '';
+          lbDenom.textContent = '—';
+          lbVitigno.textContent = '—';
           lbServizio.textContent = '—';
-          lbNotes.textContent    = '';
+          lbNotes.textContent = '';
         }, 550);
       }
 
       // Delegazione click: immagini zoomabili e CTA delle card
-      document.addEventListener('click', function(e) {
+      document.addEventListener('click', function (e) {
         var img = e.target.closest('.zoomable-image');
         var cta = e.target.closest('.champ-card__cta');
         if (cta) {
@@ -3232,7 +3001,7 @@
       overlay.addEventListener('click', closeLightbox);
       closeBtn.addEventListener('click', closeLightbox);
 
-      document.addEventListener('keydown', function(e) {
+      document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape' && lightbox.classList.contains('is-open')) {
           e.stopPropagation();
           closeLightbox();
