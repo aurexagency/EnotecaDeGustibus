@@ -27,6 +27,10 @@
     /* ═══════════════════════════════════════════════════════
        LAYOUT PAGINA
        ═══════════════════════════════════════════════════════ */
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--color-bordeaux-deeper);
     }
@@ -123,6 +127,41 @@
       color: var(--color-avorio-dim);
       max-width: 520px;
       margin-inline: auto;
+    }
+
+    .vini-hero__anchors {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 16px;
+      margin-top: var(--space-8);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    
+    .vini-hero__anchors::-webkit-scrollbar {
+      display: none;
+    }
+
+    .vini-hero__anchors a {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-avorio);
+      border: 1px solid var(--color-line);
+      padding: 16px 24px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+    }
+
+    .vini-hero__anchors a:hover {
+      color: var(--color-oro);
+      border-color: var(--color-oro);
+      transform: translateY(-2px);
     }
 
     /* ── Divisore sezionale in oro ── */
@@ -472,6 +511,9 @@
 
     /* ─── Reduced Motion ─── */
     @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto !important;
+      }
       .vr {
         opacity: 1;
         transform: none;
@@ -485,8 +527,10 @@
       .champ-card__img,
       .champ-card__name,
       .champ-card__cta,
-      .champ-card__frame::after {
+      .champ-card__frame::after,
+      .vini-hero__anchors a {
         transition: none;
+        transform: none;
       }
     }
 
@@ -750,6 +794,13 @@
           dello Champagne alla struttura profonda dei grandi rossi italiani e internazionali.
           Ogni bottiglia racconta un vignaiolo, un terroir, una storia.
         </p>
+        
+        <nav class="vini-hero__anchors vr vr--d3" aria-label="Ancore categorie vini">
+          <a href="#champagne" aria-label="Vai alla sezione Champagne">Champagne</a>
+          <a href="#bollicine" aria-label="Vai alla sezione Bollicine">Bollicine</a>
+          <a href="#vini-bianchi" aria-label="Vai alla sezione Vini Bianchi">Vini Bianchi</a>
+          <a href="#vini-rossi" aria-label="Vai alla sezione Vini Rossi">Vini Rossi</a>
+        </nav>
       </div>
     </header>
 
