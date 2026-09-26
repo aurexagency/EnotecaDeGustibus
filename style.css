@@ -2069,15 +2069,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: calc(var(--sa-thumb-sz) + var(--sa-pad));
+  padding-right: var(--sa-pad);
   font-family: var(--font-sans);
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.30em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--sa-label-color);
   pointer-events: none;
   z-index: 3;
   transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .swipe-action__label,
+  .swipe-action__label--success {
+    font-size: 9px;
+    letter-spacing: 0.10em;
+    padding-left: calc(var(--sa-thumb-sz) + 2px);
+  }
 }
 
 .swipe-action__label--success {
