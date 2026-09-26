@@ -633,6 +633,52 @@
       transform: translateX(4px);
     }
 
+    /* Modificatori Work In Progress */
+    .tri-card.is-wip {
+      cursor: not-allowed;
+    }
+    
+    .tri-card.is-wip .tri-card__img {
+      filter: blur(8px) brightness(0.3) saturate(0.2) !important;
+      transform: scale(1) !important;
+    }
+
+    .tri-card.is-wip .tri-card__overlay > * {
+      opacity: 0.15;
+    }
+
+    .tri-card__wip-badge {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .tri-card__wip-icon {
+      font-size: 40px;
+      margin-bottom: var(--space-2);
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.8));
+    }
+
+    .tri-card__wip-text {
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #ff3333;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.9);
+      border: 1px solid rgba(255,51,51,0.5);
+      background: rgba(28,0,8,0.6);
+      padding: var(--space-2) var(--space-4);
+      backdrop-filter: blur(4px);
+    }
+
     /* ═══════════════════════════════════════════════════════
        ── BLOCCO 3: BI-GRID (Eventi / Degustazioni)
        ═══════════════════════════════════════════════════════ */
