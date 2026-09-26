@@ -1750,15 +1750,19 @@
     }
 
     /* ── Label testo centrale ── */
-    .swipe-btn__label {
+    .swipe-btn__label,
+    .swipe-btn__label--success {
       position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: calc(var(--swipe-thumb-sz) + var(--swipe-pad));
+      padding-right: var(--swipe-pad);
       font-family: var(--font-sans);
       font-size: 9.5px;
       font-weight: 500;
-      letter-spacing: 0.30em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--color-avorio-dim);
       white-space: nowrap;
@@ -1771,7 +1775,6 @@
     .swipe-btn__label--success {
       opacity: 0;
       color: var(--color-oro);
-      letter-spacing: 0.25em;
     }
 
     /* Stato completato: scambia le label */
@@ -1904,9 +1907,11 @@
         --swipe-h:        58px;
         --swipe-thumb-sz: 46px;
       }
-      .swipe-btn__label {
+      .swipe-btn__label,
+      .swipe-btn__label--success {
         font-size: 8.5px;
-        letter-spacing: 0.22em;
+        letter-spacing: 0.10em;
+        padding-left: calc(var(--swipe-thumb-sz) + 2px);
       }
     }
 
