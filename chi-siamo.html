@@ -228,20 +228,7 @@
       pointer-events: none;
     }
 
-    /* Anno / etichetta sull'immagine */
-    .cs-storia__year-badge {
-      position: absolute;
-      top: var(--space-3);
-      left: calc(-1 * var(--space-4));
-      background: var(--color-bordeaux-deeper);
-      border: 1px solid var(--color-card-border);
-      padding: var(--space-2) var(--space-3);
-      font-family: var(--font-serif);
-      font-size: 11px;
-      letter-spacing: 0.25em;
-      color: var(--color-oro);
-      text-transform: uppercase;
-    }
+
 
     /* Colonna testo narrativo */
     .cs-storia__text {
@@ -586,7 +573,6 @@
       }
 
       .cs-storia__img-frame::after { display: none; }
-      .cs-storia__year-badge { left: 0; }
       .cs-storia__text { padding-left: 0; }
 
       .cs-sommelier__grid {
@@ -672,10 +658,9 @@
           <!-- Colonna immagine -->
           <div class="cs-storia__visual cs-reveal">
             <div class="cs-storia__img-frame">
-              <span class="cs-storia__year-badge" aria-hidden="true">Est. 2018</span>
               <img
                 class="cs-storia__img"
-                src="/Home/Foto%20Alessandra%20per%20Sito%20.jpg"
+                src="/Home/Foto%20alessandra%20sito%202.jpg"
                 alt="L'interno dell'Enoteca Degustibus, un'atmosfera di eleganza e cura artigianale"
                 loading="lazy"
               />
